@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ device.name }}
+{% endblock %}
+
+{% block content %}
+<div>
+    <a href="{% url 'device_delete' device.id %}">Delete device</a>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <p>Name: {{ device.name }}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <p>Serial number: {{ device.serial_number }}</p>
+    </div>
+</div>
+{% endblock %}

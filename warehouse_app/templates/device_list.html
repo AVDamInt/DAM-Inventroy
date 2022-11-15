@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Device list
+{% endblock %}
+
+{% block content %}
+<div>
+    <a href="{% url 'device_register' %}">Register a device</a>
+</div>
+<h2>Device list</h2>
+    <table class="table table-bordered" data-sort-name="field_id" data-sort-order="asc">
+        <thead>
+            <tr>
+                <th data-field='field_id'>Id</th>
+                <th data-field='field_name'>Name</th>
+                <th data-field='field_serial_number'>Serial Number</th>
+                <th data-field='field_detail'>Detail</th>
+                <th data-field='field_delete'>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for device in devices %}
+                <tr>
+                    <th scope="row">{{device.id}}</th>
+                        <td>{{device.name}}</td>
+                        <td>{{device.serial_number}}</td>
+                        <td><a href="{% url 'device_detail' device.id %}">
+                            Detail</a></td>
+                        <td><a href="{% url 'device_delete' device.id %}">Delete device</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</div>
+{% endblock %}
