@@ -8,15 +8,15 @@ from django.views.generic.edit import DeleteView
 #def index(request):
 #    return HttpResponse("Warehouse!")
 
-#def device_list(request):
-#    devices = models.Device.objects.all()
-#    context = {'devices': devices}
-#    return render(request, 'device_list.html', context)
+def device_list(request):
+    devices = models.Device.objects.all()
+    context = {'devices': devices}
+    return render(request, 'device_list.html', context)
 
-class DeviceListView(generic.ListView):
-    model = models.Device
-    template_name = 'device_list.html'
-    context_object_name = 'device'   
+#class DeviceListView(generic.ListView):
+#    model = models.Device
+#    template_name = 'device_list.html'
+#    context_object_name = 'device'   
 
 
 #def device_detail(request, pk):
@@ -33,7 +33,15 @@ class DeviceDetailView(generic.DetailView):
 class DeviceCreateView(generic.CreateView):
     model = models.Device
     template_name = 'device_form.html'
-    fields = ['name', 'serial_number']
+    fields = ['name',
+'serial_number',
+'contract',
+'expiration_date',
+'renewal_date',
+'host_name',
+'make',
+'model',
+'place']
 
 
 class DeviceDeleteView(DeleteView):

@@ -9,7 +9,14 @@ Register device
 {% block content %}
 <h2>Register device</h2>
 
-<form method="POST" class="row g-3">
+<form method="POST">
+    {% csrf_token %}
+    {{ form | crispy }}
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+<!--
+  <form method="POST" class="row g-3">
     {% csrf_token %}
     <div class="col-md-6">
       <label for="inputDeviceName" class="form-label">Device name</label>
@@ -54,4 +61,5 @@ Register device
       <button type="submit" class="btn btn-primary">Save</button>
     </div>
   </form>
+-->
 {% endblock %}

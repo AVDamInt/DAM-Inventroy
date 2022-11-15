@@ -15,6 +15,7 @@ Device list
                 <th data-field='field_id'>Id</th>
                 <th data-field='field_name'>Name</th>
                 <th data-field='field_serial_number'>Serial Number</th>
+                <th data-field='field_contract'>Contract</th>
                 <th data-field='field_detail'>Detail</th>
                 <th data-field='field_delete'>Delete</th>
             </tr>
@@ -25,6 +26,7 @@ Device list
                     <th scope="row">{{device.id}}</th>
                         <td>{{device.name}}</td>
                         <td>{{device.serial_number}}</td>
+                        <td>{{device.contract}}</td>
                         <td><a href="{% url 'device_detail' device.id %}">
                             Detail</a></td>
                         <td><a href="{% url 'device_delete' device.id %}">Delete device</a></td>
