@@ -33,15 +33,17 @@ class DeviceDetailView(generic.DetailView):
 class DeviceCreateView(generic.CreateView):
     model = models.Device
     template_name = 'device_form.html'
-    fields = ['name',
-'serial_number',
-'contract',
-'expiration_date',
-'renewal_date',
-'host_name',
-'make',
-'model',
-'place']
+    fields = [
+        'name',
+        'serial_number',
+        'contract',
+        'expiration_date',
+        'renewal_date',
+        'host_name',
+        'make',
+        'model',
+        'place'
+        ]
 
 
 class DeviceDeleteView(DeleteView):
@@ -55,11 +57,23 @@ class PlaceListView(generic.ListView):
     template_name = 'place_list.html'
     context_object_name = 'place'   
 
+def place_list(request):
+    places = models.Place.objects.all()
+    context = {'places': places}
+    return render(request, 'place_list.html', context)
+
 
 class PlaceCreateView(generic.CreateView):
     model = models.Place
     template_name = 'place_form.html'
-    fields = ['name', 'city']
+    fields = [
+        'name', 
+        'city',
+        'address',
+        'cap',
+        'country',
+        'plan'
+        ]
 
 
 class PlaceDeleteView(DeleteView):

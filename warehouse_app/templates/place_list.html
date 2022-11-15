@@ -24,7 +24,7 @@ Device list
         <tbody>
             {% for place in places %}
                 <tr>
-                    <th scope="row">{{device.id}}</th>
+                    <th scope="row">{{place.id}}</th>
                         <td>{{place.name}}</td>
                         <td>{{place.city}}</td>
                         <td><a href="{% url 'place_detail' place.id %}">
