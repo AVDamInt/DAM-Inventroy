@@ -13,6 +13,9 @@ class Place(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('place_detail', kwargs={"pk": self.pk})
+
 class Device(models.Model):
     name = models.CharField(max_length=50, blank=True, null=True)
     serial_number = models.CharField(max_length=50, blank=True, null=True)

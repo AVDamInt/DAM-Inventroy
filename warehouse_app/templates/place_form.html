@@ -7,7 +7,7 @@ Register device
 {% endblock %}
 
 {% block content %}
-<h2>Register device</h2>
+<h2>Register place</h2>
 
 <form method="POST" class="row g-3">
     {% csrf_token %}
@@ -30,8 +30,8 @@ Register device
     <div class="col-md-4">
       <label for="inputCountry" class="form-label">Country</label>
       <select id="inputCountry" class="form-select">
-        <option selected="">Choose...</option>
-        <option>...</option>
+        <option selected>Italy</option>
+        <option>Switzerland</option>
       </select>
     </div>
     <div class="col-md-2">
