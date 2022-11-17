@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-
+from django.contrib.auth.models import User
 
 class Place(models.Model):
     name = models.CharField(max_length=50, blank=True, null=True)
@@ -25,8 +25,8 @@ class Device(models.Model):
     host_name = models.CharField(max_length=50, blank=True, null=True)
     make = models.CharField(max_length=50, blank=True, null=True)
     model = models.CharField(max_length=50, blank=True, null=True)
-    place = models.ForeignKey(Place, blank=True, null=True, on_delete=models.SET_NULL)
-    
+    place = models.ForeignKey(Place, blank=True, null=True, related_name="place", on_delete=models.CASCADE)
+    user = models.OneToOneField(User, blank=True, null=True, on_delete=models.CASCADE)
 
 
     def __str__(self):

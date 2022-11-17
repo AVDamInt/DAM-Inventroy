@@ -1,11 +1,13 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views import generic
 from . import models
 from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView
+from . import forms
 
-#def index(request):
+
+# def index(request):
 #    return HttpResponse("Warehouse!")
 
 def device_list(request):
@@ -13,13 +15,14 @@ def device_list(request):
     context = {'devices': devices}
     return render(request, 'device_list.html', context)
 
-#class DeviceListView(generic.ListView):
+
+# class DeviceListView(generic.ListView):
 #    model = models.Device
 #    template_name = 'device_list.html'
 #    context_object_name = 'device'   
 
 
-#def device_detail(request, pk):
+# def device_detail(request, pk):
 #    device = get_object_or_404(models.Device, pk=pk)
 #    context = {'device': device}
 #    return render(request, 'device_detail.html', context)
@@ -30,20 +33,46 @@ class DeviceDetailView(generic.DetailView):
     context_object_name = 'device'
 
 
-class DeviceCreateView(generic.CreateView):
-    model = models.Device
-    template_name = 'device_form.html'
-    fields = [
-        'name',
-        'serial_number',
-        'contract',
-        'expiration_date',
-        'renewal_date',
-        'host_name',
-        'make',
-        'model',
-        'place'
-        ]
+# class DeviceCreateView(generic.CreateView):
+#   model = models.Device
+#   template_name = 'device_form.html'
+#   fields = [
+#       'name',
+#       'serial_number',
+#       'contract',
+#       'expiration_date',
+#       'renewal_date',
+#       'host_name',
+#       'make',
+#       'model',
+#       'place'
+#       ]
+
+# class DeviceCreateView(generic.CreateView):
+#    model = models.Device
+#    form_class = DeviceForm
+#    template_name = 'device_form.html'
+#    fields = [
+#        'name',
+#        'serial_number',
+#        'contract',
+#        'expiration_date',
+#        'renewal_date',
+#        'host_name',
+#        'make',
+#        'model',
+#        'place'
+#        ]
+
+def create_device(request):
+    if request.method == 'POST':
+        instance_form = forms.DeviceForm(request.POST)
+        if instance_form.is_valid():
+            instance_form.save()
+            return HttpResponseRedirect(reverse_lazy('device_list'))
+    else:
+        form = forms.DeviceForm()
+        return render(request, 'device_form.html', {'form': form})
 
 
 class DeviceDeleteView(DeleteView):
@@ -55,7 +84,8 @@ class DeviceDeleteView(DeleteView):
 class PlaceListView(generic.ListView):
     model = models.Place
     template_name = 'place_list.html'
-    context_object_name = 'place'   
+    context_object_name = 'place'
+
 
 def place_list(request):
     places = models.Place.objects.all()
@@ -67,13 +97,13 @@ class PlaceCreateView(generic.CreateView):
     model = models.Place
     template_name = 'place_form.html'
     fields = [
-        'name', 
+        'name',
         'city',
         'address',
         'cap',
         'country',
         'plan'
-        ]
+    ]
 
 
 class PlaceDeleteView(DeleteView):

@@ -1,74 +1,10 @@
 {% extends 'base.html' %}
 
 {% load crispy_forms_tags %}
-
 {% block title %}
 Register device
 {% endblock %}
 
 {% block content %}
-<h2>Register device</h2>
-<!--
-<form method="POST">
-    <br>
-    {% csrf_token %}
-    {{ form | crispy }}
-    <br>
-    <button type="submit" class="btn btn-primary">Save</button>
-</form>
--->
-
-  <form method="POST">
-    {% csrf_token %}
-
-    <div class="row">    
-      <div class="col-md-4">
-      {{ form.name|as_crispy_field }}
-    </div>
-    <div class="col-md-8">
-      {{ form.serial_number|as_crispy_field }}
-    </div></div>
-
-    <div class="row">
-    <div class="col-md-4">
-      {{ form.contract|as_crispy_field }}
-    </div>
-    </div>
-    <div class="row">
-    <div class="col-md-4">
-      {{ form.expiration_date|as_crispy_field }}
-    </div>
-    <div class="col-md-4">
-<!--    <div id="date-picker-example" class="md-form md-outline input-with-post-icon datepicker" inline="true">
-        <label for="renewal_date">Renewal</label>
-
-        <input placeholder="Select date" type="date" id="renewal_date" class="form-control">
-        <i class="fas fa-calendar input-prefix"></i>
-      </div>
-    -->
-      {{ form.renewal_date|as_crispy_field }}
-    </div>
-    </div>
-    <div class="row">
-    <div class="col-md-4">
-      {{ form.host_name|as_crispy_field }}
-    </div>
-    </div>
-    <div class="row">
-    <div class="col-md-6">
-      {{ form.make|as_crispy_field }}
-    </div>
-    <div class="col-6">
-      {{ form.model|as_crispy_field }}
-    </div>
-  </div>
-    <div class="col-12">
-      {{ form.place|as_crispy_field }}
-    </div>
-    <div class="col-12">
-      <br>
-      <button type="submit" class="btn btn-primary">Save</button>
-    </div>
-  </form>
-
+    {% crispy form %}
 {% endblock %}

@@ -5,19 +5,23 @@ Device list
 {% endblock %}
 
 {% block content %}
-<div>
-    <a href="{% url 'device_register' %}">Register a device</a>
-</div>
 <h2>Device list</h2>
     <table class="table table-bordered" data-sort-name="field_id" data-sort-order="asc">
         <thead>
             <tr>
-                <th data-field='field_id'>Id</th>
-                <th data-field='field_name'>Name</th>
-                <th data-field='field_serial_number'>Serial Number</th>
-                <th data-field='field_contract'>Contract</th>
-                <th data-field='field_detail'>Detail</th>
-                <th data-field='field_delete'>Delete</th>
+                <th  class="text-nowrap" data-field='field_id'>Id</th>
+                <th  class="text-nowrap" data-field='field_name'>Name</th>
+                <th  class="text-nowrap" data-field='field_serial_number'>Serial Number</th>
+                <th  class="text-nowrap" data-field='field_contract'>Contract</th>
+                <th  class="text-nowrap" data-field='field_expiration_date'>Expiration date</th>
+                <th  class="text-nowrap" data-field='field_renewal_date'>Renewal date</th>
+                <th  class="text-nowrap" data-field='field_host_name'>Host name</th>
+                <th  class="text-nowrap" data-field='field_make'>Make</th>
+                <th  class="text-nowrap" data-field='field_model'>Model</th>
+                <th  class="text-nowrap" data-field='field_place'>Place</th>
+                <th  class="text-nowrap" data-field='field_user'>User</th>
+                <th  class="text-nowrap" data-field='field_detail'>Detail</th>
+                <th  class="text-nowrap" data-field='field_delete'>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +31,14 @@ Device list
                         <td>{{device.name}}</td>
                         <td>{{device.serial_number}}</td>
                         <td>{{device.contract}}</td>
+                        <td>{{device.expiration_date}}</td>
+                        <td>{{device.renewal_date}}</td>
+                        <td>{{device.host_name}}</td>
+                        <td>{{device.make}}</td>
+                        <td>{{device.model}}</td>
+                         <td><a href="{% url 'place_detail' device.place.id %}">
+                            {{device.place}}</a></td>
+                        <td>{{device.user}}</td>
                         <td><a href="{% url 'device_detail' device.id %}">
                             Detail</a></td>
                         <td><a href="{% url 'device_delete' device.id %}">Delete device</a></td>

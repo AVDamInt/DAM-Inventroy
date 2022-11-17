@@ -5,10 +5,8 @@ Device list
 {% endblock %}
 
 {% block content %}
-<div>
-    <a href="{% url 'place_register' %}">Register a device</a>
-</div>
-<h2>Device list</h2>
+
+<h2>Place list</h2>
     <table class="table table-bordered" data-sort-name="field_id" data-sort-order="asc">
         <thead>
             <tr>
@@ -19,6 +17,8 @@ Device list
                 <th data-field='field_cap'>Cap</th>
                 <th data-field='field_country'>Country</th>
                 <th data-field='field_plan'>Plan</th>
+                <th data-field='field_detail'>Detail</th>
+                <th data-field='field_delete'>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +27,12 @@ Device list
                     <th scope="row">{{place.id}}</th>
                         <td>{{place.name}}</td>
                         <td>{{place.city}}</td>
+                        <td>{{place.address}}</td>
+                        <td>{{place.cap}}</td>
+                        <td>{{place.country}}</td>
+                        <td>{{place.plan}}</td>
+
+
                         <td><a href="{% url 'place_detail' place.id %}">
                             Detail</a></td>
                         <td><a href="{% url 'place_delete' place.id %}">Delete device</a></td>
