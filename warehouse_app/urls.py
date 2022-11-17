@@ -11,7 +11,9 @@ urlpatterns = [
     path('place/register', views.PlaceCreateView.as_view(), name='place_register'),
     path('<int:pk>/place', views.PlaceDeleteView.as_view(), name='place_delete'),
     path('places', views.place_list, name='place_list'),
-    path('users', views.UserListView.as_view(), name='user_list')
+    path('users', views.UserListView.as_view(), name='user_list'),
+    path('user/register', views.UserCreateView.as_view(), name='user_register'),
+    path('<int:pk>/user', views.UserDeleteView.as_view(), name='user_delete'),
 
     #path('device/<int:pk>', views.device_details, name='device_details'),
 ]

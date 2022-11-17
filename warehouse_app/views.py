@@ -7,6 +7,7 @@ from django.views.generic.edit import DeleteView
 from . import forms
 from django.contrib.auth.models import User
 
+
 # def index(request):
 #    return HttpResponse("Warehouse!")
 
@@ -96,14 +97,7 @@ def place_list(request):
 class PlaceCreateView(generic.CreateView):
     model = models.Place
     template_name = 'place_form.html'
-    fields = [
-        'name',
-        'city',
-        'address',
-        'cap',
-        'country',
-        'plan'
-    ]
+    fields = fields = '__all__'
 
 
 class PlaceDeleteView(DeleteView):
@@ -121,3 +115,17 @@ class PlaceDetailView(generic.DetailView):
 class UserListView(generic.ListView):
     model = User
     template_name = 'user_list.html'
+
+
+class UserCreateView(generic.CreateView):
+    model = User
+    template_name = 'user_form.html'
+    fields = '__all__'
+    success_url = reverse_lazy('user_list')
+
+
+class UserDeleteView(generic.DeleteView):
+    model = User
+    template_name = 'user_delete.html'
+    success_url = reverse_lazy('user_list')
+

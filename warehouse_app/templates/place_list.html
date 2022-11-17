@@ -31,11 +31,9 @@ Device list
                         <td>{{place.cap}}</td>
                         <td>{{place.country}}</td>
                         <td>{{place.plan}}</td>
-
-
                         <td><a href="{% url 'place_detail' place.id %}">
                             Detail</a></td>
-                        <td><a href="{% url 'place_delete' place.id %}">Delete device</a></td>
+                        <td><a href="{% url 'place_delete' place.id %}">Delete place</a></td>
                 </tr>
             {% endfor %}
         </tbody>
