@@ -5,7 +5,7 @@ from . import models
 from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView
 from . import forms
-
+from django.contrib.auth.models import User
 
 # def index(request):
 #    return HttpResponse("Warehouse!")
@@ -116,3 +116,8 @@ class PlaceDetailView(generic.DetailView):
     model = models.Place
     template_name = 'place_detail.html'
     context_object_name = 'place'
+
+
+class UserListView(generic.ListView):
+    model = User
+    template_name = 'user_list.html'

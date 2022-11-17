@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+User list
+{% endblock %}
+
+{% block content %}
+
+<h2>User list</h2>
+
+    <table class="table table-bordered" data-sort-name="field_id" data-sort-order="asc">
+        <thead>
+            <tr>
+                <th data-field='field_id'>Id</th>
+                <th data-field='field_username'>Username</th>
+                <th data-field='field_email'>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in object_list %}
+                <tr>
+                    <th scope="row">{{user.id}}</th>
+                        <td>{{user.username}}</td>
+                        <td>{{user.email}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}
