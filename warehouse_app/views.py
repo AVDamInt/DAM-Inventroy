@@ -5,7 +5,6 @@ from . import models
 from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView
 from . import forms
-from django.contrib.auth.models import User
 
 
 # def index(request):
@@ -113,19 +112,21 @@ class PlaceDetailView(generic.DetailView):
 
 
 class UserListView(generic.ListView):
-    model = User
+    model = models.DeviceUser
     template_name = 'user_list.html'
+    context_object_name = 'users'
 
 
 class UserCreateView(generic.CreateView):
-    model = User
+    model = models.DeviceUser
     template_name = 'user_form.html'
     fields = '__all__'
+
     success_url = reverse_lazy('user_list')
 
 
 class UserDeleteView(generic.DeleteView):
-    model = User
+    model = models.DeviceUser
     template_name = 'user_delete.html'
     success_url = reverse_lazy('user_list')
 

@@ -12,16 +12,18 @@ User list
         <thead>
             <tr>
                 <th data-field='field_id'>Id</th>
-                <th data-field='field_username'>Username</th>
+                <th data-field='field_username'>Name</th>
+                <th data-field='field_email'>Surname</th>
                 <th data-field='field_email'>Email</th>
                 <th data-field='field_delete'>Delete</th>
             </tr>
         </thead>
         <tbody>
-            {% for user in object_list %}
+            {% for user in users %}
                 <tr>
                     <th scope="row">{{user.id}}</th>
-                        <td>{{user.username}}</td>
+                        <td>{{user.name}}</td>
+                        <td>{{user.surname}}</td>
                         <td>{{user.email}}</td>
                         <td><a href="{% url 'user_delete' user.id %}">Delete user</a></td>
                 </tr>
