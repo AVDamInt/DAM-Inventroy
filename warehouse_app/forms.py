@@ -54,3 +54,9 @@ class DeviceForm(forms.ModelForm):
             'renewal_date': DateInput()
         }
 
+
+class UploadFileForm(forms.Form):
+    title = forms.CharField(max_length=50)
+    file = forms.FileField()
+
+

@@ -5,7 +5,8 @@ from . import models
 from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView
 from . import forms
-
+from .forms import UploadFileForm
+from . import utils
 
 # def index(request):
 #    return HttpResponse("Warehouse!")
@@ -130,3 +131,16 @@ class UserDeleteView(generic.DeleteView):
     template_name = 'user_delete.html'
     success_url = reverse_lazy('user_list')
 
+
+def file_upload(request):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            utils.handle_uploaded_file(request.FILES['file'])
+            return HttpResponseRedirect(reverse_lazy('device_list'))
+        else:
+            form = UploadFileForm()
+            return render(request, 'file_upload.html', {'form': form})
+    else:
+        form = UploadFileForm()
+        return render(request, 'file_upload.html', {'form': form})

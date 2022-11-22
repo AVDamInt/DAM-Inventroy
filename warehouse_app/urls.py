@@ -14,6 +14,6 @@ urlpatterns = [
     path('users', views.UserListView.as_view(), name='user_list'),
     path('user/register', views.UserCreateView.as_view(), name='user_register'),
     path('<int:pk>/user', views.UserDeleteView.as_view(), name='user_delete'),
-
+    path('file_upload', views.file_upload, name='file_upload')
     #path('device/<int:pk>', views.device_details, name='device_details'),
 ]
