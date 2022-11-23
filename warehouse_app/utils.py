@@ -1,12 +1,87 @@
-import pandas as porco_demonio
+from datetime import datetime
+
+import pandas as pd
 import os
+from .models import Device, Place, DeviceUser
 
 
 def handle_uploaded_file(up_file):
-    # df = porco_demonio.read_excel(f)
-    if up_file.name == 'places.xlsx':
-        print("Uploading places!")
-    elif up_file.name == 'users.xlsx':
-        print("Uploading users!")
-    elif up_file.name == 'devices.xlsx':
-        print("Uploading devices!")
+    #if up_file.name ==
+    df = pd.read_excel(up_file, engine='openpyxl')
+    cnt = 0
+    for _, row in df.iterrows():
+        UTENTE = str(row['UTENTE'])
+        UTENTE = UTENTE[:-1]
+        UFFICIO = str(row['UFFICIO'])
+        UFFICIO = UFFICIO[:-1]
+        SEDE = str(row['SEDE'])
+        SEDE = SEDE[:-1]
+        #user = DeviceUser(
+        #    name=row['UTENTE'],
+        #    surname='',
+        #    email='',
+        #    role=''
+        #)
+        #user.save()
+        user = DeviceUser.objects.get_or_create(
+            name=UTENTE,
+            surname='',
+            email='',
+            role='')
+        place = Place.objects.get_or_create(
+            name=UFFICIO,
+            city=SEDE,
+            address='',
+            cap='',
+            country='',
+            plan=''
+        )
+
+        CONTRATTO = str(row['CONTR'])
+        CONTRATTO = CONTRATTO[:-1]
+        SCADENZA = str(row['SCAD'])
+        SCADENZA = SCADENZA[:-1]
+        RINNOVO = str(row['RINNOVO'])
+        RINNOVO = RINNOVO[:-1]
+        HOST_NAME = str(row['HOST_NAME'])
+        HOST_NAME = HOST_NAME[:-1]
+        MARCA = str(row['MARCA'])
+        MARCA = MARCA[:-1]
+        TYPE = str(row['TYPE'])
+        TYPE = TYPE[:-1]
+        MATRICOLA = str(row['MATRICOLA'])
+        MATRICOLA = MATRICOLA[:-1]
+        DESC = str(row['DESC'])
+        DESC = DESC[:-1]
+
+        #dt_scadenza = datetime.strptime(SCADENZA, '%Y-%m-%d')
+        #print(dt_scadenza)
+        #dt_rinnovo = datetime.strptime(RINNOVO, '%Y-%m-%d')
+        #print(dt_rinnovo)
+        name = 'name' + str(cnt)
+        device = Device.objects.get_or_create(
+            name=[name],
+            serial_number=MATRICOLA,
+            contract=CONTRATTO,
+            #expiration_date=dt_scadenza,
+            #renewal_date=dt_rinnovo,
+            host_name=HOST_NAME,
+            make=MARCA,
+            model=TYPE,
+            place=place[0],
+            user=user[0]
+        )
+        cnt += 1
+
+
+        #place = Place(
+        #    name=row['UFFICIO'],
+        #    city=row['SEDE'],
+        #    address='',
+        #    cap='',
+        #    country='',
+        #    plan=''
+        #)
+        #place.save()
+
+

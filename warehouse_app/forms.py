@@ -27,8 +27,8 @@ class DeviceForm(forms.ModelForm):
                 css_class='row',
             ),
             Div(
-                Div('place', css_class='col-md-4'),
-                Div('user', css_class='col-md-4'),
+                Div('place', css_class='col-md-6'),
+                Div('user', css_class='col-md-6'),
                 css_class='row',
             ),
             Div(

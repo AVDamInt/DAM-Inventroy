@@ -7,6 +7,9 @@ from django.views.generic.edit import DeleteView
 from . import forms
 from .forms import UploadFileForm
 from . import utils
+from . import filters
+from django_filters.views import FilterView
+
 
 # def index(request):
 #    return HttpResponse("Warehouse!")
@@ -83,15 +86,16 @@ class DeviceDeleteView(DeleteView):
 
 
 class PlaceListView(generic.ListView):
+    paginate_by = 10
     model = models.Place
     template_name = 'place_list.html'
-    context_object_name = 'place'
+    context_object_name = 'places'
 
 
-def place_list(request):
-    places = models.Place.objects.all()
-    context = {'places': places}
-    return render(request, 'place_list.html', context)
+#def place_list(request):
+#    places = models.Place.objects.all()
+#    context = {'places': places}
+#    return render(request, 'place_list.html', context)
 
 
 class PlaceCreateView(generic.CreateView):
@@ -112,11 +116,17 @@ class PlaceDetailView(generic.DetailView):
     context_object_name = 'place'
 
 
+#class UserListView(generic.ListView):
+#    paginate_by = 10
+#    model = models.DeviceUser
+#    template_name = 'user_list.html'
+#    context_object_name = 'users'
+
 class UserListView(generic.ListView):
+    paginate_by = 10
     model = models.DeviceUser
     template_name = 'user_list.html'
     context_object_name = 'users'
-
 
 class UserCreateView(generic.CreateView):
     model = models.DeviceUser
