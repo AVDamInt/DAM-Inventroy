@@ -14,16 +14,37 @@ from django_filters.views import FilterView
 # def index(request):
 #    return HttpResponse("Warehouse!")
 
+# def device_list(request):
+#    paginate_by = 10
+#    devices = models.Device.objects.all()
+#    context = {'devices': devices}
+#    return render(request, 'device_list.html', context)
+
+
 def device_list(request):
     devices = models.Device.objects.all()
-    context = {'devices': devices}
+
+    myFilter = filters.DeviceFilter(request.GET, queryset=devices)
+    devices = myFilter.qs
+
+    context = {'devices': devices, 'myFilter': myFilter}
     return render(request, 'device_list.html', context)
 
 
-# class DeviceListView(generic.ListView):
-#    model = models.Device
-#    template_name = 'device_list.html'
-#    context_object_name = 'device'   
+class DeviceListView(generic.ListView):
+    paginate_by = 10
+    model = models.Device
+    template_name = 'device_list.html'
+    context_object_name = 'devices'
+
+
+class DeviceList(FilterView):
+    paginate_by = 10
+
+    model = models.Device
+    context_object_name = 'devices'
+    template_name = 'device_list.html'
+    filterset_class = filters.DeviceFilter
 
 
 # def device_detail(request, pk):
@@ -92,7 +113,7 @@ class PlaceListView(generic.ListView):
     context_object_name = 'places'
 
 
-#def place_list(request):
+# def place_list(request):
 #    places = models.Place.objects.all()
 #    context = {'places': places}
 #    return render(request, 'place_list.html', context)
@@ -116,7 +137,7 @@ class PlaceDetailView(generic.DetailView):
     context_object_name = 'place'
 
 
-#class UserListView(generic.ListView):
+# class UserListView(generic.ListView):
 #    paginate_by = 10
 #    model = models.DeviceUser
 #    template_name = 'user_list.html'
@@ -127,6 +148,7 @@ class UserListView(generic.ListView):
     model = models.DeviceUser
     template_name = 'user_list.html'
     context_object_name = 'users'
+
 
 class UserCreateView(generic.CreateView):
     model = models.DeviceUser

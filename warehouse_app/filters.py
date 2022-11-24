@@ -1,12 +1,14 @@
 import django_filters
 from django_filters import DateFilter, CharFilter
 
-from .models import DeviceUser
+from .models import *
 
 
-class DeviceUserFilter(django_filters.FilterSet):
-    name = CharFilter(field_name='name')
+class DeviceFilter(django_filters.FilterSet):
+    name = CharFilter(field_name='name', lookup_expr='gte')
+    serial_number = CharFilter(field_name='serial_number', lookup_expr='icontains')
 
     class Meta:
-        model = DeviceUser
+        model = Device
         fields = '__all__'
+        exclude = ['contract', 'expiration_date', 'renewal_date', 'host_name', 'make', 'model', 'place', 'user']

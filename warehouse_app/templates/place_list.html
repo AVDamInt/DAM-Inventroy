@@ -7,7 +7,8 @@ Device list
 {% block content %}
 
 <h2>Place list</h2>
-    <table class="table table-bordered" data-sort-name="field_id" data-sort-order="asc">
+
+    <table class="table table-bordered table-responsive" data-sort-name="field_id" data-sort-order="asc">
         <thead>
             <tr>
                 <th data-field='field_id'>Id</th>
@@ -39,6 +40,7 @@ Device list
         </tbody>
 
     </table>
+
         <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
