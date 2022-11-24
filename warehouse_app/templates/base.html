@@ -34,13 +34,21 @@
             <li><a class="dropdown-item" href="{% url 'place_register' %}">Add place</a></li>
           </ul>
         </li>
-                  <li class="nav-item dropdown">
+          <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             User
           </a>
           <ul class="dropdown-menu dropdown-menu-dark">
             <li><a class="dropdown-item" href="{% url 'user_list' %}">List users</a></li>
               <li><a class="dropdown-item" href="{% url 'user_register' %}">Add user</a></li>
+          </ul>
+        </li>
+           <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Data import
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" href="{% url 'file_upload' %}">Import data</a></li>
           </ul>
         </li>
       </ul>
