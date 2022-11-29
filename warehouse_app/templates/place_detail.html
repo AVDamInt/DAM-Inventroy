@@ -1,21 +1,21 @@
 {% extends 'base.html' %}
 
 {% block title %}
-{{ place.name }}
+    {{ place.name }}
 {% endblock %}
 
 {% block content %}
-<div>
-    <a href="{% url 'place_delete' place.id %}">Delete place</a>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <p>Name: {{ place.name }}</p>
+    <div>
+        <a href="{% url 'place_delete' place.id %}">Delete place</a>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <p>City: {{ place.city }}</p>
+    <div class="row">
+        <div class="col-md-12">
+            <p>Name: {{ place.name }}</p>
+        </div>
     </div>
-</div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>City: {{ place.city }}</p>
+        </div>
+    </div>
 {% endblock %}

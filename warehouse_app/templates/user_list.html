@@ -1,36 +1,56 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}
-User list
+    User list
 {% endblock %}
 
 {% block content %}
 
-<h2>User list</h2>
+    <h2>User list</h2>
 
+        <div class="row">
+        <div class=" col-md-4">
+            <div class="card card-body">
+
+                <form method="get">
+                    {{ filter.form.as_p }}
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+        <div class=" col-md-2">
+            <div class="card card-body">
+                <h5><i class="bi bi-rocket-takeoff-fill"></i> Total Users</h5>
+                <hr>
+                <h1>{{ page_obj.paginator.count }}</h1>
+            </div>
+        </div>
+    </div>
+    <br>
     <table class="table table-bordered table-responsive" data-sort-name="field_id" data-sort-order="asc">
         <thead>
-            <tr>
-                <th data-field='field_id'>Id</th>
-                <th data-field='field_username'>Name</th>
-                <th data-field='field_email'>Surname</th>
-                <th data-field='field_email'>Email</th>
-                <th data-field='field_delete'>Delete</th>
-            </tr>
+        <tr>
+            <th data-field='field_id'>Id</th>
+            <th data-field='field_username'>Name</th>
+            <th data-field='field_email'>Surname</th>
+            <th data-field='field_email'>Email</th>
+            <th data-field='field_delete'>Delete</th>
+        </tr>
         </thead>
         <tbody>
-            {% for user in users %}
-                <tr>
-                    <th scope="row">{{user.id}}</th>
-                        <td>{{user.name}}</td>
-                        <td>{{user.surname}}</td>
-                        <td>{{user.email}}</td>
-                        <td><a href="{% url 'user_delete' user.id %}">Delete user</a></td>
-                </tr>
-            {% endfor %}
+        {% for user in users %}
+            <tr>
+                <th scope="row">{{ user.id }}</th>
+                <td>{{ user.name }}</td>
+                <td>{{ user.surname }}</td>
+                <td>{{ user.email }}</td>
+                <td><a href="{% url 'user_delete' user.id %}">Delete user</a></td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
-<div class="pagination">
+    <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
             <a href="?page=1">&laquo; first</a>
@@ -46,6 +66,6 @@ User list
             <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
-</div>
-</div>
+    </div>
+    </div>
 {% endblock %}

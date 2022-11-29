@@ -1,47 +1,66 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}
-Device list
+    Device list
 {% endblock %}
 
 {% block content %}
 
-<h2>Place list</h2>
+    <h2>Place list</h2>
+    <div class="row">
+        <div class=" col-md-4">
+            <div class="card card-body">
 
+                <form method="get">
+                    {{ filter.form.as_p }}
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+        <div class=" col-md-2">
+            <div class="card card-body">
+                <h5><i class="bi bi-rocket-takeoff-fill"></i> Total Places</h5>
+                <hr>
+                <h1>{{ page_obj.paginator.count }}</h1>
+            </div>
+        </div>
+    </div>
+    <br>
     <table class="table table-bordered table-responsive" data-sort-name="field_id" data-sort-order="asc">
         <thead>
-            <tr>
-                <th data-field='field_id'>Id</th>
-                <th data-field='field_name'>Name</th>
-                <th data-field='field_city'>City</th>
-                <th data-field='field_address'>Address</th>
-                <th data-field='field_cap'>Cap</th>
-                <th data-field='field_country'>Country</th>
-                <th data-field='field_plan'>Plan</th>
-                <th data-field='field_detail'>Detail</th>
-                <th data-field='field_delete'>Delete</th>
-            </tr>
+        <tr>
+            <th data-field='field_id'>Id</th>
+            <th data-field='field_name'>Name</th>
+            <th data-field='field_city'>City</th>
+            <th data-field='field_address'>Address</th>
+            <th data-field='field_cap'>Cap</th>
+            <th data-field='field_country'>Country</th>
+            <th data-field='field_plan'>Plan</th>
+            <th data-field='field_detail'>Detail</th>
+            <th data-field='field_delete'>Delete</th>
+        </tr>
         </thead>
         <tbody>
-            {% for place in places %}
-                <tr>
-                    <th scope="row">{{place.id}}</th>
-                        <td>{{place.name}}</td>
-                        <td>{{place.city}}</td>
-                        <td>{{place.address}}</td>
-                        <td>{{place.cap}}</td>
-                        <td>{{place.country}}</td>
-                        <td>{{place.plan}}</td>
-                        <td><a href="{% url 'place_detail' place.id %}">
-                            Detail</a></td>
-                        <td><a href="{% url 'place_delete' place.id %}">Delete place</a></td>
-                </tr>
-            {% endfor %}
+        {% for place in places %}
+            <tr>
+                <th scope="row">{{ place.id }}</th>
+                <td>{{ place.name }}</td>
+                <td>{{ place.city }}</td>
+                <td>{{ place.address }}</td>
+                <td>{{ place.cap }}</td>
+                <td>{{ place.country }}</td>
+                <td>{{ place.plan }}</td>
+                <td><a href="{% url 'place_detail' place.id %}">
+                    Detail</a></td>
+                <td><a href="{% url 'place_delete' place.id %}">Delete place</a></td>
+            </tr>
+        {% endfor %}
         </tbody>
 
     </table>
 
-        <div class="pagination">
+    <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
             <a href="?page=1">&laquo; first</a>
@@ -57,6 +76,6 @@ Device list
             <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
-</div>
-</div>
+    </div>
+    </div>
 {% endblock %}

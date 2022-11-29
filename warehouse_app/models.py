@@ -17,9 +17,9 @@ class Place(models.Model):
     def get_absolute_url(self):
         return reverse('place_detail', kwargs={"pk": self.pk})
 
-
     class Meta:
         ordering = ['id']
+
 
 class DeviceUser(models.Model):
     name = models.CharField(max_length=50, null=True)
@@ -46,8 +46,8 @@ class Device(models.Model):
     host_name = models.CharField(max_length=50, blank=True, null=True)
     make = models.CharField(max_length=50, blank=True, null=True)
     model = models.CharField(max_length=50, blank=True, null=True)
-    place = models.ForeignKey(Place, related_name="place", on_delete=models.CASCADE,null=True)
-    user = models.ForeignKey(DeviceUser, related_name="deviceuser", on_delete=models.CASCADE,null=True)
+    place = models.ForeignKey(Place, related_name="place", on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(DeviceUser, related_name="deviceuser", on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.name

@@ -6,7 +6,7 @@ from .models import Device, Place, DeviceUser
 
 
 def handle_uploaded_file(up_file):
-    #if up_file.name ==
+    # if up_file.name ==
     df = pd.read_excel(up_file, engine='openpyxl')
     cnt = 0
     for _, row in df.iterrows():
@@ -16,13 +16,13 @@ def handle_uploaded_file(up_file):
         UFFICIO = UFFICIO[:-1]
         SEDE = str(row['SEDE'])
         SEDE = SEDE[:-1]
-        #user = DeviceUser(
+        # user = DeviceUser(
         #    name=row['UTENTE'],
         #    surname='',
         #    email='',
         #    role=''
-        #)
-        #user.save()
+        # )
+        # user.save()
         user = DeviceUser.objects.get_or_create(
             name=UTENTE,
             surname='',
@@ -54,17 +54,17 @@ def handle_uploaded_file(up_file):
         DESC = str(row['DESC'])
         DESC = DESC[:-1]
 
-        #dt_scadenza = datetime.strptime(SCADENZA, '%Y-%m-%d')
-        #print(dt_scadenza)
-        #dt_rinnovo = datetime.strptime(RINNOVO, '%Y-%m-%d')
-        #print(dt_rinnovo)
+        # dt_scadenza = datetime.strptime(SCADENZA, '%Y-%m-%d')
+        # print(dt_scadenza)
+        # dt_rinnovo = datetime.strptime(RINNOVO, '%Y-%m-%d')
+        # print(dt_rinnovo)
         name = 'name' + str(cnt)
         device = Device.objects.get_or_create(
             name=[name],
             serial_number=MATRICOLA,
             contract=CONTRATTO,
-            #expiration_date=dt_scadenza,
-            #renewal_date=dt_rinnovo,
+            # expiration_date=dt_scadenza,
+            # renewal_date=dt_rinnovo,
             host_name=HOST_NAME,
             make=MARCA,
             model=TYPE,
@@ -73,15 +73,12 @@ def handle_uploaded_file(up_file):
         )
         cnt += 1
 
-
-        #place = Place(
+        # place = Place(
         #    name=row['UFFICIO'],
         #    city=row['SEDE'],
         #    address='',
         #    cap='',
         #    country='',
         #    plan=''
-        #)
-        #place.save()
-
-
+        # )
+        # place.save()

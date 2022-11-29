@@ -4,10 +4,10 @@
 {% load static %}
 
 {% block content %}
-  <form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-      {{ form | crispy }}
-    <br>
-    <button type="submit">Upload</button>
-  </form>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <br>
+        <button type="submit">Upload</button>
+    </form>
 {% endblock %}
