@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import generic
@@ -9,6 +10,7 @@ from .forms import UploadFileForm
 from . import utils
 from . import filters
 from django_filters.views import FilterView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # def index(request):
@@ -41,7 +43,9 @@ class DeviceListView(generic.ListView):
     # context_object_name = 'devices'
 
 
-class DeviceList(FilterView):
+class DeviceList(LoginRequiredMixin, FilterView):
+    # login_url = 'accounts/login'
+    # redirect_field_name = 'redirect_to'
     paginate_by = 10
 
     model = models.Device
@@ -55,7 +59,8 @@ class DeviceList(FilterView):
 #    context = {'device': device}
 #    return render(request, 'device_detail.html', context)
 
-class DeviceDetailView(generic.DetailView):
+class DeviceDetailView(LoginRequiredMixin, generic.DetailView):
+    # login_url = 'accounts/login'
     model = models.Device
     template_name = 'device_detail.html'
     context_object_name = 'device'
@@ -92,6 +97,7 @@ class DeviceDetailView(generic.DetailView):
 #        'place'
 #        ]
 
+@login_required(login_url='/accounts/login/')
 def create_device(request):
     if request.method == 'POST':
         instance_form = forms.DeviceForm(request.POST)
@@ -103,7 +109,8 @@ def create_device(request):
         return render(request, 'device_form.html', {'form': form})
 
 
-class DeviceDeleteView(DeleteView):
+class DeviceDeleteView(LoginRequiredMixin, DeleteView):
+    # login_url = 'accounts/login'
     model = models.Device
     template_name = 'device_delete.html'
     success_url = reverse_lazy('device_list')
@@ -116,7 +123,8 @@ class PlaceListView(generic.ListView):
     context_object_name = 'places'
 
 
-class PlaceList(FilterView):
+class PlaceList(LoginRequiredMixin, FilterView):
+    # login_url = 'accounts/login'
     paginate_by = 10
     model = models.Place
     context_object_name = 'places'
@@ -130,19 +138,22 @@ class PlaceList(FilterView):
 #    return render(request, 'place_list.html', context)
 
 
-class PlaceCreateView(generic.CreateView):
+class PlaceCreateView(LoginRequiredMixin, generic.CreateView):
+    # login_url = 'accounts/login'
     model = models.Place
     template_name = 'place_form.html'
     fields = fields = '__all__'
 
 
-class PlaceDeleteView(DeleteView):
+class PlaceDeleteView(LoginRequiredMixin, DeleteView):
+    # login_url = 'accounts/login'
     model = models.Place
     template_name = 'place_delete.html'
     success_url = reverse_lazy('place_list')
 
 
-class PlaceDetailView(generic.DetailView):
+class PlaceDetailView(LoginRequiredMixin, generic.DetailView):
+    # login_url = 'accounts/login'
     model = models.Place
     template_name = 'place_detail.html'
     context_object_name = 'place'
@@ -154,14 +165,16 @@ class PlaceDetailView(generic.DetailView):
 #    template_name = 'user_list.html'
 #    context_object_name = 'users'
 
-class UserListView(generic.ListView):
+class UserListView(LoginRequiredMixin, generic.ListView):
+    # login_url = 'accounts/login'
     paginate_by = 10
     model = models.DeviceUser
     template_name = 'user_list.html'
     context_object_name = 'users'
 
 
-class UserList(FilterView):
+class UserList(LoginRequiredMixin, FilterView):
+    # login_url = 'accounts/login'
     paginate_by = 10
     model = models.DeviceUser
     context_object_name = 'users'
@@ -169,7 +182,8 @@ class UserList(FilterView):
     filterset_class = filters.DeviceUserFilter
 
 
-class UserCreateView(generic.CreateView):
+class UserCreateView(LoginRequiredMixin, generic.CreateView):
+    # login_url = 'accounts/login'
     model = models.DeviceUser
     template_name = 'user_form.html'
     fields = '__all__'
@@ -177,12 +191,14 @@ class UserCreateView(generic.CreateView):
     success_url = reverse_lazy('user_list')
 
 
-class UserDeleteView(generic.DeleteView):
+class UserDeleteView(LoginRequiredMixin, generic.DeleteView):
+    # login_url = 'accounts/login'
     model = models.DeviceUser
     template_name = 'user_delete.html'
     success_url = reverse_lazy('user_list')
 
 
+@login_required(login_url='/accounts/login/')
 def file_upload(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)

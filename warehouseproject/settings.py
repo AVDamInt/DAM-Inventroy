@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 
+from django.urls import reverse_lazy
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,18 +27,18 @@ SECRET_KEY = 'django-insecure-fyzgjcbm-zpdx*o)9csvts$w4*d$f=5pj9c67pz3e@e7g2=x(+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "192.168.1.45", "192.168.20.48"]
+ALLOWED_HOSTS = ["localhost","10.90.4.66"]
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'warehouse_app.apps.WarehouseAppConfig',
+    'django.contrib.admin',
     'crispy_forms',
     'django_filters',
 ]
@@ -122,4 +124,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = '/'
+
+LOGIN_URL = '/accounts/login/'
+
+LOGIN_REDIRECT_URL = reverse_lazy('device_list')
