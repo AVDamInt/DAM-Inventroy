@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href=
-            "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"/>
+            "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"/>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -26,8 +26,8 @@
                         Device
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark">
-                        <li><a class="dropdown-item" href="{% url 'device_list' %}">List devices</a></li>
-                        <li><a class="dropdown-item" href="{% url 'device_register' %}">Add device</a></li>
+                        <li><a class="dropdown-item" href="{% url 'device_list' %}"><i class="bi bi-list"></i> List devices</a></li>
+                        <li><a class="dropdown-item" href="{% url 'device_register' %}"><i class="bi bi-plus-circle"></i> Add device</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -36,8 +36,8 @@
                         Place
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark">
-                        <li><a class="dropdown-item" href="{% url 'place_list' %}">List places</a></li>
-                        <li><a class="dropdown-item" href="{% url 'place_register' %}">Add place</a></li>
+                        <li><a class="dropdown-item" href="{% url 'place_list' %}"><i class="bi bi-list"></i> List places</a></li>
+                        <li><a class="dropdown-item" href="{% url 'place_register' %}"><i class="bi bi-plus-circle"></i> Add place</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -46,8 +46,8 @@
                         User
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark">
-                        <li><a class="dropdown-item" href="{% url 'user_list' %}">List users</a></li>
-                        <li><a class="dropdown-item" href="{% url 'user_register' %}">Add user</a></li>
+                        <li><a class="dropdown-item" href="{% url 'user_list' %}"><i class="bi bi-list"></i> List users</a></li>
+                        <li><a class="dropdown-item" href="{% url 'user_register' %}"><i class="bi bi-plus-circle"></i> Add user</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
