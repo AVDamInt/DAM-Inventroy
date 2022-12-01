@@ -16,8 +16,9 @@ class DeviceForm(forms.ModelForm):
         self.helper.form_action = 'device_register'
         self.helper.layout = Layout(
             Div(
-                Div('name', css_class='col-md-6'),
-                Div('serial_number', css_class='col-md-6'),
+                Div('user_history', css_class='col-md-4'),
+                Div('serial_number', css_class='col-md-4'),
+                Div('status', css_class='col-md-4'),
                 css_class='row',
             ),
             Div(

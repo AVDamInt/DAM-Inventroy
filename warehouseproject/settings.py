@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-fyzgjcbm-zpdx*o)9csvts$w4*d$f=5pj9c67pz3e@e7g2=x(+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost","10.90.4.66"]
+ALLOWED_HOSTS = ["localhost", "10.90.4.66"]
 
 # Application definition
 
@@ -78,12 +78,25 @@ WSGI_APPLICATION = 'warehouseproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# PostgreSQL
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'inventorydb',
+        'USER': 'admin',
+        'PASSWORD': 'Damiani2022!?',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
+
+# default db
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -106,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'it-it'
 
 TIME_ZONE = 'UTC'
 
@@ -125,6 +138,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-LOGIN_URL = '/accounts/login/'
+#LOGIN_URL = '/accounts/login/'
 
-LOGIN_REDIRECT_URL = reverse_lazy('device_list')
+#LOGIN_REDIRECT_URL = reverse_lazy('device_list')

@@ -38,12 +38,12 @@ class DeviceListView(generic.ListView):
     model = models.Device
     template_name = 'device_list.html'
     devices = models.Device.objects.all()
-    device_count = devices.count()
-    context = {'devices': devices, 'device_count': device_count}
+    #device_count = devices.count()
+    #context = {'devices': devices, 'device_count': device_count}
     # context_object_name = 'devices'
 
-
-class DeviceList(LoginRequiredMixin, FilterView):
+# LoginRequiredMixin
+class DeviceList(FilterView):
     # login_url = 'accounts/login'
     # redirect_field_name = 'redirect_to'
     paginate_by = 10
@@ -59,7 +59,8 @@ class DeviceList(LoginRequiredMixin, FilterView):
 #    context = {'device': device}
 #    return render(request, 'device_detail.html', context)
 
-class DeviceDetailView(LoginRequiredMixin, generic.DetailView):
+#LoginRequiredMixin,
+class DeviceDetailView(generic.DetailView):
     # login_url = 'accounts/login'
     model = models.Device
     template_name = 'device_detail.html'
@@ -97,7 +98,7 @@ class DeviceDetailView(LoginRequiredMixin, generic.DetailView):
 #        'place'
 #        ]
 
-@login_required(login_url='/accounts/login/')
+#@login_required(login_url='/accounts/login/')
 def create_device(request):
     if request.method == 'POST':
         instance_form = forms.DeviceForm(request.POST)
@@ -108,8 +109,8 @@ def create_device(request):
         form = forms.DeviceForm()
         return render(request, 'device_form.html', {'form': form})
 
-
-class DeviceDeleteView(LoginRequiredMixin, DeleteView):
+# LoginRequiredMixin,
+class DeviceDeleteView(DeleteView):
     # login_url = 'accounts/login'
     model = models.Device
     template_name = 'device_delete.html'
@@ -122,8 +123,8 @@ class PlaceListView(generic.ListView):
     template_name = 'place_list.html'
     context_object_name = 'places'
 
-
-class PlaceList(LoginRequiredMixin, FilterView):
+# LoginRequiredMixin,
+class PlaceList(FilterView):
     # login_url = 'accounts/login'
     paginate_by = 10
     model = models.Place
@@ -137,22 +138,22 @@ class PlaceList(LoginRequiredMixin, FilterView):
 #    context = {'places': places}
 #    return render(request, 'place_list.html', context)
 
-
-class PlaceCreateView(LoginRequiredMixin, generic.CreateView):
+# LoginRequiredMixin,
+class PlaceCreateView(generic.CreateView):
     # login_url = 'accounts/login'
     model = models.Place
     template_name = 'place_form.html'
     fields = fields = '__all__'
 
-
-class PlaceDeleteView(LoginRequiredMixin, DeleteView):
+# LoginRequiredMixin,
+class PlaceDeleteView(DeleteView):
     # login_url = 'accounts/login'
     model = models.Place
     template_name = 'place_delete.html'
     success_url = reverse_lazy('place_list')
 
-
-class PlaceDetailView(LoginRequiredMixin, generic.DetailView):
+# LoginRequiredMixin,
+class PlaceDetailView(generic.DetailView):
     # login_url = 'accounts/login'
     model = models.Place
     template_name = 'place_detail.html'
@@ -165,15 +166,16 @@ class PlaceDetailView(LoginRequiredMixin, generic.DetailView):
 #    template_name = 'user_list.html'
 #    context_object_name = 'users'
 
-class UserListView(LoginRequiredMixin, generic.ListView):
+#LoginRequiredMixin,
+class UserListView(generic.ListView):
     # login_url = 'accounts/login'
     paginate_by = 10
     model = models.DeviceUser
     template_name = 'user_list.html'
     context_object_name = 'users'
 
-
-class UserList(LoginRequiredMixin, FilterView):
+#LoginRequiredMixin,
+class UserList(FilterView):
     # login_url = 'accounts/login'
     paginate_by = 10
     model = models.DeviceUser
@@ -181,8 +183,8 @@ class UserList(LoginRequiredMixin, FilterView):
     template_name = 'user_list.html'
     filterset_class = filters.DeviceUserFilter
 
-
-class UserCreateView(LoginRequiredMixin, generic.CreateView):
+# LoginRequiredMixin,
+class UserCreateView(generic.CreateView):
     # login_url = 'accounts/login'
     model = models.DeviceUser
     template_name = 'user_form.html'

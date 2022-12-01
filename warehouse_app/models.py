@@ -38,7 +38,31 @@ class DeviceUser(models.Model):
 
 
 class Device(models.Model):
-    name = models.CharField(max_length=50, blank=True, null=True)
+    EXABYTE = 'EB'
+    PETABYTE = 'PB'
+    TERABYTE = 'TB'
+    GIGABYTE = 'GB'
+    MEGABYTE = 'MB'
+    KILOBYTE = 'kB'
+    BYTE = 'B'
+    BIT = 'bit'
+    UNIT_OF_MEASURE_CHOICES = [
+        (EXABYTE, 'Exabyte'),
+        (PETABYTE, 'Petabyte'),
+        (TERABYTE, 'Terabyte'),
+        (GIGABYTE, 'Gigabyte'),
+        (MEGABYTE, 'Megabyte'),
+        (KILOBYTE, 'Kilobyte'),
+        (BIT, 'Bit')
+    ]
+
+    ATTIVO = 'Active'
+    STORICO = 'Historic'
+    IS_ACTIVE_CHOICES = [
+        (ATTIVO, 'Active'),
+        (STORICO, 'Historic')
+    ]
+
     serial_number = models.CharField(max_length=50, null=True)
     contract = models.CharField(max_length=50, blank=True, null=True)
     expiration_date = models.DateField(blank=True, null=True)
@@ -46,9 +70,15 @@ class Device(models.Model):
     host_name = models.CharField(max_length=50, blank=True, null=True)
     make = models.CharField(max_length=50, blank=True, null=True)
     model = models.CharField(max_length=50, blank=True, null=True)
+    memory = models.IntegerField(blank=True, null=True)
+    memory_unit = models.CharField(max_length=3, choices=UNIT_OF_MEASURE_CHOICES, default=GIGABYTE, blank=True, null=True)
+    hard_disk = models.IntegerField(blank=True, null=True)
+    hard_disk_unit = models.CharField(max_length=3, choices=UNIT_OF_MEASURE_CHOICES, default=GIGABYTE, blank=True, null=True)
+    cpu = models.CharField(max_length=50, blank=True, null=True)
     place = models.ForeignKey(Place, related_name="place", on_delete=models.CASCADE, null=True)
     user = models.ForeignKey(DeviceUser, related_name="deviceuser", on_delete=models.CASCADE, null=True)
-
+    user_history = models.ManyToManyField(DeviceUser)
+    status = models.CharField(max_length=20, choices=IS_ACTIVE_CHOICES, default=ATTIVO, blank=True, null=True)
     def __str__(self):
         return self.name
 
