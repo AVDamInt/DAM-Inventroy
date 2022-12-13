@@ -11,6 +11,7 @@ from . import utils
 from . import filters
 from django_filters.views import FilterView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import UpdateView
 
 
 # def index(request):
@@ -38,9 +39,10 @@ class DeviceListView(generic.ListView):
     model = models.Device
     template_name = 'device_list.html'
     devices = models.Device.objects.all()
-    #device_count = devices.count()
-    #context = {'devices': devices, 'device_count': device_count}
+    # device_count = devices.count()
+    # context = {'devices': devices, 'device_count': device_count}
     # context_object_name = 'devices'
+
 
 # LoginRequiredMixin
 class DeviceList(FilterView):
@@ -59,7 +61,7 @@ class DeviceList(FilterView):
 #    context = {'device': device}
 #    return render(request, 'device_detail.html', context)
 
-#LoginRequiredMixin,
+# LoginRequiredMixin,
 class DeviceDetailView(generic.DetailView):
     # login_url = 'accounts/login'
     model = models.Device
@@ -98,7 +100,7 @@ class DeviceDetailView(generic.DetailView):
 #        'place'
 #        ]
 
-#@login_required(login_url='/accounts/login/')
+# @login_required(login_url='/accounts/login/')
 def create_device(request):
     if request.method == 'POST':
         instance_form = forms.DeviceForm(request.POST)
@@ -109,6 +111,7 @@ def create_device(request):
         form = forms.DeviceForm()
         return render(request, 'device_form.html', {'form': form})
 
+
 # LoginRequiredMixin,
 class DeviceDeleteView(DeleteView):
     # login_url = 'accounts/login'
@@ -117,11 +120,44 @@ class DeviceDeleteView(DeleteView):
     success_url = reverse_lazy('device_list')
 
 
+def delete_device(request, id):
+    context = {}
+
+    obj = get_object_or_404(models.Device, id=id)
+
+    if request.method == 'POST':
+        obj.status = models.Device.STORICO
+        obj.save()
+        return HttpResponseRedirect('/')
+    return render(request, 'device_delete.html', context)
+
+
+#def updatedevice(request, pk):
+#    device = get_object_or_404(models.Device, id=pk)
+#    form = forms.DeviceForm(instance=device)
+#    context = {'device': device}
+#
+#    if request.method == 'POST':
+#        form = forms.DeviceForm(request.POST, instance=device)
+#        if form.is_valid():
+#            form.save()
+#            return HttpResponseRedirect('/')
+#    return render(request, 'device_form.html')
+
+
+class DeviceUpdateView(generic.UpdateView):
+    template_name = "device_form.html"
+    model = models.Device
+    form_class = forms.DeviceForm
+
+
+
 class PlaceListView(generic.ListView):
     paginate_by = 10
     model = models.Place
     template_name = 'place_list.html'
     context_object_name = 'places'
+
 
 # LoginRequiredMixin,
 class PlaceList(FilterView):
@@ -145,12 +181,14 @@ class PlaceCreateView(generic.CreateView):
     template_name = 'place_form.html'
     fields = fields = '__all__'
 
+
 # LoginRequiredMixin,
 class PlaceDeleteView(DeleteView):
     # login_url = 'accounts/login'
     model = models.Place
     template_name = 'place_delete.html'
     success_url = reverse_lazy('place_list')
+
 
 # LoginRequiredMixin,
 class PlaceDetailView(generic.DetailView):
@@ -166,7 +204,7 @@ class PlaceDetailView(generic.DetailView):
 #    template_name = 'user_list.html'
 #    context_object_name = 'users'
 
-#LoginRequiredMixin,
+# LoginRequiredMixin,
 class UserListView(generic.ListView):
     # login_url = 'accounts/login'
     paginate_by = 10
@@ -174,7 +212,8 @@ class UserListView(generic.ListView):
     template_name = 'user_list.html'
     context_object_name = 'users'
 
-#LoginRequiredMixin,
+
+# LoginRequiredMixin,
 class UserList(FilterView):
     # login_url = 'accounts/login'
     paginate_by = 10
@@ -182,6 +221,7 @@ class UserList(FilterView):
     context_object_name = 'users'
     template_name = 'user_list.html'
     filterset_class = filters.DeviceUserFilter
+
 
 # LoginRequiredMixin,
 class UserCreateView(generic.CreateView):

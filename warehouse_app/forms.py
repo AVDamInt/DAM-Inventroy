@@ -1,5 +1,5 @@
-from django import forms
 from crispy_forms.helper import FormHelper
+from django import forms
 from crispy_forms.layout import Submit, Row, Column, Layout, Div, Field, HTML
 from .models import Device
 
@@ -13,7 +13,7 @@ class DeviceForm(forms.ModelForm):
         super(DeviceForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_method = 'POST'
-        self.helper.form_action = 'device_register'
+        #self.helper.form_action = 'device_register'
         self.helper.layout = Layout(
             Div(
                 Div('user_history', css_class='col-md-4'),

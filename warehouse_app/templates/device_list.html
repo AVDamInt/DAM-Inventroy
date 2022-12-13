@@ -45,11 +45,11 @@
             <th class="text-nowrap" data-field='field_user'>User</th>
             <th class="text-nowrap" data-field='field_detail'>Detail</th>
             <th class="text-nowrap" data-field='field_delete'>Delete</th>
+            <th class="text-nowrap" data-field='field-edit'>Edit</th>
         </tr>
         </thead>
         <tbody>
         {% for device in devices %}
-            {% if device.status == 'Active' %}
             <tr>
                 <th scope="row">{{ device.id }}</th>
                 <td>
@@ -70,8 +70,8 @@
                 <td><a href="{% url 'device_detail' device.id %}">
                     Detail</a></td>
                 <td><a href="{% url 'device_delete' device.id %}">Delete device</a></td>
+                <td><a href="{% url 'update_device' device.id %}">Edit device</a></td>
             </tr>
-            {% endif %}
         {% endfor %}
         </tbody>
     </table>

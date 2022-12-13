@@ -23,12 +23,18 @@ def handle_uploaded_file(up_file):
         #    role=''
         # )
         # user.save()
-        user = DeviceUser.objects.get_or_create(
+        user, created = DeviceUser.objects.get_or_create(
             name=UTENTE,
             surname='',
             email='',
             role='')
-        place = Place.objects.get_or_create(
+
+        if created:
+            print(f"User created with name {UTENTE}")
+        else:
+            print(f"User already in db")
+
+        place, created = Place.objects.get_or_create(
             name=UFFICIO,
             city=SEDE,
             address='',
@@ -36,6 +42,10 @@ def handle_uploaded_file(up_file):
             country='',
             plan=''
         )
+        if created:
+            print(f"Place created with name {UFFICIO} and city {SEDE}")
+        else:
+            print(f"Place already in db")
 
         CONTRATTO = str(row['CONTR'])
         CONTRATTO = CONTRATTO[:-1]
@@ -48,29 +58,33 @@ def handle_uploaded_file(up_file):
         MARCA = str(row['MARCA'])
         MARCA = MARCA[:-1]
         TYPE = str(row['TYPE'])
-        TYPE = TYPE[:-1]
+        YPE = TYPE[:-1]
         MATRICOLA = str(row['MATRICOLA'])
         MATRICOLA = MATRICOLA[:-1]
         DESC = str(row['DESC'])
         DESC = DESC[:-1]
 
-        # dt_scadenza = datetime.strptime(SCADENZA, '%Y-%m-%d')
-        # print(dt_scadenza)
-        # dt_rinnovo = datetime.strptime(RINNOVO, '%Y-%m-%d')
-        # print(dt_rinnovo)
-        name = 'name' + str(cnt)
-        device = Device.objects.get_or_create(
-            name=[name],
+        #dt_scadenza = datetime.strptime(SCADENZA, '%Y-%m-%d')
+        #print(dt_scadenza)
+        #dt_rinnovo = datetime.strptime(RINNOVO, '%Y-%m-%d')
+        #print(dt_rinnovo)
+        device, created = Device.objects.get_or_create(
             serial_number=MATRICOLA,
             contract=CONTRATTO,
-            # expiration_date=dt_scadenza,
-            # renewal_date=dt_rinnovo,
+            #expiration_date=dt_scadenza,
+            #renewal_date=dt_rinnovo,
             host_name=HOST_NAME,
             make=MARCA,
             model=TYPE,
-            place=place[0],
-            user=user[0]
+            place=place,
+            user=user
         )
+
+        if created:
+            print(f"Device created with data {MATRICOLA} - {CONTRATTO} - {HOST_NAME} - {MARCA} - {TYPE}")
+        else:
+            print(f"Device already in db")
+
         cnt += 1
 
         # place = Place(
