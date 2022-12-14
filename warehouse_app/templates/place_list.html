@@ -40,6 +40,7 @@ Total Places</h5>
             <th data-field='field_plan'>Plan</th>
             <th data-field='field_detail'>Detail</th>
             <th data-field='field_delete'>Delete</th>
+            <th data-field='field_delete'>Edit</th>
         </tr>
         </thead>
         <tbody>
@@ -55,6 +56,7 @@ Total Places</h5>
                 <td><a href="{% url 'place_detail' place.id %}">
                     Detail</a></td>
                 <td><a href="{% url 'place_delete' place.id %}">Delete place</a></td>
+             <td><a href="{% url 'update_place' place.id %}">Edit place</a></td>
             </tr>
         {% endfor %}
         </tbody>

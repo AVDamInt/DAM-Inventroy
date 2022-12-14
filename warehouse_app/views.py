@@ -112,6 +112,17 @@ def create_device(request):
         return render(request, 'device_form.html', {'form': form})
 
 
+def create_place(request):
+    if request.method == 'POST':
+        instance_form = forms.PlaceForm(request.POST)
+        if instance_form.is_valid():
+            instance_form.save()
+            return HttpResponseRedirect(reverse_lazy('place_list'))
+    else:
+        form = forms.PlaceForm()
+        return render(request, 'place_form.html', {'form': form})
+
+
 # LoginRequiredMixin,
 class DeviceDeleteView(DeleteView):
     # login_url = 'accounts/login'
@@ -132,7 +143,7 @@ def delete_device(request, id):
     return render(request, 'device_delete.html', context)
 
 
-#def updatedevice(request, pk):
+# def updatedevice(request, pk):
 #    device = get_object_or_404(models.Device, id=pk)
 #    form = forms.DeviceForm(instance=device)
 #    context = {'device': device}
@@ -149,7 +160,6 @@ class DeviceUpdateView(generic.UpdateView):
     template_name = "device_form.html"
     model = models.Device
     form_class = forms.DeviceForm
-
 
 
 class PlaceListView(generic.ListView):
@@ -189,6 +199,11 @@ class PlaceDeleteView(DeleteView):
     template_name = 'place_delete.html'
     success_url = reverse_lazy('place_list')
 
+
+class PlaceUpdateView(generic.UpdateView):
+    template_name = "place_form.html"
+    model = models.Place
+    form_class = forms.PlaceForm
 
 # LoginRequiredMixin,
 class PlaceDetailView(generic.DetailView):

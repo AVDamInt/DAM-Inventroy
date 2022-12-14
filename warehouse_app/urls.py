@@ -10,8 +10,12 @@ urlpatterns = [
     #path('device/delete/<int:pk>', views.DeviceDeleteView.as_view(), name='device_delete'),
     path('<id>/delete', views.delete_device, name='device_delete'),
     path('place/<int:pk>', views.PlaceDetailView.as_view(), name='place_detail'),
-    path('place/register', views.PlaceCreateView.as_view(), name='place_register'),
+    #path('place/register', views.PlaceCreateView.as_view(), name='place_register'),
+    path('place/register', views.create_place, name='place_register'),
+    path('place/edit/<int:pk>', views.PlaceUpdateView.as_view(), name='update_place'),
+
     path('<int:pk>/place', views.PlaceDeleteView.as_view(), name='place_delete'),
+    #path('place/edit/<int:pk>', views.PlaceUpdateView.as_view(), name='update_place'),
     # path('places', views.PlaceListView.as_view(), name='place_list'),
     path('places', views.PlaceList.as_view(), name='place_list'),
     # path('users', views.UserListView.as_view(), name='user_list'),
