@@ -14,16 +14,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import UpdateView
 
 
-# def index(request):
-#    return HttpResponse("Warehouse!")
-
-# def device_list(request):
-#    paginate_by = 10
-#    devices = models.Device.objects.all()
-#    context = {'devices': devices}
-#    return render(request, 'device_list.html', context)
-
-
 def device_list(request):
     devices = models.Device.objects.all()
 
@@ -56,11 +46,6 @@ class DeviceList(FilterView):
     filterset_class = filters.DeviceFilter
 
 
-# def device_detail(request, pk):
-#    device = get_object_or_404(models.Device, pk=pk)
-#    context = {'device': device}
-#    return render(request, 'device_detail.html', context)
-
 # LoginRequiredMixin,
 class DeviceDetailView(generic.DetailView):
     # login_url = 'accounts/login'
@@ -68,37 +53,6 @@ class DeviceDetailView(generic.DetailView):
     template_name = 'device_detail.html'
     context_object_name = 'device'
 
-
-# class DeviceCreateView(generic.CreateView):
-#   model = models.Device
-#   template_name = 'device_form.html'
-#   fields = [
-#       'name',
-#       'serial_number',
-#       'contract',
-#       'expiration_date',
-#       'renewal_date',
-#       'host_name',
-#       'make',
-#       'model',
-#       'place'
-#       ]
-
-# class DeviceCreateView(generic.CreateView):
-#    model = models.Device
-#    form_class = DeviceForm
-#    template_name = 'device_form.html'
-#    fields = [
-#        'name',
-#        'serial_number',
-#        'contract',
-#        'expiration_date',
-#        'renewal_date',
-#        'host_name',
-#        'make',
-#        'model',
-#        'place'
-#        ]
 
 # @login_required(login_url='/accounts/login/')
 def create_device(request):
@@ -110,17 +64,6 @@ def create_device(request):
     else:
         form = forms.DeviceForm()
         return render(request, 'device_form.html', {'form': form})
-
-
-def create_place(request):
-    if request.method == 'POST':
-        instance_form = forms.PlaceForm(request.POST)
-        if instance_form.is_valid():
-            instance_form.save()
-            return HttpResponseRedirect(reverse_lazy('place_list'))
-    else:
-        form = forms.PlaceForm()
-        return render(request, 'place_form.html', {'form': form})
 
 
 # LoginRequiredMixin,
@@ -141,19 +84,6 @@ def delete_device(request, id):
         obj.save()
         return HttpResponseRedirect('/')
     return render(request, 'device_delete.html', context)
-
-
-# def updatedevice(request, pk):
-#    device = get_object_or_404(models.Device, id=pk)
-#    form = forms.DeviceForm(instance=device)
-#    context = {'device': device}
-#
-#    if request.method == 'POST':
-#        form = forms.DeviceForm(request.POST, instance=device)
-#        if form.is_valid():
-#            form.save()
-#            return HttpResponseRedirect('/')
-#    return render(request, 'device_form.html')
 
 
 class DeviceUpdateView(generic.UpdateView):
@@ -179,17 +109,23 @@ class PlaceList(FilterView):
     filterset_class = filters.PlaceFilter
 
 
-# def place_list(request):
-#    places = models.Place.objects.all()
-#    context = {'places': places}
-#    return render(request, 'place_list.html', context)
-
 # LoginRequiredMixin,
 class PlaceCreateView(generic.CreateView):
     # login_url = 'accounts/login'
     model = models.Place
     template_name = 'place_form.html'
     fields = fields = '__all__'
+
+
+def create_place(request):
+    if request.method == 'POST':
+        instance_form = forms.PlaceForm(request.POST)
+        if instance_form.is_valid():
+            instance_form.save()
+            return HttpResponseRedirect(reverse_lazy('place_list'))
+    else:
+        form = forms.PlaceForm()
+        return render(request, 'place_form.html', {'form': form})
 
 
 # LoginRequiredMixin,
@@ -205,6 +141,7 @@ class PlaceUpdateView(generic.UpdateView):
     model = models.Place
     form_class = forms.PlaceForm
 
+
 # LoginRequiredMixin,
 class PlaceDetailView(generic.DetailView):
     # login_url = 'accounts/login'
@@ -212,12 +149,6 @@ class PlaceDetailView(generic.DetailView):
     template_name = 'place_detail.html'
     context_object_name = 'place'
 
-
-# class UserListView(generic.ListView):
-#    paginate_by = 10
-#    model = models.DeviceUser
-#    template_name = 'user_list.html'
-#    context_object_name = 'users'
 
 # LoginRequiredMixin,
 class UserListView(generic.ListView):
