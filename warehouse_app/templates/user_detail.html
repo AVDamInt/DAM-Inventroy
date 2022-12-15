@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ deviceuser.name }}
+{% endblock %}
+
+{% block content %}
+    <div>
+        <a href="{% url 'user_delete' deviceuser.id %}">Delete user</a>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>Name: {{ deviceuser.name }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>Surname: {{ deviceuser.surname }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>Email: {{ deviceuser.email }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>Role: {{ deviceuser.role }}</p>
+        </div>
+    </div>
+{% endblock %}

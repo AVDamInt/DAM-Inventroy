@@ -36,7 +36,9 @@
             <th data-field='field_username'>Name</th>
             <th data-field='field_email'>Surname</th>
             <th data-field='field_email'>Email</th>
+            <th data-field='field_delete'>Detail</th>
             <th data-field='field_delete'>Delete</th>
+            <th data-field='field_edit'>Edit</th>
         </tr>
         </thead>
         <tbody>
@@ -46,7 +48,9 @@
                 <td>{{ user.name }}</td>
                 <td>{{ user.surname }}</td>
                 <td>{{ user.email }}</td>
+                <td><a href="{% url 'user_detail' user.id %}">Detail user</a></td>
                 <td><a href="{% url 'user_delete' user.id %}">Delete user</a></td>
+                <td><a href="{% url 'update_user' user.id %}">Edit user</a></td>
             </tr>
         {% endfor %}
         </tbody>

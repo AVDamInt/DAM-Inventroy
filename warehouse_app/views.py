@@ -199,3 +199,16 @@ def file_upload(request):
     else:
         form = UploadFileForm()
         return render(request, 'file_upload.html', {'form': form})
+
+
+class DeviceUserDetailView(generic.DetailView):
+    # login_url = 'accounts/login'
+    model = models.DeviceUser
+    template_name = 'user_detail.html'
+    context_object_name = 'deviceuser'
+
+
+class DeviceUserUpdateView(generic.UpdateView):
+    template_name = "user_form.html"
+    model = models.DeviceUser
+    form_class = forms.DeviceUserForm

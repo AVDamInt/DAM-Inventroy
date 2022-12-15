@@ -1,7 +1,7 @@
 from crispy_forms.helper import FormHelper
 from django import forms
 from crispy_forms.layout import Submit, Row, Column, Layout, Div, Field, HTML
-from .models import Device, Place
+from .models import Device, Place, DeviceUser
 
 
 class DateInput(forms.DateInput):
@@ -24,7 +24,7 @@ class DeviceForm(forms.ModelForm):
             Div(
                 Div('contract', css_class='col-md-4'),
                 Div('expiration_date', type='date', css_class='col-md-4'),
-                Div('renewal_date', css_class='col-md-4'),
+                Div('renewal_date', type='date', css_class='col-md-4'),
                 css_class='row',
             ),
             Div(
@@ -63,17 +63,29 @@ class PlaceForm(forms.ModelForm):
         self.helper.form_method = 'POST'
         # self.helper.form_action = 'device_register'
         self.helper.layout = Layout(
-            Div(
-                Div('name', css_class='col-md-4'),
-                Div('city', css_class='col-md-4'),
-                Div('address', css_class='col-md-4'),
-                css_class='row',
+            Row(
+                Column('name', css_class='col-md-4'),
+                css_class='form-row',
             ),
-            Div(
-                Div('cap', css_class='col-md-4'),
-                Div('country', type='date', css_class='col-md-4'),
-                Div('plan', css_class='col-md-4'),
-                css_class='row',
+            Row(
+                Column('country', css_class='col-md-4'),
+                css_class='form-row',
+            ),
+            Row(
+                Column('city', css_class='col-md-4'),
+                css_class='form-row',
+            ),
+            Row(
+                Column('address', css_class='col-md-4'),
+                css_class='form-row',
+            ),
+            Row(
+                Column('cap', css_class='col-md-4'),
+                css_class='form-row',
+            ),
+            Row(
+                Column('plan', css_class='col-md-4'),
+                css_class='form-row',
             ),
             HTML("""
                     <br>
@@ -87,6 +99,44 @@ class PlaceForm(forms.ModelForm):
 
     class Meta:
         model = Place
+        fields = ('__all__')
+
+
+class DeviceUserForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(DeviceUserForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'POST'
+        # self.helper.form_action = 'device_register'
+        self.helper.layout = Layout(
+            Row(
+                Column('name', css_class='col-md-4'),
+                css_class='form-row',
+            ),
+            Row(
+                Column('surname', css_class='col-sm-4 col-sm-offset-4'),
+                css_class='form-row',
+            ),
+            Row(
+                Column('email', css_class='col-md-4'),
+                css_class='form-row',
+            ),
+            Row(
+                Column('role', css_class='col-md-4'),
+                css_class='form-row',
+            ),
+            HTML("""
+                    <br>
+                """),
+            Div(
+                Submit('submit', 'Submit'),
+            )
+        )
+
+        # self.helper.add_input(Submit('submit', 'Submit'))
+
+    class Meta:
+        model = DeviceUser
         fields = ('__all__')
 
 
