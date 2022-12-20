@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'daminventory'
           slot-name: 'staging'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A3DBE78735604B588D07AEDB53B37047 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_042CD086D25B473BA9648F28DD6389A2 }}
