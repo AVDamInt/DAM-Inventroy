@@ -77,7 +77,7 @@ class Device(models.Model):
     cpu = models.CharField(max_length=50, blank=True, null=True)
     place = models.ForeignKey(Place, related_name="place", on_delete=models.CASCADE, null=True)
     user = models.ForeignKey(DeviceUser, related_name="deviceuser", on_delete=models.CASCADE, null=True)
-    user_history = models.ManyToManyField(DeviceUser)
+    user_history = models.ManyToManyField(DeviceUser, blank=True, null=True)
     status = models.IntegerField(choices=IS_ACTIVE_CHOICES, default=0, blank=True, null=True)
 
     def __str__(self):

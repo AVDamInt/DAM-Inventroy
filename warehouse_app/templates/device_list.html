@@ -34,6 +34,7 @@
         <tr>
             <th class="text-nowrap" data-field='field_id'>Id</th>
             <th class="text-nowrap" data-field='field_name'>User History</th>
+            <th class="text-nowrap" data-field='field_status'>Status</th>
             <th class="text-nowrap" data-field='field_serial_number'>Serial Number</th>
             <th class="text-nowrap" data-field='field_contract'>Contract</th>
             <th class="text-nowrap" data-field='field_expiration_date'>Expiration date</th>
@@ -50,6 +51,7 @@
         </thead>
         <tbody>
         {% for device in devices %}
+            {% if device.status == 0 %}
             <tr>
                 <th scope="row">{{ device.id }}</th>
                 <td>
@@ -57,6 +59,7 @@
                         {{ usr }}<br/>
                     {% endfor %}
                 </td>
+                <td>{{ device.status }}</td>
                 <td>{{ device.serial_number }}</td>
                 <td>{{ device.contract }}</td>
                 <td>{{ device.expiration_date }}</td>
@@ -72,6 +75,7 @@
                 <td><a href="{% url 'device_delete' device.id %}">Delete device</a></td>
                 <td><a href="{% url 'update_device' device.id %}">Edit device</a></td>
             </tr>
+            {% endif %}
         {% endfor %}
         </tbody>
     </table>
