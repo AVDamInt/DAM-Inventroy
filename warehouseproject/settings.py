@@ -82,10 +82,10 @@ WSGI_APPLICATION = 'warehouseproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'inventorydb',
-        'USER': 'admin',
-        'PASSWORD': 'Damiani2022!?',
-        'HOST': 'localhost',
+        'NAME': 'postgres',
+        'USER': 'djarphjobn',
+        'PASSWORD': '6GSKS10AH47V835X$',
+        'HOST': 'daminventory-server',
         'PORT': '5432',
     }
 }
