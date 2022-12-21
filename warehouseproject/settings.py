@@ -101,7 +101,7 @@ DATABASES = {
 #    }
 #}
 
-# default db
+# default sqlite db
 #DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.sqlite3',
