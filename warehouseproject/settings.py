@@ -85,10 +85,21 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'djarphjobn',
         'PASSWORD': '6GSKS10AH47V835X$',
-        'HOST': 'daminventory-server',
+        'HOST': 'daminventory-server.postgres.database.azure.com',
         'PORT': '5432',
     }
 }
+
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'inventorydb',
+#        'USER': 'admin',
+#        'PASSWORD': 'Damiani2022!?',
+#        'HOST': 'localhost',
+#        'PORT': '5432',
+#    }
+#}
 
 # default db
 #DATABASES = {
