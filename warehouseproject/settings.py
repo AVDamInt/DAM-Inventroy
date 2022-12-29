@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-fyzgjcbm-zpdx*o)9csvts$w4*d$f=5pj9c67pz3e@e7g2=x(+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["daminventory-staging.azurewebsites.net"]
+ALLOWED_HOSTS = ["daminventory-staging.azurewebsites.net", "localhost"]
 
 # Application definition
 
@@ -79,13 +79,25 @@ WSGI_APPLICATION = 'warehouseproject.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 # PostgreSQL
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'postgres',
+#        'USER': 'djarphjobn',
+#        'PASSWORD': '6GSKS10AH47V835X$',
+#        'HOST': 'daminventory-server.postgres.database.azure.com',
+#        'PORT': '5432',
+#    }
+#}
+
+# PostgreSQL
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'postgres',
-        'USER': 'djarphjobn',
-        'PASSWORD': '6GSKS10AH47V835X$',
-        'HOST': 'daminventory-server.postgres.database.azure.com',
+        'USER': 'devadmin',
+        'PASSWORD': 'Damiani2022!',
+        'HOST': 'daminventory-server-dev.postgres.database.azure.com',
         'PORT': '5432',
     }
 }
