@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-fyzgjcbm-zpdx*o)9csvts$w4*d$f=5pj9c67pz3e@e7g2=x(+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["daminventory-staging.azurewebsites.net"]
+ALLOWED_HOSTS = ["daminventory.azurewebsites.net"]
 
 # Application definition
 
