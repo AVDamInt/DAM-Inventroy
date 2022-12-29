@@ -79,13 +79,14 @@ WSGI_APPLICATION = 'warehouseproject.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 # PostgreSQL
+# PostgreSQL
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'postgres',
-        'USER': 'djarphjobn',
-        'PASSWORD': '6GSKS10AH47V835X$',
-        'HOST': 'daminventory-server.postgres.database.azure.com',
+        'USER': 'devadmin',
+        'PASSWORD': 'Damiani2022!',
+        'HOST': 'daminventory-server-dev.postgres.database.azure.com',
         'PORT': '5432',
     }
 }
