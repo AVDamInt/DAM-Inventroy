@@ -29,6 +29,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["daminventory-staging.azurewebsites.net"]
 
+CSRF_TRUSTED_ORIGINS = [
+    'daminventory-staging.azurewebsites.net'
+]
+
 # Application definition
 
 INSTALLED_APPS = [
