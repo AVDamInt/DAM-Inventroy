@@ -84,27 +84,27 @@ WSGI_APPLICATION = 'warehouseproject.wsgi.application'
 
 
 # PostgreSQL
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#        'NAME': 'postgres',
-#        'USER': 'devadmin',
-#        'PASSWORD': 'Damiani2022!',
-#        'HOST': 'daminventory-server-dev.postgres.database.azure.com',
-#        'PORT': '5432',
-#    }
-#}
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'inventorydb',
-        'USER': 'admin',
-        'PASSWORD': 'Damiani2022!?',
-        'HOST': 'localhost',
+        'NAME': 'postgres',
+        'USER': 'devadmin',
+        'PASSWORD': 'Damiani2022!',
+        'HOST': 'daminventory-server-dev.postgres.database.azure.com',
         'PORT': '5432',
     }
 }
+
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'inventorydb',
+#        'USER': 'admin',
+#        'PASSWORD': 'Damiani2022!?',
+#        'HOST': 'localhost',
+#        'PORT': '5432',
+#    }
+#}
 
 # default sqlite db
 #DATABASES = {
