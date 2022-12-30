@@ -35,10 +35,6 @@ class DeviceList(LoginRequiredMixin, FilterView):
     template_name = 'device_list.html'
     filterset_class = filters.DeviceFilter
 
-    def urencode_filter(self):
-        qd = self.request.GET.copy()
-        qd.pop(self.page_kwarg, None)
-        return qd.urencode()
 
     def get_context_data(self, **kwargs):
         context = super(DeviceList, self).get_context_data(**kwargs)
