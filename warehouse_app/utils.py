@@ -63,6 +63,15 @@ def handle_uploaded_file(up_file):
         MATRICOLA = MATRICOLA[:-1]
         DESC = str(row['DESC'])
         DESC = DESC[:-1]
+        DISPONIBILE = str(row['DISPONIBILE'])
+        DISPONIBILE = DISPONIBILE[:-1]
+        real_disp = 0
+        if DISPONIBILE == 'DISPONIBILE':
+            real_disp = 2
+        elif DISPONIBILE == 'na' or DISPONIBILE == 'nan':
+            real_disp = 1
+        else:
+            real_disp = 0
 
         #dt_scadenza = datetime.strptime(SCADENZA, '%Y-%m-%d')
         #print(dt_scadenza)
@@ -77,7 +86,8 @@ def handle_uploaded_file(up_file):
             make=MARCA,
             model=TYPE,
             place=place,
-            user=user
+            user=user,
+            status=real_disp
         )
 
         if created:

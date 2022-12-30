@@ -19,14 +19,25 @@
         </div>
         <div class=" col-md-2">
             <div class="card card-body">
-                <h5><i class="bi bi-rocket-takeoff-fill"></i> Total Devices</h5>
+                <h5><i class="bi bi-play-fill"></i> Total active Devices</h5>
                 <hr>
-
-
-                <h1>{{ page_obj.paginator.count }}</h1>
+                <h1>{{ active_devices }}</h1>
             </div>
         </div>
-
+        <div class=" col-md-2">
+            <div class="card card-body">
+                <h5><i class="bi bi-pause-fill"></i> Total available devices</h5>
+                <hr>
+                <h1>{{ available_devices }}</h1>
+            </div>
+        </div>
+        <div class=" col-md-2">
+            <div class="card card-body">
+                <h5><i class="bi bi-stop-fill"></i> Total historic devices</h5>
+                <hr>
+                <h1>{{ hist_devices }}</h1>
+            </div>
+        </div>
     </div>
     <br>
     <table class="table table-bordered" data-sort-name="field_id" data-sort-order="asc">
@@ -51,7 +62,6 @@
         </thead>
         <tbody>
         {% for device in devices %}
-            {% if device.status == 0 %}
             <tr>
                 <th scope="row">{{ device.id }}</th>
                 <td>
@@ -75,7 +85,6 @@
                 <td><a href="{% url 'device_delete' device.id %}">Delete device</a></td>
                 <td><a href="{% url 'update_device' device.id %}">Edit device</a></td>
             </tr>
-            {% endif %}
         {% endfor %}
         </tbody>
     </table>
@@ -84,13 +93,13 @@
     <ul class="pagination">
         {% if page_obj.has_previous %}
             <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&amp;{{ view.urlencode_filter }}">previous</a></li>
         {% endif %}
 
 
 
         {% if page_obj.has_next %}
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&amp;{{ view.urlencode_filter }}">next</a></li>
             <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>
         {% endif %}
   </ul>

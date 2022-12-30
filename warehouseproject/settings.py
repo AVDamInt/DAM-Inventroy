@@ -27,10 +27,10 @@ SECRET_KEY = 'django-insecure-fyzgjcbm-zpdx*o)9csvts$w4*d$f=5pj9c67pz3e@e7g2=x(+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["https://daminventory-staging.azurewebsites.net","daminventory-staging.azurewebsites.net"]
+ALLOWED_HOSTS = ["https://daminventory-staging.azurewebsites.net","daminventory-staging.azurewebsites.net","localhost"]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://daminventory-staging.azurewebsites.net','daminventory-staging.azurewebsites.net'
+    'https://daminventory-staging.azurewebsites.net'
 ]
 
 # Application definition
@@ -82,29 +82,29 @@ WSGI_APPLICATION = 'warehouseproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# PostgreSQL
-# PostgreSQL
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'devadmin',
-        'PASSWORD': 'Damiani2022!',
-        'HOST': 'daminventory-server-dev.postgres.database.azure.com',
-        'PORT': '5432',
-    }
-}
 
+# PostgreSQL
 #DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#        'NAME': 'inventorydb',
-#        'USER': 'admin',
-#        'PASSWORD': 'Damiani2022!?',
-#        'HOST': 'localhost',
+#        'NAME': 'postgres',
+#        'USER': 'devadmin',
+#        'PASSWORD': 'Damiani2022!',
+#        'HOST': 'daminventory-server-dev.postgres.database.azure.com',
 #        'PORT': '5432',
 #    }
 #}
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'inventorydb',
+        'USER': 'admin',
+        'PASSWORD': 'Damiani2022!?',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 # default sqlite db
 #DATABASES = {

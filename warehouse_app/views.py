@@ -35,12 +35,37 @@ class DeviceList(LoginRequiredMixin, FilterView):
     template_name = 'device_list.html'
     filterset_class = filters.DeviceFilter
 
+    def urencode_filter(self):
+        qd = self.request.GET.copy()
+        qd.pop(self.page_kwarg, None)
+        return qd.urencode()
+
+    def get_context_data(self, **kwargs):
+        context = super(DeviceList, self).get_context_data(**kwargs)
+        context['hist_devices'] = (models.Device.objects.filter(status=1)).count()
+        context['active_devices'] = (models.Device.objects.filter(status=0)).count()
+        context['available_devices'] = (models.Device.objects.filter(status=2)).count()
+        return context
+
 
 class DeviceDetailView(LoginRequiredMixin, generic.DetailView):
     # login_url = 'accounts/login'
     model = models.Device
     template_name = 'device_detail.html'
     context_object_name = 'device'
+
+
+@login_required(login_url='/accounts/login/')
+def update_device(request):
+    print("HI")
+    if request.method == 'POST':
+        instance_form = forms.DeviceUpdateForm(request.POST)
+        if instance_form.is_valid():
+            instance_form.save()
+            return HttpResponseRedirect(reverse_lazy('device_list'))
+    else:
+        form = forms.DeviceUpdateForm()
+    return render(request, 'device_update_form.html', {'form': form})
 
 
 class DeviceUpdateView(LoginRequiredMixin, generic.UpdateView):
@@ -56,7 +81,8 @@ def delete_device(request, id):
     obj = get_object_or_404(models.Device, id=id)
 
     if request.method == 'POST':
-        obj.status = models.Device.status = 1
+        obj.status = models.Device.status_bol = 1
+        # obj.status = models.Device.status_bol = False
         obj.save()
         return HttpResponseRedirect('/')
     return render(request, 'device_delete.html', context)

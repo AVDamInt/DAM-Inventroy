@@ -58,7 +58,8 @@ class Device(models.Model):
 
     IS_ACTIVE_CHOICES = [
         (0, 'Active'),
-        (1, 'Historic')
+        (1, 'Historic'),
+        (2, 'Available')
     ]
 
     serial_number = models.CharField(max_length=50, null=True)

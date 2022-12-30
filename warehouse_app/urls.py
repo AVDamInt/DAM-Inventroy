@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.DeviceList.as_view(), name='device_list'),
     path('device/read/<int:pk>', views.DeviceDetailView.as_view(), name='device_detail'),
     path('device/update/<int:pk>', views.DeviceUpdateView.as_view(), name='update_device'),
+    #path('device/update/<int:pk>', views.update_device, name='update_device'),
     path('device/delete/<id>', views.delete_device, name='device_delete'),
     path('place/create', views.create_place, name='place_register'),
     path('places', views.PlaceList.as_view(), name='place_list'),

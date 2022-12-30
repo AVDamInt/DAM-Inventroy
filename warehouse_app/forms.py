@@ -16,25 +16,55 @@ class DeviceForm(forms.ModelForm):
         # self.helper.form_action = 'device_register'
         self.helper.layout = Layout(
             Div(
-                Div('user_history', css_class='col-md-4'),
-                Div('serial_number', css_class='col-md-4'),
+                Div('host_name', css_class='col-md-2'),
+                css_class='row',
+            ),
+            Div(
+                Div('serial_number', css_class='col-md-2'),
+                css_class='row',
+            ),
+            Div(
                 Div('status', css_class='col-md-4'),
                 css_class='row',
             ),
             Div(
-                Div('contract', css_class='col-md-4'),
-                Div('expiration_date', type='date', css_class='col-md-4'),
-                Div('renewal_date', type='date', css_class='col-md-4'),
+                Div('contract', css_class='col-md-2'),
                 css_class='row',
             ),
             Div(
-                Div('place', css_class='col-md-6'),
-                Div('user', css_class='col-md-6'),
+                Div('expiration_date', type='date', css_class='col-md-2'),
                 css_class='row',
             ),
             Div(
-                Div('make', css_class='col-md-6'),
-                Div('model', css_class='col-md-6'),
+                Div('renewal_date', type='date', css_class='col-md-2'),
+                css_class='row',
+            ),
+            Div(
+                Div('place', css_class='col-md-2'),
+                Div('user', css_class='col-md-2'),
+                Div('user_history', css_class='col-md-2'),
+                css_class='row',
+            ),
+            Div(
+                Div('make', css_class='col-md-2'),
+                css_class='row',
+            ),
+            Div(
+                Div('model', css_class='col-md-2'),
+                css_class='row',
+            ),
+            Div(
+                Div('memory', css_class='col-md-2'),
+                Div('memory_unit', css_class='col-md-2'),
+                css_class='row',
+            ),
+            Div(
+                Div('hard_disk', css_class='col-md-2'),
+                Div('hard_disk_unit', css_class='col-md-2'),
+                css_class='row',
+            ),
+            Div(
+                Div('cpu', css_class='col-md-2'),
                 css_class='row',
             ),
             HTML("""
@@ -60,32 +90,65 @@ class DeviceUpdateForm(forms.ModelForm):
         # self.helper.form_action = 'device_register'
         self.helper.layout = Layout(
             Div(
-                Div('user_history', css_class='col-md-4'),
-                Div('serial_number', css_class='col-md-4'),
+                Div('host_name', css_class='col-md-2'),
+                css_class='row',
+            ),
+            Div(
+                Div('serial_number', css_class='col-md-2'),
+                css_class='row',
+            ),
+            Div(
                 Div('status', css_class='col-md-4'),
                 css_class='row',
             ),
             Div(
-                Div('contract', css_class='col-md-4'),
-                Div('expiration_date', type='date', css_class='col-md-4'),
-                Div('renewal_date', type='date', css_class='col-md-4'),
+                Div('contract', css_class='col-md-2'),
                 css_class='row',
             ),
             Div(
-                Div('place', css_class='col-md-6'),
-                Div('user', css_class='col-md-6'),
+                Div('expiration_date', type='date', css_class='col-md-2'),
                 css_class='row',
             ),
             Div(
-                Div('make', css_class='col-md-6'),
-                Div('model', css_class='col-md-6'),
+                Div('renewal_date', type='date', css_class='col-md-2'),
+                css_class='row',
+            ),
+            Div(
+
+                css_class='row',
+            ),
+            Div(
+                Div('place', css_class='col-md-2'),
+                Div('user', css_class='col-md-2'),
+                Div('user_history', css_class='col-md-2'),
+                css_class='row',
+            ),
+            Div(
+                Div('make', css_class='col-md-2'),
+                css_class='row',
+            ),
+            Div(
+                Div('model', css_class='col-md-2'),
+                css_class='row',
+            ),
+            Div(
+                Div('memory', css_class='col-md-2'),
+                Div('memory_unit', css_class='col-md-2'),
+                css_class='row',
+            ),
+            Div(
+                Div('hard_disk', css_class='col-md-2'),
+                Div('hard_disk_unit', css_class='col-md-2'),
+                css_class='row',
+            ),
+            Div(
+                Div('cpu', css_class='col-md-2'),
                 css_class='row',
             ),
             HTML("""
                     <br>
                 """)
         )
-
         self.helper.add_input(Submit('submit', 'Edit'))
 
     class Meta:
