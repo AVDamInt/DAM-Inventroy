@@ -12,7 +12,8 @@ class DeviceFilter(django_filters.FilterSet):
     class Meta:
         model = Device
         fields = '__all__'
-        exclude = ['contract', 'expiration_date', 'renewal_date', 'host_name', 'make', 'memory', 'memory_unit', 'hard_disk', 'hard_disk_unit', 'cpu', 'place', 'user', 'user_history']
+        exclude = ['contract', 'expiration_date', 'renewal_date', 'host_name', 'make', 'memory', 'memory_unit',
+                   'hard_disk', 'hard_disk_unit', 'cpu', 'place', 'user', 'user_history']
 
 
 class PlaceFilter(django_filters.FilterSet):

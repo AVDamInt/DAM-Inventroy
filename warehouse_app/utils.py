@@ -73,15 +73,15 @@ def handle_uploaded_file(up_file):
         else:
             real_disp = 0
 
-        #dt_scadenza = datetime.strptime(SCADENZA, '%Y-%m-%d')
-        #print(dt_scadenza)
-        #dt_rinnovo = datetime.strptime(RINNOVO, '%Y-%m-%d')
-        #print(dt_rinnovo)
+        # dt_scadenza = datetime.strptime(SCADENZA, '%Y-%m-%d')
+        # print(dt_scadenza)
+        # dt_rinnovo = datetime.strptime(RINNOVO, '%Y-%m-%d')
+        # print(dt_rinnovo)
         device, created = Device.objects.get_or_create(
             serial_number=MATRICOLA,
             contract=CONTRATTO,
-            #expiration_date=dt_scadenza,
-            #renewal_date=dt_rinnovo,
+            # expiration_date=dt_scadenza,
+            # renewal_date=dt_rinnovo,
             host_name=HOST_NAME,
             make=MARCA,
             model=TYPE,

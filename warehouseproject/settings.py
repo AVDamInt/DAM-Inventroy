@@ -27,7 +27,8 @@ SECRET_KEY = 'django-insecure-fyzgjcbm-zpdx*o)9csvts$w4*d$f=5pj9c67pz3e@e7g2=x(+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["https://daminventory-staging.azurewebsites.net","daminventory-staging.azurewebsites.net","localhost"]
+ALLOWED_HOSTS = ["https://daminventory-staging.azurewebsites.net", "daminventory-staging.azurewebsites.net",
+                 "localhost"]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://daminventory-staging.azurewebsites.net'
@@ -84,7 +85,7 @@ WSGI_APPLICATION = 'warehouseproject.wsgi.application'
 
 
 # PostgreSQL
-#DATABASES = {
+# DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #        'NAME': 'postgres',
@@ -93,7 +94,7 @@ WSGI_APPLICATION = 'warehouseproject.wsgi.application'
 #        'HOST': 'daminventory-server-dev.postgres.database.azure.com',
 #        'PORT': '5432',
 #    }
-#}
+# }
 
 DATABASES = {
     'default': {
@@ -107,12 +108,12 @@ DATABASES = {
 }
 
 # default sqlite db
-#DATABASES = {
+# DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.sqlite3',
 #        'NAME': BASE_DIR / 'db.sqlite3',
 #    }
-#}
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -153,7 +154,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#CSRF_COOKIE_DOMAIN = None
+# CSRF_COOKIE_DOMAIN = None
 
 LOGIN_URL = '/accounts/login/'
 

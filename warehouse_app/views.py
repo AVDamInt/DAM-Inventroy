@@ -35,7 +35,6 @@ class DeviceList(LoginRequiredMixin, FilterView):
     template_name = 'device_list.html'
     filterset_class = filters.DeviceFilter
 
-
     def get_context_data(self, **kwargs):
         context = super(DeviceList, self).get_context_data(**kwargs)
         context['hist_devices'] = (models.Device.objects.filter(status=1)).count()
