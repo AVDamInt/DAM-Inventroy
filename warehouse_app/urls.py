@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from .import views
 
 urlpatterns = [
     path('device/create', views.create_device, name='device_register'),
@@ -19,5 +19,8 @@ urlpatterns = [
     path('user/<int:pk>', views.DeviceUserDetailView.as_view(), name='user_detail'),
     path('user/edit/<int:pk>', views.DeviceUserUpdateView.as_view(), name='update_user'),
     path('<int:pk>/user', views.UserDeleteView.as_view(), name='user_delete'),
-    path('file_upload', views.file_upload, name='file_upload')
+    path('file_upload', views.file_upload, name='file_upload'),
+    path('export/devices', views.export_devices, name='export_devices'),
+    path('export/places', views.export_places, name='export_places')
+
 ]

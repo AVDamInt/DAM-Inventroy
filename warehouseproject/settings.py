@@ -27,7 +27,8 @@ SECRET_KEY = 'django-insecure-fyzgjcbm-zpdx*o)9csvts$w4*d$f=5pj9c67pz3e@e7g2=x(+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["https://daminventory-staging.azurewebsites.net", "daminventory-staging.azurewebsites.net"]
+ALLOWED_HOSTS = ["https://daminventory-staging.azurewebsites.net", "daminventory-staging.azurewebsites.net",
+                 "localhost", "127.0.0.1"]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://daminventory-staging.azurewebsites.net'
@@ -45,9 +46,12 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'crispy_forms',
     'django_filters',
+    'import_export'
 ]
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -84,27 +88,27 @@ WSGI_APPLICATION = 'warehouseproject.wsgi.application'
 
 
 # PostgreSQL
+# DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'postgres',
+#        'USER': 'devadmin',
+#        'PASSWORD': 'Damiani2022!',
+#        'HOST': 'daminventory-server-dev.postgres.database.azure.com',
+#        'PORT': '5432',
+#    }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'devadmin',
-        'PASSWORD': 'Damiani2022!',
-        'HOST': 'daminventory-server-dev.postgres.database.azure.com',
+        'NAME': 'inventorydb',
+        'USER': 'admin',
+        'PASSWORD': 'Damiani2022!?',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
-
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#        'NAME': 'inventorydb',
-#        'USER': 'admin',
-#        'PASSWORD': 'Damiani2022!?',
-#        'HOST': 'localhost',
-#        'PORT': '5432',
-#    }
-#}
 
 # default sqlite db
 # DATABASES = {
@@ -140,13 +144,17 @@ LANGUAGE_CODE = 'it-it'
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
+USE_L10N = False
 
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+
 STATIC_URL = 'static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -158,3 +166,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/accounts/login/'
 
 LOGIN_REDIRECT_URL = reverse_lazy('device_list')
+DATE_INPUT_FORMATS = ['%d/%m/%Y',
+                      '%d-%m-%Y',
+                      '%Y-%m-%d']
+
+DATETIME_INPUT_FORMATS = ['%d/%m/%Y %H:%M:%S',
+                          '%d-%m-%Y %H:%M:%S',
+                          '%Y-%m-%d %H:%M:%S']

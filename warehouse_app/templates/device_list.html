@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% load pagination_tags %}
-
 {% block title %}
     Device list
 {% endblock %}
@@ -9,7 +8,7 @@
 {% block content %}
     <h2>Device list</h2>
     <div class="row">
-        <div class=" col-md-4">
+        <div class=" col-md-3">
             <div class="card card-body">
 
                 <form method="get">
@@ -18,21 +17,21 @@
                 </form>
             </div>
         </div>
-        <div class=" col-md-2">
+         <div class=" col-md-3">
             <div class="card card-body">
                 <h5><i class="bi bi-play-fill"></i> Total active Devices</h5>
                 <hr>
                 <h1>{{ active_devices }}</h1>
             </div>
         </div>
-        <div class=" col-md-2">
+        <div class=" col-md-3">
             <div class="card card-body">
                 <h5><i class="bi bi-pause-fill"></i> Total available devices</h5>
                 <hr>
                 <h1>{{ available_devices }}</h1>
             </div>
         </div>
-        <div class=" col-md-2">
+        <div class=" col-md-3">
             <div class="card card-body">
                 <h5><i class="bi bi-stop-fill"></i> Total historic devices</h5>
                 <hr>
@@ -41,46 +40,60 @@
         </div>
     </div>
     <br>
-    <table class="table table-bordered" data-sort-name="field_id" data-sort-order="asc">
+    <div class="row">
+        <div class=" col-md-3">
+            <div class="card card-body">
+                <h5><i class="bi bi-stop-fill"></i> Export devices</h5>
+                <hr>
+                <h1><a href="{% url 'export_devices' %}">Export</a></h1>
+            </div>
+        </div>
+    </div>
+        <div class="table-responsive">
+
+    <table id="sortedtable" class="table table-striped table-bordered table-responsive" data-sort-name="field_id" data-sort-order="asc">
         <thead>
         <tr>
-            <th class="text-nowrap" data-field='field_id'>Id</th>
-            <th class="text-nowrap" data-field='field_name'>User History</th>
-            <th class="text-nowrap" data-field='field_status'>Status</th>
-            <th class="text-nowrap" data-field='field_serial_number'>Serial Number</th>
-            <th class="text-nowrap" data-field='field_contract'>Contract</th>
-            <th class="text-nowrap" data-field='field_expiration_date'>Expiration date</th>
-            <th class="text-nowrap" data-field='field_renewal_date'>Renewal date</th>
-            <th class="text-nowrap" data-field='field_host_name'>Host name</th>
-            <th class="text-nowrap" data-field='field_make'>Make</th>
-            <th class="text-nowrap" data-field='field_model'>Model</th>
-            <th class="text-nowrap" data-field='field_place'>Place</th>
-            <th class="text-nowrap" data-field='field_user'>User</th>
-            <th class="text-nowrap" data-field='field_detail'>Detail</th>
-            <th class="text-nowrap" data-field='field_delete'>Delete</th>
-            <th class="text-nowrap" data-field='field-edit'>Edit</th>
+            <th  data-field='field_id'>Id</th>
+            <th  data-field='field_note'>Note</th>
+            <th  data-field='field_name'>User History</th>
+            <th  data-field='field_status'>Status</th>
+            <th  data-field='field_serial_number'>Serial Number</th>
+            <th data-field='field_contract'>Contract</th>
+            <th  data-field='field_expiration_date'>Expiration date</th>
+            <th  data-field='field_renewal_date'>Renewal date</th>
+            <th  data-field='field_host_name'>Host name</th>
+            <th  data-field='field_make'>Make</th>
+            <th  data-field='field_model'>Model</th>
+            <th  data-field='field_place'>Place</th>
+            <th  data-field='field_user'>User</th>
+            <th  data-field='field_detail'>Detail</th>
+            <th  data-field='field_delete'>Delete</th>
+            <th  data-field='field-edit'>Edit</th>
         </tr>
         </thead>
         <tbody>
         {% for device in devices %}
             <tr>
                 <th scope="row">{{ device.id }}</th>
+                <th scope="row">{{ device.note }}</th>
                 <td>
                     {% for usr in device.user_history.all %}
                         {{ usr }}<br/>
                     {% endfor %}
                 </td>
-                <td>{{ device.status }}</td>
+                <td>{{ device.get_status_display }}</td>
                 <td>{{ device.serial_number }}</td>
                 <td>{{ device.contract }}</td>
-                <td>{{ device.expiration_date }}</td>
-                <td>{{ device.renewal_date }}</td>
+                <td>{{ device.expiration_date|date:"d/m/Y" }}</td>
+                <td>{{ device.renewal_date|date:"d/m/Y" }}</td>
                 <td>{{ device.host_name }}</td>
                 <td>{{ device.make }}</td>
                 <td>{{ device.model }}</td>
                 <td><a href="{% url 'place_detail' device.place.id %}">
                     {{ device.place }}</a></td>
-                <td>{{ device.user }}</td>
+                <td><a href="{% url 'user_detail' device.user.id %}">
+                    {{ device.user.name }} {{ device.user.surname }}</a></td>
                 <td><a href="{% url 'device_detail' device.id %}">
                     Detail</a></td>
                 <td><a href="{% url 'device_delete' device.id %}">Delete device</a></td>
@@ -89,8 +102,7 @@
         {% endfor %}
         </tbody>
     </table>
-
-
+        </div>
 
 
     {% if is_paginated %}
@@ -122,4 +134,5 @@
         </span>
     {% endif %}
     </div>
+
 {% endblock %}

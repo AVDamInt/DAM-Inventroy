@@ -62,7 +62,7 @@ class Device(models.Model):
         (2, 'Available')
     ]
 
-    serial_number = models.CharField(max_length=50, null=True)
+    serial_number = models.CharField(max_length=50, blank=True, null=True)
     contract = models.CharField(max_length=50, blank=True, null=True)
     expiration_date = models.DateField(blank=True, null=True)
     renewal_date = models.DateField(blank=True, null=True)
@@ -80,7 +80,7 @@ class Device(models.Model):
     user = models.ForeignKey(DeviceUser, related_name="deviceuser", on_delete=models.CASCADE, null=True)
     user_history = models.ManyToManyField(DeviceUser, blank=True, null=True)
     status = models.IntegerField(choices=IS_ACTIVE_CHOICES, default=0, blank=True, null=True)
-
+    note = models.CharField(max_length=200, blank=True, null=True)
     def __str__(self):
         return self.contract
 

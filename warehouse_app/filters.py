@@ -8,6 +8,7 @@ class DeviceFilter(django_filters.FilterSet):
     serial_number = CharFilter(field_name='serial_number', lookup_expr='icontains')
     model = CharFilter(field_name='model', lookup_expr='icontains')
     status = ChoiceFilter(choices=Device.IS_ACTIVE_CHOICES)
+    user = CharFilter(field_name='user__name', lookup_expr='icontains')
 
     class Meta:
         model = Device

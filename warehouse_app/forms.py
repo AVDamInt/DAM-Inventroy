@@ -1,6 +1,6 @@
 from crispy_forms.helper import FormHelper
 from django import forms
-from crispy_forms.layout import Submit, Row, Column, Layout, Div, Field, HTML
+from crispy_forms.layout import Submit, Row, Column, Layout, Div, HTML, Field
 from .models import Device, Place, DeviceUser
 
 
@@ -41,8 +41,14 @@ class DeviceForm(forms.ModelForm):
             ),
             Div(
                 Div('place', css_class='col-md-2'),
-                Div('user', css_class='col-md-2'),
+                css_class='row',
+            ),
+            Div(
                 Div('user_history', css_class='col-md-2'),
+                css_class='row',
+            ),
+            Div(
+                Div('user', css_class='col-md-2'),
                 css_class='row',
             ),
             Div(
@@ -77,8 +83,8 @@ class DeviceForm(forms.ModelForm):
         model = Device
         fields = '__all__'
         widgets = {
-            'expiration_date': DateInput(),
-            'renewal_date': DateInput()
+            'expiration_date': DateInput(format='%d/%m/%Y'),
+            'renewal_date': DateInput(format='%d/%m/%Y')
         }
 
 
@@ -168,27 +174,27 @@ class PlaceForm(forms.ModelForm):
         self.helper.form_action = 'place_register'
         self.helper.layout = Layout(
             Row(
-                Column('name', css_class='col-md-4'),
+                Column('name', css_class='col-md-2'),
                 css_class='form-row',
             ),
             Row(
-                Column('country', css_class='col-md-4'),
+                Column('country', css_class='col-md-2'),
                 css_class='form-row',
             ),
             Row(
-                Column('city', css_class='col-md-4'),
+                Column('city', css_class='col-md-2'),
                 css_class='form-row',
             ),
             Row(
-                Column('address', css_class='col-md-4'),
+                Column('address', css_class='col-md-2'),
                 css_class='form-row',
             ),
             Row(
-                Column('cap', css_class='col-md-4'),
+                Column('cap', css_class='col-md-2'),
                 css_class='form-row',
             ),
             Row(
-                Column('plan', css_class='col-md-4'),
+                Column('plan', css_class='col-md-2'),
                 css_class='form-row',
             ),
             HTML("""
@@ -256,7 +262,7 @@ class DeviceUserForm(forms.ModelForm):
                 css_class='form-row',
             ),
             Row(
-                Column('surname', css_class='col-sm-4 col-sm-offset-4'),
+                Column('surname', css_class='col-sm-4'),
                 css_class='form-row',
             ),
             Row(
