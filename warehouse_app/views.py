@@ -38,9 +38,10 @@ class DeviceList(LoginRequiredMixin, FilterView):
 
     def get_context_data(self, **kwargs):
         context = super(DeviceList, self).get_context_data(**kwargs)
-        context['hist_devices'] = (models.Device.objects.filter(status=1)).count()
-        context['active_devices'] = (models.Device.objects.filter(status=0)).count()
-        context['available_devices'] = (models.Device.objects.filter(status=2)).count()
+        context['hist_devices'] = (models.Device.objects.filter(history_type=0)).count()
+        context['active_devices'] = (models.Device.objects.filter(history_type=1)).count()
+        context['available_devices'] = (models.Device.objects.filter(status=0)).count()
+        context['unavailable_devices'] = (models.Device.objects.filter(status=1)).count()
         return context
 
 

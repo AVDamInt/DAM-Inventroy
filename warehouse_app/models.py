@@ -56,10 +56,14 @@ class Device(models.Model):
         (BIT, 'Bit')
     ]
 
-    IS_ACTIVE_CHOICES = [
-        (0, 'Active'),
-        (1, 'Historic'),
-        (2, 'Available')
+    IS_AVAILABLE_CHOICES = [
+        (0, 'Available'),
+        (1, 'Unavailable')
+    ]
+
+    IS_HISTORY_CHOICES = [
+        (0, 'Storico'),
+        (1, 'Attivo')
     ]
 
     serial_number = models.CharField(max_length=50, blank=True, null=True)
@@ -77,10 +81,12 @@ class Device(models.Model):
                                       null=True)
     cpu = models.CharField(max_length=50, blank=True, null=True)
     place = models.ForeignKey(Place, related_name="place", on_delete=models.CASCADE, null=True)
-    user = models.ForeignKey(DeviceUser, related_name="deviceuser", on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(DeviceUser, related_name="deviceuser", on_delete=models.CASCADE, blank=True, null=True)
     user_history = models.ManyToManyField(DeviceUser, blank=True, null=True)
-    status = models.IntegerField(choices=IS_ACTIVE_CHOICES, default=0, blank=True, null=True)
+    status = models.IntegerField(choices=IS_AVAILABLE_CHOICES, default=0, blank=True, null=True)
+    history_type = models.IntegerField(choices=IS_HISTORY_CHOICES, default=0, blank=True, null=True)
     note = models.CharField(max_length=200, blank=True, null=True)
+
     def __str__(self):
         return self.contract
 

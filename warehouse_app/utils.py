@@ -3,86 +3,62 @@ from datetime import datetime
 import pandas as pd
 import os
 from .models import Device, Place, DeviceUser
+import time
 
 
 def handle_uploaded_file(up_file):
     # if up_file.name ==
-    df = pd.read_excel(up_file, engine='openpyxl', na_filter = False)
+    start_time = time.time()
+    df = pd.read_excel(up_file, engine='openpyxl', na_filter=False)
     cnt = 0
     for _, row in df.iterrows():
-        UTENTE = str(row['UTENTE'])
-        # UTENTE = UTENTE[:-1]
-        UFFICIO = str(row['UFFICIO'])
-        # UFFICIO = UFFICIO[:-1]
-        SEDE = str(row['SEDE'])
-        # SEDE = SEDE[:-1]
-        # user = DeviceUser(
-        #    name=row['UTENTE'],
-        #    surname='',
-        #    email='',
-        #    role=''
-        # )
-        # user.save()
-        user, created = DeviceUser.objects.get_or_create(
-            name=UTENTE,
-            surname='',
-            email='',
-            role='')
+        utente = str(row['UTENTE'])
+        ufficio = str(row['UFFICIO'])
+        sede = str(row['SEDE'])
+        device_status = 1
+        user = None
+        if 'disponibile' not in utente.lower():
+            user, created = DeviceUser.objects.get_or_create(
+                name=utente,
+                surname='',
+                email='',
+                role='')
 
-        if created:
-            print(f"User created with name {UTENTE}")
+            #if created:
+                #print(f"User created with name {utente}")
+            #else:
+                #print(f"User already in db")
         else:
-            print(f"User already in db")
+            device_status = 0
 
         place, created = Place.objects.get_or_create(
-            name=UFFICIO,
-            city=SEDE,
+            name=ufficio,
+            city=sede,
             address='',
             cap='',
             country='',
             plan=''
         )
-        if created:
-            print(f"Place created with name {UFFICIO} and city {SEDE}")
-        else:
-            print(f"Place already in db")
-
-        CONTRATTO = str(row['CONTR'])
-        # CONTRATTO = CONTRATTO[:-1]
-        # SCADENZA = str(row['SCAD'])
-        # SCADENZA = SCADENZA[:-1]
-        # RINNOVO = str(row['RINNOVO'])
-        # RINNOVO = RINNOVO[:-1]
-        HOST_NAME = str(row['HOST_NAME'])
-        # HOST_NAME = HOST_NAME[:-1]
-        MARCA = str(row['MARCA'])
-        # MARCA = MARCA[:-1]
-        TIPO = str(row['TYPE'])
-        # PROVA = PROVA[:-1]
-        MATRICOLA = str(row['MATRICOLA'])
-        # MATRICOLA = MATRICOLA[:-1]
-        STATO = str(row['STATO'])
-        NOTE = str(row['MONITOR'])
-        # STATO = STATO[:-1]
-
-        # DESC = str(row['DESC'])
-        # DESC = DESC[:-1]
-        # DISPONIBILE = str(row['DISPONIBILE'])
-        # DISPONIBILE = DISPONIBILE[:-1]
-        real_disp = 0
-        if STATO == 'STORICO':
-            real_disp = 1
-        elif STATO == 'ATTIVO':
-            real_disp = 0
-        else:
-            STATO = 2
-
-        #if UTENTE == 'DISPONIBILE':
-            #real_disp = 2
-        #elif UTENTE == 'na' or UTENTE == 'nan':
-            real_disp = 1
+        #if created:
+            #print(f"Place created with name {ufficio} and city {sede}")
         #else:
-            #real_disp = 0
+            #print(f"Place already in db")
+
+        contratto = str(row['CONTR'])
+
+        host_name = str(row['HOST_NAME'])
+        marca = str(row['MARCA'])
+        tipo = str(row['TYPE'])
+        matricola = str(row['MATRICOLA'])
+        stato = str(row['STATO'])
+        note = str(row['MONITOR'])
+
+        history_type = 0
+        if stato == 'STORICO':
+            history_type = 0
+        elif stato == 'ATTIVO':
+            history_type = 1
+
         dt_scadenza = ''
         dt_rinnovo = ''
         scad = None
@@ -95,42 +71,36 @@ def handle_uploaded_file(up_file):
             scad = None
 
         if rinnovo:
-            rinn = datetime.strptime(scadenza, '%Y-%m-%d %H:%M:%S')
+            rinn = datetime.strptime(rinnovo, '%Y-%m-%d %H:%M:%S')
         else:
             rinn = None
 
-        print(f"Device data {MATRICOLA} - {CONTRATTO} - {HOST_NAME} - {MARCA} - {TIPO}")
-        print(scad)
+        #print(f"Device data {matricola} - {contratto} - {host_name} - {marca} - {tipo}")
+        #print(scad)
 
-        print(rinn)
+        #print(rinn)
 
+        # bisogna rivdere la get_or_create perchè crea meno records di quelli presente nel file excel.
         device, created = Device.objects.get_or_create(
-            serial_number=MATRICOLA,
-            contract=CONTRATTO,
+            serial_number=matricola,
+            contract=contratto,
             expiration_date=scad if scad else None,
             renewal_date=rinn if rinn else None,
-            host_name=HOST_NAME,
-            make=MARCA,
-            model=TIPO,
+            host_name=host_name,
+            make=marca,
+            model=tipo,
             place=place,
             user=user,
-            status=real_disp,
-            note=NOTE
+            status=device_status,
+            history_type=history_type,
+            note=note
         )
 
         if created:
-            print(f"Device created with data {MATRICOLA} - {CONTRATTO} - {HOST_NAME} - {MARCA} - {TIPO}")
+            print(f"Device created with data {matricola} - {contratto} - {host_name} - {marca} - {tipo}")
         else:
-            print(f"Device already in db")
+            print(f"Device already in db {matricola} - {contratto} - {host_name} - {marca} - {tipo}")
 
         cnt += 1
-
-        # place = Place(
-        #    name=row['UFFICIO'],
-        #    city=row['SEDE'],
-        #    address='',
-        #    cap='',
-        #    country='',
-        #    plan=''
-        # )
-        # place.save()
+    end_time = time.time() - start_time
+    print(f"Execution time in seconds {end_time}")
