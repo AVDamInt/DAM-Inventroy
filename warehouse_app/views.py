@@ -204,7 +204,8 @@ def export_devices(request):
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
 
-    columns = ['Id','User History','Status','Serial number','Contract','Expiration Date','Renewal date', 'Host name','Make','Model', 'Place','User']
+    columns = ['Id', 'User History', 'Status', 'Serial number', 'Contract', 'Expiration Date', 'Renewal date',
+               'Host name', 'Make', 'Model', 'Place', 'User']
 
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
@@ -212,7 +213,9 @@ def export_devices(request):
     # Sheet body, remaining rows
     font_style = xlwt.XFStyle()
 
-    rows = models.Device.objects.all().values_list('id','user_history','status','serial_number','contract','expiration_date','renewal_date','host_name','make','model','place','user')
+    rows = models.Device.objects.all().values_list('id', 'user_history', 'status', 'serial_number', 'contract',
+                                                   'expiration_date', 'renewal_date', 'host_name', 'make', 'model',
+                                                   'place', 'user')
     for row in rows:
         row_num += 1
         for col_num in range(len(row)):
@@ -236,7 +239,7 @@ def export_places(request):
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
 
-    columns = ['Name','City','Address','CAP','Country','Plan']
+    columns = ['Name', 'City', 'Address', 'CAP', 'Country', 'Plan']
 
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
@@ -244,7 +247,7 @@ def export_places(request):
     # Sheet body, remaining rows
     font_style = xlwt.XFStyle()
 
-    rows = models.Place.objects.all().values_list('name','city','address','cap','country','plan')
+    rows = models.Place.objects.all().values_list('name', 'city', 'address', 'cap', 'country', 'plan')
     for row in rows:
         row_num += 1
         for col_num in range(len(row)):
@@ -269,7 +272,8 @@ def export_users(request):
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
 
-    columns = ['Id','User History','Status','Serial number','Contract','Expiration Date','Renewal date', 'Host name','Make','Model', 'Place','User']
+    columns = ['Id', 'User History', 'Status', 'Serial number', 'Contract', 'Expiration Date', 'Renewal date',
+               'Host name', 'Make', 'Model', 'Place', 'User']
 
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
@@ -277,7 +281,9 @@ def export_users(request):
     # Sheet body, remaining rows
     font_style = xlwt.XFStyle()
 
-    rows = models.Device.objects.all().values_list('id','user_history','status','serial_number','contract','expiration_date','renewal_date','host_name','make','model','place','user')
+    rows = models.Device.objects.all().values_list('id', 'user_history', 'status', 'serial_number', 'contract',
+                                                   'expiration_date', 'renewal_date', 'host_name', 'make', 'model',
+                                                   'place', 'user')
     for row in rows:
         row_num += 1
         for col_num in range(len(row)):

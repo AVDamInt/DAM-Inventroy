@@ -18,31 +18,39 @@ def handle_uploaded_file(up_file):
         device_status = 1
         user = None
         if 'disponibile' not in utente.lower():
-            user, created = DeviceUser.objects.get_or_create(
+            user, created = DeviceUser.objects.update_or_create(
                 name=utente,
                 surname='',
                 email='',
-                role='')
+                role='',
+                defaults={'name': utente,
+                          'surname': '',
+                          'email': '',
+                          'role': ''})
 
-            #if created:
-                #print(f"User created with name {utente}")
-            #else:
-                #print(f"User already in db")
+            # if created:
+            # print(f"User created with name {utente}")
+            # else:
+            # print(f"User already in db")
         else:
             device_status = 0
 
-        place, created = Place.objects.get_or_create(
+        place, created = Place.objects.update_or_create(
             name=ufficio,
             city=sede,
             address='',
             cap='',
             country='',
-            plan=''
-        )
-        #if created:
-            #print(f"Place created with name {ufficio} and city {sede}")
-        #else:
-            #print(f"Place already in db")
+            plan='',
+            defaults={'name': ufficio,
+                      'city': sede,
+                      'cap': '',
+                      'country': '',
+                      'plan': ''})
+        # if created:
+        # print(f"Place created with name {ufficio} and city {sede}")
+        # else:
+        # print(f"Place already in db")
 
         contratto = str(row['CONTR'])
 
@@ -52,6 +60,7 @@ def handle_uploaded_file(up_file):
         matricola = str(row['MATRICOLA'])
         stato = str(row['STATO'])
         note = str(row['MONITOR'])
+        test_id = str(row['TEST_ID'])
 
         history_type = 0
         if stato == 'STORICO':
@@ -75,13 +84,13 @@ def handle_uploaded_file(up_file):
         else:
             rinn = None
 
-        #print(f"Device data {matricola} - {contratto} - {host_name} - {marca} - {tipo}")
-        #print(scad)
+        # print(f"Device data {matricola} - {contratto} - {host_name} - {marca} - {tipo}")
+        # print(scad)
 
-        #print(rinn)
+        # print(rinn)
 
         # bisogna rivdere la get_or_create perchè crea meno records di quelli presente nel file excel.
-        device, created = Device.objects.get_or_create(
+        device, created = Device.objects.update_or_create(
             serial_number=matricola,
             contract=contratto,
             expiration_date=scad if scad else None,
@@ -93,7 +102,8 @@ def handle_uploaded_file(up_file):
             user=user,
             status=device_status,
             history_type=history_type,
-            note=note
+            note=note,
+            test_id=test_id
         )
 
         if created:

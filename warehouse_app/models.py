@@ -86,6 +86,7 @@ class Device(models.Model):
     status = models.IntegerField(choices=IS_AVAILABLE_CHOICES, default=0, blank=True, null=True)
     history_type = models.IntegerField(choices=IS_HISTORY_CHOICES, default=0, blank=True, null=True)
     note = models.CharField(max_length=200, blank=True, null=True)
+    test_id = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.contract
