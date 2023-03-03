@@ -1,3 +1,4 @@
+import pandas as pd
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
@@ -13,9 +14,10 @@ from django_filters.views import FilterView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import UpdateView
 import xlwt
+from openpyxl import Workbook
 
 
-@login_required(login_url='/accounts/login/')
+#@login_required(login_url='/accounts/login/')
 def create_device(request):
     if request.method == 'POST':
         instance_form = forms.DeviceForm(request.POST)
@@ -52,7 +54,7 @@ class DeviceDetailView(LoginRequiredMixin, generic.DetailView):
     context_object_name = 'device'
 
 
-@login_required(login_url='/accounts/login/')
+#@login_required(login_url='/accounts/login/')
 def update_device(request):
     print("HI")
     if request.method == 'POST':
@@ -71,7 +73,7 @@ class DeviceUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = forms.DeviceUpdateForm
 
 
-@login_required(login_url='/accounts/login/')
+#@login_required(login_url='/accounts/login/')
 def delete_device(request, id):
     context = {}
 
@@ -85,7 +87,7 @@ def delete_device(request, id):
     return render(request, 'device_delete.html', context)
 
 
-@login_required(login_url='/accounts/login/')
+#@login_required(login_url='/accounts/login/')
 def create_place(request):
     if request.method == 'POST':
         instance_form = forms.PlaceForm(request.POST)
@@ -126,7 +128,7 @@ class PlaceDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('place_list')
 
 
-@login_required(login_url='/accounts/login/')
+#@login_required(login_url='/accounts/login/')
 def create_user_device(request):
     if request.method == 'POST':
         instance_form = forms.DeviceUserForm(request.POST)
@@ -176,7 +178,7 @@ class UserDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy('user_list')
 
 
-@login_required(login_url='/accounts/login/')
+#@login_required(login_url='/accounts/login/')
 def file_upload(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
@@ -191,12 +193,46 @@ def file_upload(request):
         return render(request, 'file_upload.html', {'form': form})
 
 
+# def export_devices(request):
+#    response = HttpResponse(content_type='application/ms-excel')
+#    response['Content-Disposition'] = 'attachment; filename="devices.xls"'
+
+#    wb = xlwt.Workbook(encoding='utf-8')
+#    ws = wb.add_sheet('Device Data')  # this will make a sheet named Users Data
+
+# Sheet header, first row
+#    row_num = 0
+
+#   font_style = xlwt.XFStyle()
+#    font_style.font.bold = True
+
+#    columns = ['Id', 'User History', 'Status', 'Serial number', 'Contract', 'Expiration Date', 'Renewal date',
+#               'Host name', 'Make', 'Model', 'Place', 'User']
+
+#    for col_num in range(len(columns)):
+#        ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+# Sheet body, remaining rows
+#    font_style = xlwt.XFStyle()
+
+#    rows = models.Device.objects.all().values_list('id', 'user_history', 'status', 'serial_number', 'contract',
+#                                                   'expiration_date', 'renewal_date', 'host_name', 'make', 'model',
+#                                                   'place', 'user')
+#    for row in rows:
+#        row_num += 1
+#        for col_num in range(len(row)):
+#            ws.write(row_num, col_num, row[col_num], font_style)
+
+#    wb.save(response)
+
+#    return response
+
 def export_devices(request):
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename="devices.xls"'
+    response['Content-Disposition'] = 'attachment; filename="devices.xlsx"'
 
-    wb = xlwt.Workbook(encoding='utf-8')
-    ws = wb.add_sheet('Device Data')  # this will make a sheet named Users Data
+    wb = Workbook()
+    ws = wb.active  # this will make a sheet named Users Data
 
     # Sheet header, first row
     row_num = 0
@@ -207,19 +243,62 @@ def export_devices(request):
     columns = ['Id', 'User History', 'Status', 'Serial number', 'Contract', 'Expiration Date', 'Renewal date',
                'Host name', 'Make', 'Model', 'Place', 'User']
 
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+    # for col_num in range(len(columns)):
+    #    ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
 
     # Sheet body, remaining rows
-    font_style = xlwt.XFStyle()
+    # font_style = xlwt.XFStyle()
 
     rows = models.Device.objects.all().values_list('id', 'user_history', 'status', 'serial_number', 'contract',
                                                    'expiration_date', 'renewal_date', 'host_name', 'make', 'model',
                                                    'place', 'user')
+    data_list = []
     for row in rows:
-        row_num += 1
-        for col_num in range(len(row)):
-            ws.write(row_num, col_num, row[col_num], font_style)
+
+        hist_us = ''
+        device_user_history = None
+        if row[1] is not None:
+            device_detail = models.Device.objects.get(pk=row[0])
+            device_user_history = device_detail.user_history.all()
+            for dev_usr in device_user_history:
+                hist_us += dev_usr.name
+                hist_us += ','
+                hist_us += '/n'
+
+            hist_us[::-2]
+
+            print("Hi")
+
+        status = ''
+        if row[2] is not None:
+            if row[2] == 1:
+                status = 'Unavailable'
+            elif row[2] == 0:
+                status = 'Available'
+
+        device_place = ''
+        if row[10] is not None:
+            device_place = models.Place.objects.get(pk=row[10]).name
+
+        device_user = ''
+        if row[11] is not None:
+            device_user = models.DeviceUser.objects.get(pk=row[11]).name
+
+        device_expiration_date = ''
+        if row[5] is not None:
+            device_expiration_date = row[5].strftime('%d/%m/%Y')
+
+        device_renewal_date = ''
+        if row[6] is not None:
+            device_renewal_date = row[6].strftime('%d/%m/%Y')
+
+        data_row = [row[0], hist_us, status, row[3], row[4], device_expiration_date, device_renewal_date,
+                    row[7], row[8], row[9], device_place, device_user]
+        # data_list.append([row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9],row[10],row[11]])
+        ws.append(data_row)
+        # row_num += 1
+        # for col_num in range(len(row)):
+        # ws.write(row_num, col_num, row[col_num], font_style)
 
     wb.save(response)
 

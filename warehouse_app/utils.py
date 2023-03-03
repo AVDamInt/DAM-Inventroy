@@ -17,7 +17,9 @@ def handle_uploaded_file(up_file):
         sede = str(row['SEDE'])
         device_status = 1
         user = None
-        if 'disponibile' not in utente.lower():
+        if 'onibile' in utente.lower() or  'ninbile' in utente.lower():
+            device_status = 0
+        else:
             user, created = DeviceUser.objects.update_or_create(
                 name=utente,
                 surname='',
@@ -32,8 +34,6 @@ def handle_uploaded_file(up_file):
             # print(f"User created with name {utente}")
             # else:
             # print(f"User already in db")
-        else:
-            device_status = 0
 
         place, created = Place.objects.update_or_create(
             name=ufficio,
