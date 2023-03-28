@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}
     {{ device.name }}
 {% endblock %}
@@ -23,4 +23,10 @@
             <p>Print device detail: <a href="http://localhost:8013/api/print/text?text=CONTRATTO:{{device.serial_number}}&font_family=DejaVu+Sans+(Oblique)&font_size=70&label_size=39x90&align=left&orientation=standard&margin_top=24&margin_bottom=45&margin_left=35&margin_right=35">Printer</a></p>
         </div>
     </div>
+
+    <input type="hidden" id="deviceDetails" name="device" value="{{ device }}">
+    <button onclick="myFunction()">Click me!</button>
+
+<script src="{% static 'brotherscript.js' %}"></script>
+
 {% endblock %}
