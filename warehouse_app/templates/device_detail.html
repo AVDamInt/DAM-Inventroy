@@ -18,4 +18,9 @@
             <p>Serial number: {{ device.serial_number }}</p>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>Print device detail: <a href="http://localhost:8013/api/print/text?text=CONTRATTO:{{device.serial_number}}&font_family=DejaVu+Sans+(Oblique)&font_size=70&label_size=39x90&align=left&orientation=standard&margin_top=24&margin_bottom=45&margin_left=35&margin_right=35">Printer</a></p>
+        </div>
+    </div>
 {% endblock %}
