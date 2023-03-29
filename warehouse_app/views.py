@@ -1,5 +1,8 @@
+import json
+
 import pandas as pd
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import generic
@@ -52,6 +55,12 @@ class DeviceDetailView(LoginRequiredMixin, generic.DetailView):
     model = models.Device
     template_name = 'device_detail.html'
     context_object_name = 'device'
+
+    def get_context_data(self, **kwargs):
+        context = super(DeviceDetailView, self).get_context_data(**kwargs)
+        devDet = models.Device.objects.filter(pk=self.kwargs.get('pk'))
+        context['deviceDetails'] = serializers.serialize('json', devDet)
+        return context
 
 
 #@login_required(login_url='/accounts/login/')
