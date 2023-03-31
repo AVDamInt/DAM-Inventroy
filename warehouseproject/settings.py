@@ -27,8 +27,8 @@ SECRET_KEY = 'django-insecure-fyzgjcbm-zpdx*o)9csvts$w4*d$f=5pj9c67pz3e@e7g2=x(+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["https://daminventory-staging.azurewebsites.net", "daminventory-staging.azurewebsites.net",
-                 "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["https://daminventory-staging.azurewebsites.net", "daminventory-staging.azurewebsites.net"]
+                 #"localhost", "127.0.0.1"]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://daminventory-staging.azurewebsites.net'

@@ -20,7 +20,7 @@ import xlwt
 from openpyxl import Workbook
 
 
-#@login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def create_device(request):
     if request.method == 'POST':
         instance_form = forms.DeviceForm(request.POST)
@@ -63,7 +63,7 @@ class DeviceDetailView(LoginRequiredMixin, generic.DetailView):
         return context
 
 
-#@login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def update_device(request):
     print("HI")
     if request.method == 'POST':
@@ -82,7 +82,7 @@ class DeviceUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = forms.DeviceUpdateForm
 
 
-#@login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def delete_device(request, id):
     context = {}
 
@@ -96,7 +96,7 @@ def delete_device(request, id):
     return render(request, 'device_delete.html', context)
 
 
-#@login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def create_place(request):
     if request.method == 'POST':
         instance_form = forms.PlaceForm(request.POST)
@@ -109,7 +109,7 @@ def create_place(request):
 
 
 class PlaceList(LoginRequiredMixin, FilterView):
-    # login_url = 'accounts/login'
+    login_url = 'accounts/login'
     paginate_by = 10
     model = models.Place
     context_object_name = 'places'
@@ -118,7 +118,7 @@ class PlaceList(LoginRequiredMixin, FilterView):
 
 
 class PlaceDetailView(LoginRequiredMixin, generic.DetailView):
-    # login_url = 'accounts/login'
+    login_url = 'accounts/login'
     model = models.Place
     template_name = 'place_detail.html'
     context_object_name = 'place'
@@ -137,7 +137,7 @@ class PlaceDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('place_list')
 
 
-#@login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def create_user_device(request):
     if request.method == 'POST':
         instance_form = forms.DeviceUserForm(request.POST)
@@ -187,7 +187,7 @@ class UserDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy('user_list')
 
 
-#@login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def file_upload(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
@@ -235,7 +235,7 @@ def file_upload(request):
 #    wb.save(response)
 
 #    return response
-
+@login_required(login_url='/accounts/login/')
 def export_devices(request):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename="devices.xlsx"'
@@ -314,6 +314,7 @@ def export_devices(request):
     return response
 
 
+@login_required(login_url='/accounts/login/')
 def export_places(request):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename="places.xls"'
@@ -347,6 +348,7 @@ def export_places(request):
     return response
 
 
+@login_required(login_url='/accounts/login/')
 def export_users(request):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename="users.xls"'
