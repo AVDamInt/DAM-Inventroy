@@ -14,21 +14,22 @@ from pathlib import Path
 import os
 
 from django.urls import reverse_lazy
+from decouple import config, AutoConfig
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+config = AutoConfig(search_path='.env')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-fyzgjcbm-zpdx*o)9csvts$w4*d$f=5pj9c67pz3e@e7g2=x(+'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["https://daminventory-staging.azurewebsites.net", "daminventory-staging.azurewebsites.net"]
-                 #"localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["https://daminventory-staging.azurewebsites.net", "daminventory-staging.azurewebsites.net","localhost", "127.0.0.1"]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://daminventory-staging.azurewebsites.net'
@@ -87,17 +88,27 @@ WSGI_APPLICATION = 'warehouseproject.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
-# PostgreSQL
 DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': 'postgares',
-       'USER': 'devadmin',
-       'PASSWORD': 'Damiani2022!',
-       'HOST': 'daminventory-server-dev.postgres.database.azure.com',
-       'PORT': '5432',
-   }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': config('DBNAME'),
+        'HOST': config('DBHOST'),
+        'USER': config('DBUSER'),
+        'PASSWORD': config('DBPASS'),
+    }
 }
+
+# PostgreSQL
+#DATABASES = {
+#   'default': {
+#       'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#       'NAME': 'postgares',
+#       'USER': 'devadmin',
+#       'PASSWORD': 'Damiani2022!',
+#       'HOST': 'daminventory-server-dev.postgres.database.azure.com',
+#       'PORT': '5432',
+#   }
+#}
 
 #DATABASES = {
 #    'default': {
