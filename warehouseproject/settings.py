@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'warehouseproject.wsgi.application'
 DATABASES = {
    'default': {
        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': 'postgres',
+       'NAME': 'postgares',
        'USER': 'devadmin',
        'PASSWORD': 'Damiani2022!',
        'HOST': 'daminventory-server-dev.postgres.database.azure.com',
