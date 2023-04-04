@@ -29,7 +29,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["https://daminventory-staging.azurewebsites.net", "daminventory-staging.azurewebsites.net","localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["https://damianinventory-staging.azurewebsites.net", "damianinventory-staging.azurewebsites.net","localhost", "127.0.0.1"]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://daminventory-staging.azurewebsites.net'
