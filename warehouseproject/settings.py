@@ -92,10 +92,10 @@ WSGI_APPLICATION = 'warehouseproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config('DBNAME'),
-        'HOST': config('DBHOST'),
-        'USER': config('DBUSER'),
-        'PASSWORD': config('DBPASS'),
+        'NAME': 'damianinventorydatabase', #config('DBNAME'),
+        'HOST': 'damianinventoryserver.postgres.database.azure.com',#config('DBHOST'),
+        'USER': 'xfpbhvcblb',#config('DBUSER'),
+        'PASSWORD': '283Q0U2V2YU03UP7$',#config('DBPASS'),
     }
 }
 
