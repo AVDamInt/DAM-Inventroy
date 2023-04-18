@@ -30,7 +30,8 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["https://damianinventory-staging.azurewebsites.net", "damianinventory-staging.azurewebsites.net", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["https://damianinventory-staging.azurewebsites.net", "damianinventory-staging.azurewebsites.net"]
+#, "localhost", "127.0.0.1"]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://damianinventory-staging.azurewebsites.net'
@@ -95,7 +96,7 @@ DATABASES = {
         'NAME': 'damianinventorydatabase', #config('DBNAME'),
         'HOST': 'damianinventoryserver.postgres.database.azure.com',#config('DBHOST'),
         'USER': 'xfpbhvcblb',#config('DBUSER'),
-        'PASSWORD': '283Q0U2V2YU03UP7$',#config('DBPASS'),
+        'PASSWORD': '283Q0U2V2YU03UP7!',#config('DBPASS'),
     }
 }
 
