@@ -48,6 +48,10 @@ class DeviceForm(forms.ModelForm):
                 css_class='row',
             ),
             Div(
+                Div('history_type', css_class='col-md-2'),
+                css_class='row',
+            ),
+            Div(
                 Div('user', css_class='col-md-2'),
                 css_class='row',
             ),

@@ -12,7 +12,7 @@ class Place(models.Model):
     plan = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
-        return self.name + self.city
+        return self.name
 
     def get_absolute_url(self):
         return reverse('place_detail', kwargs={"pk": self.pk})
