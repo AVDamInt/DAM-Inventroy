@@ -64,10 +64,10 @@
                 <td>{{ place.cap }}</td>
                 <td>{{ place.country }}</td>
                 <td>{{ place.plan }}</td>
-                <td><a href="{% url 'place_detail' place.id %}">
+                <td><a class="btn btn-primary" href="{% url 'place_detail' place.id %}">
                     Detail</a></td>
-                <td><a href="{% url 'place_delete' place.id %}">Delete place</a></td>
-                <td><a href="{% url 'update_place' place.id %}">Edit place</a></td>
+                <td><a class="btn btn-danger" href="{% url 'place_delete' place.id %}">Delete place</a></td>
+                <td><a class="btn btn-success" href="{% url 'update_place' place.id %}">Edit place</a></td>
             </tr>
         {% endfor %}
         </tbody>
