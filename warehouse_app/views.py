@@ -18,6 +18,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import UpdateView
 import xlwt
 from openpyxl import Workbook
+from django.contrib import messages
+
 
 
 @login_required(login_url="/accounts/login/")
@@ -196,8 +198,13 @@ def file_upload(request):
     if request.method == "POST":
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            utils.handle_uploaded_file(request.FILES["file"])
-            return HttpResponseRedirect(reverse_lazy("device_list"))
+            if ".xlsx" in request.FILES["file"]:
+                utils.handle_uploaded_file(request.FILES["file"])
+                return HttpResponseRedirect(reverse_lazy("device_list"))
+            else:
+                messages.error(request,"Wrong file type!")
+                form = UploadFileForm()
+                return render(request, "file_upload.html", {"form": form})
         else:
             form = UploadFileForm()
             return render(request, "file_upload.html", {"form": form})

@@ -15,6 +15,7 @@ import os
 
 from django.urls import reverse_lazy
 from decouple import config, AutoConfig
+from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,10 +31,10 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["damianinventory-staging.azurewebsites.net"]
+#ALLOWED_HOSTS = ["damianinventory-staging.azurewebsites.net"]
 # , "localhost", "127.0.0.1"]
 
-#ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 CSRF_TRUSTED_ORIGINS = ["https://damianinventory-staging.azurewebsites.net"]
 
@@ -86,19 +87,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "warehouseproject.wsgi.application"
 
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
+
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
-DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': 'damianinventorydatabase', #config('DBNAME'),
-       'HOST': 'damianinventoryserver.postgres.database.azure.com',#config('DBHOST'),
-       'USER': 'xfpbhvcblb',#config('DBUSER'),
-       'PASSWORD': '283Q0U2V2YU03UP7!',#config('DBPASS'),
-   }
-}
+#DATABASES = {
+#   'default': {
+#       'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#       'NAME': 'damianinventorydatabase', #config('DBNAME'),
+#       'HOST': 'damianinventoryserver.postgres.database.azure.com',#config('DBHOST'),
+#      'USER': 'xfpbhvcblb',#config('DBUSER'),
+#       'PASSWORD': '283Q0U2V2YU03UP7!',#config('DBPASS'),
+#   }
+#}
 
 # PostgreSQL
 # DATABASES = {
@@ -112,16 +118,16 @@ DATABASES = {
 #   }
 # }
 
-#DATABASES = {
-#    "default": {
-#        "ENGINE": "django.db.backends.postgresql_psycopg2",
-#        "NAME": "inventorydb",
-#        "USER": "admin",
-#        "PASSWORD": "Damiani2022!?",
-#        "HOST": "localhost",
-#        "PORT": "5432",
-#    }
-#}
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "inventorydb",
+        "USER": "admin",
+        "PASSWORD": "Damiani2022!?",
+        "HOST": "localhost",
+        "PORT": "5432",
+    }
+}
 
 # default sqlite db
 # DATABASES = {
