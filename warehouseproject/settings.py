@@ -90,27 +90,27 @@ WSGI_APPLICATION = "warehouseproject.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
-DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': 'damianinventorydatabase', #config('DBNAME'),
-       'HOST': 'damianinventoryserver.postgres.database.azure.com',#config('DBHOST'),
-       'USER': 'xfpbhvcblb',#config('DBUSER'),
-       'PASSWORD': '283Q0U2V2YU03UP7!',#config('DBPASS'),
-   }
-}
-
-# PostgreSQL
-# DATABASES = {
+#DATABASES = {
 #   'default': {
 #       'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#       'NAME': 'postgares',
-#       'USER': 'devadmin',
-#       'PASSWORD': 'Damiani2022!',
-#       'HOST': 'daminventory-server-dev.postgres.database.azure.com',
-#       'PORT': '5432',
+#       'NAME': 'damianinventorydatabase', #config('DBNAME'),
+#       'HOST': 'damianinventoryserver.postgres.database.azure.com',#config('DBHOST'),
+#       'USER': 'xfpbhvcblb',#config('DBUSER'),
+#       'PASSWORD': '283Q0U2V2YU03UP7!',#config('DBPASS'),
 #   }
-# }
+#}
+
+# PostgreSQL
+DATABASES = {
+  'default': {
+      'ENGINE': 'django.db.backends.postgresql_psycopg2',
+      'NAME': 'postgares',
+      'USER': 'devadmin',
+      'PASSWORD': 'Damiani2022!',
+      'HOST': 'daminventory-server-dev.postgres.database.azure.com',
+      'PORT': '5432',
+  }
+}
 
 #DATABASES = {
 #    "default": {
@@ -156,7 +156,7 @@ LANGUAGE_CODE = "it-it"
 
 TIME_ZONE = "UTC"
 
-USE_I18N = True
+USE_I18N = False
 USE_L10N = False
 
 USE_TZ = True
@@ -164,12 +164,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-
-STATIC_ROOT = ''
+print (f"tro {BASE_DIR}")
+print("VWNOI")
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = ('static',)
+# Add these new lines
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

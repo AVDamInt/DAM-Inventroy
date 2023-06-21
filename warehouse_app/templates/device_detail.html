@@ -32,11 +32,11 @@
                 <h2>Model:</h2>
                 <p>{{ device.model }}</h2>
                 <h2>RAM:</h2>
-                <p>{{ device.memory }}</h2>
+                <p>{{ device.memory }} {{device.memory_unit}}</h2>
                 <h2>HDD/SSD:</h2>
-                <p>{{ device.hard_disks }}</h2>
+                <p>{{ device.hard_disk }} {{device.hard_disk_unit}}</h2>
                 <h2>Cpu:</h2>
-                <p>{{ device.cpu }}</h2>
+                <p>{{ device.cpu }}</p>
             </div>
         </div>
         <div class="col-md-4 d-flex align-items-stretch">

@@ -87,6 +87,8 @@ class Device(models.Model):
     place = models.ForeignKey(
         Place, related_name="place", on_delete=models.CASCADE, null=True
     )
+    
+    addr_ip = models.CharField(max_length=12,blank=True, null=True)
     user = models.ForeignKey(
         DeviceUser,
         related_name="deviceuser",
@@ -101,7 +103,7 @@ class Device(models.Model):
     history_type = models.IntegerField(
         choices=IS_HISTORY_CHOICES, default=0, blank=True, null=True
     )
-    note = models.CharField(max_length=200, blank=True, null=True)
+    note = models.TextField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return self.contract

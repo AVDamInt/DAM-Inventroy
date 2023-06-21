@@ -75,7 +75,6 @@ Device list
         <thead>
             <tr>
                 <th data-field='field_id'>Id</th>
-                <th data-field='field_note'>Note</th>
                 <th data-field='field_name'>User History</th>
                 <th data-field='field_status'>Status</th>
                 <th data-field='field_history_type'>History</th>
@@ -97,7 +96,6 @@ Device list
             {% for device in devices %}
             <tr>
                 <th scope="row">{{ device.id }}</th>
-                <th scope="row">{{ device.note }}</th>
                 <td>
                     {% for usr in device.user_history.all %}
                     {{ usr }}<br />
