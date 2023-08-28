@@ -105,14 +105,13 @@ DATABASES = {
   'default': {
       'ENGINE': 'django.db.backends.postgresql_psycopg2',
       'NAME': 'postgres',
-      'USER': 'xfpbhvcblb',
-      'PASSWORD': '283Q0U2V2YU03UP7!',
-      'HOST': 'damianinventoryserver.postgres.database.azure.com',
+      'USER': 'devadmin',
+      'PASSWORD': 'Damiani2022!',
+      'HOST': 'daminventory-server-dev.postgres.database.azure.com',
       'PORT': '5432',
   }
 }
 
-#DATABASES = {
 #    "default": {
 #        "ENGINE": "django.db.backends.postgresql_psycopg2",
 #        "NAME": "inventorydb",
