@@ -57,10 +57,12 @@ class DeviceForm(forms.ModelForm):
             ),
             Div(
                 Div("make", css_class="col-md-2"),
+                Div("model", css_class="col-md-2"),
                 css_class="row",
             ),
             Div(
-                Div("model", css_class="col-md-2"),
+                Div("cpu", css_class="col-md-2"),
+                Div("addr_ip", css_class="col-md-2"),
                 css_class="row",
             ),
             Div(
@@ -73,8 +75,9 @@ class DeviceForm(forms.ModelForm):
                 Div("hard_disk_unit", css_class="col-md-2"),
                 css_class="row",
             ),
+            
             Div(
-                Div("cpu", css_class="col-md-2"),
+                Div("note", css_class="col-md-2"),
                 css_class="row",
             ),
             HTML(
@@ -134,12 +137,14 @@ class DeviceUpdateForm(forms.ModelForm):
                 Div("user_history", css_class="col-md-2"),
                 css_class="row",
             ),
-            Div(
+           Div(
                 Div("make", css_class="col-md-2"),
+                Div("model", css_class="col-md-2"),
                 css_class="row",
             ),
             Div(
-                Div("model", css_class="col-md-2"),
+                Div("cpu", css_class="col-md-2"),
+                Div("addr_ip", css_class="col-md-2"),
                 css_class="row",
             ),
             Div(
@@ -153,7 +158,7 @@ class DeviceUpdateForm(forms.ModelForm):
                 css_class="row",
             ),
             Div(
-                Div("cpu", css_class="col-md-2"),
+                Div("note", css_class="col-md-2"),
                 css_class="row",
             ),
             HTML(
