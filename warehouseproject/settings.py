@@ -19,7 +19,6 @@ from decouple import config, AutoConfig
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 config = AutoConfig(search_path=".env")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -28,10 +27,9 @@ config = AutoConfig(search_path=".env")
 SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["damianinventory-staging.azurewebsites.net"]
-# , "localhost", "127.0.0.1"]
 
 #ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
@@ -58,6 +56,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -90,7 +89,7 @@ WSGI_APPLICATION = "warehouseproject.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
-#DATABASES = {
+# DATABASES = {
 #   'default': {
 #       'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #       'NAME': 'damianinventorydatabase', #config('DBNAME'),
@@ -98,18 +97,18 @@ WSGI_APPLICATION = "warehouseproject.wsgi.application"
 #       'USER': 'xfpbhvcblb',#config('DBUSER'),
 #       'PASSWORD': '283Q0U2V2YU03UP7!',#config('DBPASS'),
 #   }
-#}
+# }
 
-# PostgreSQL
+PostgreSQL
 DATABASES = {
-  'default': {
-      'ENGINE': 'django.db.backends.postgresql_psycopg2',
-      'NAME': 'postgres',
-      'USER': 'xfpbhvcblb',
-      'PASSWORD': '283Q0U2V2YU03UP7!',
-      'HOST': 'damianinventoryserver.postgres.database.azure.com',
-      'PORT': '5432',
-  }
+ 'default': {
+     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+     'NAME': 'postgres',
+     'USER': 'xfpbhvcblb',
+     'PASSWORD': '283Q0U2V2YU03UP7!',
+     'HOST': 'damianinventoryserver.postgres.database.azure.com',
+     'PORT': '5432',
+ }
 }
 
 #DATABASES = {
@@ -164,17 +163,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-print (f"tro {BASE_DIR}")
-print("VWNOI")
+print(f"tro {BASE_DIR}")
 
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = '/static/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Add these new lines
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATICFILES_DIRS = (
+#    os.path.join(BASE_DIR, 'static'),
+#    ('admin', os.path.join(BASE_DIR, 'static', 'admin'))
+# )
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
