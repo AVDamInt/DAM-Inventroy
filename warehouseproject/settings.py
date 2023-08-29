@@ -27,7 +27,7 @@ config = AutoConfig(search_path=".env")
 SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["damianinventory-staging.azurewebsites.net","169.254.130.2"]
 
@@ -101,15 +101,16 @@ WSGI_APPLICATION = "warehouseproject.wsgi.application"
 
 
 DATABASES = {
- 'default': {
-     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-     'NAME': 'postgres',
-     'USER': 'xfpbhvcblb',
-     'PASSWORD': '283Q0U2V2YU03UP7!',
-     'HOST': 'damianinventoryserver.postgres.database.azure.com',
-     'PORT': '5432',
- }
+'default': {
+    'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    'NAME': 'postgres',
+    'USER': 'xfpbhvcblb',
+    'PASSWORD': '283Q0U2V2YU03UP7!',
+    'HOST': 'damianinventoryserver.postgres.database.azure.com',
+    'PORT': '5432',
 }
+}
+
 
 #DATABASES = {
 #    "default": {
