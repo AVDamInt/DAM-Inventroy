@@ -24,12 +24,12 @@ config = AutoConfig(search_path=".env")
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY")
-
+#SECRET_KEY = config("SECRET_KEY")
+SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["damianinventory-staging.azurewebsites.net","169.254.130.2"]
+ALLOWED_HOSTS = ["damianinventory-staging.azurewebsites.net", "000.00.00.00"]
 
 #ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     "django.contrib.admin",
     "crispy_forms",
     "django_filters",
-    "import_export",
+      #"import_export",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
@@ -165,6 +165,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 print(f"tro {BASE_DIR}")
+
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = '/static/'
