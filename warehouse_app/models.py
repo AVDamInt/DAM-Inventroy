@@ -21,11 +21,24 @@ class Place(models.Model):
         ordering = ["id"]
 
 
+class Department(models.Model):
+    name = models.CharField(max_length=50, null=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("department_detail", kwargs={"pk": self.pk})
+
+    class Meta:
+        ordering = ["id"]
+
+
 class DeviceUser(models.Model):
     name = models.CharField(max_length=50, null=True)
     surname = models.CharField(max_length=50, blank=True, null=True)
     email = models.CharField(max_length=50, blank=True, null=True)
-    role = models.CharField(max_length=50, blank=True, null=True)
+    user_department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.name
@@ -87,8 +100,8 @@ class Device(models.Model):
     place = models.ForeignKey(
         Place, related_name="place", on_delete=models.CASCADE, null=True
     )
-    
-    addr_ip = models.CharField(max_length=12,blank=True, null=True)
+
+    addr_ip = models.CharField(max_length=12, blank=True, null=True)
     user = models.ForeignKey(
         DeviceUser,
         related_name="deviceuser",

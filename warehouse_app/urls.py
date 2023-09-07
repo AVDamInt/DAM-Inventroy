@@ -28,4 +28,10 @@ urlpatterns = [
     path("file_upload", views.file_upload, name="file_upload"),
     path("export/devices", views.export_devices, name="export_devices"),
     path("export/places", views.export_places, name="export_places"),
+    path("department/create", views.create_department, name='department_register'),
+    path("department", views.DepartmentList.as_view(), name="department_list"),
+    path("department/read/<int:pk>", views.DepartmentDetailView.as_view(), name="department_detail"),
+    path("department/update/<int:pk>", views.DepartmentUpdateView.as_view(), name="update_department"),
+    path("department/delete/<int:pk>", views.DepartmentDeleteView.as_view(), name="department_delete"),
+
 ]

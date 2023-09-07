@@ -8,9 +8,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views import generic
 from . import models
 from django.urls import reverse_lazy
-from django.views.generic.edit import DeleteView
+from django.views.generic.edit import DeleteView, CreateView
 from . import forms
-from .forms import UploadFileForm
 from . import utils
 from . import filters
 from django_filters.views import FilterView
@@ -19,6 +18,47 @@ from django.views.generic.edit import UpdateView
 import xlwt
 from openpyxl import Workbook
 from django.contrib import messages
+
+
+class DepartmentList(LoginRequiredMixin, FilterView):
+    # login_url = 'accounts/login'
+    # redirect_field_name = 'redirect_to'
+    paginate_by = 10
+    context_object_name = "departments"
+    model = models.Department
+    template_name = "department_list.html"
+
+
+@login_required(login_url="/accounts/login/")
+def create_department(request):
+    if request.method == "POST":
+        instance_form = forms.DepartmentForm(request.POST)
+        if instance_form.is_valid():
+            instance_form.save()
+            return HttpResponseRedirect(reverse_lazy("department_list"))
+    else:
+        form = forms.DepartmentForm()
+        return render(request, "department_form.html", {"form": form})
+
+
+class DepartmentDetailView(LoginRequiredMixin, generic.DetailView):
+    login_url = "accounts/login"
+    model = models.Department
+    template_name = "department_detail.html"
+    context_object_name = "department"
+
+
+class DepartmentUpdateView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "department_update_form.html"
+    model = models.Department
+    form_class = forms.DepartmentUpdateForm
+
+
+class DepartmentDeleteView(LoginRequiredMixin, DeleteView):
+    # login_url = 'accounts/login'
+    model = models.Department
+    template_name = "department_delete.html"
+    success_url = reverse_lazy("department_list")
 
 
 
@@ -32,6 +72,8 @@ def create_device(request):
     else:
         form = forms.DeviceForm()
         return render(request, "device_form.html", {"form": form})
+
+
 
 
 class DeviceList(LoginRequiredMixin, FilterView):
@@ -196,20 +238,20 @@ class UserDeleteView(LoginRequiredMixin, generic.DeleteView):
 @login_required(login_url="/accounts/login/")
 def file_upload(request):
     if request.method == "POST":
-        form = UploadFileForm(request.POST, request.FILES)
+        form = forms.UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            if ".xlsx" in request.FILES["file"]:
+            if request.FILES["file"]:
                 utils.handle_uploaded_file(request.FILES["file"])
                 return HttpResponseRedirect(reverse_lazy("device_list"))
             else:
                 messages.error(request,"Wrong file type!")
-                form = UploadFileForm()
+                form = forms.UploadFileForm()
                 return render(request, "file_upload.html", {"form": form})
         else:
-            form = UploadFileForm()
+            form = forms.UploadFileForm()
             return render(request, "file_upload.html", {"form": form})
     else:
-        form = UploadFileForm()
+        form = forms.UploadFileForm()
         return render(request, "file_upload.html", {"form": form})
 
 

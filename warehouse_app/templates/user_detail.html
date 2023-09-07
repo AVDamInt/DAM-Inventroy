@@ -17,8 +17,8 @@
             <p>{{ deviceuser.surname }}</h2>
             <h2>E-mail:</h2>
             <p>{{ deviceuser.email }}</h2>
-            <h2>Role:</h2>
-            <p>{{ deviceuser.role }}</h2>
+            <h2>Department:</h2>
+            <p>{{ deviceuser.user_department }}</h2>
             <div class="col d-flex justify-content-end align-items-end">
                     <a class="btn btn-danger" href="{% url 'user_delete' deviceuser.id %}">Delete user</a>
             </div>

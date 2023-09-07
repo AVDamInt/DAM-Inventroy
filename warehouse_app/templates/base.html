@@ -59,6 +59,16 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
+                        Department
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item" href="{% url 'department_list' %}"><i class="bi bi-list"></i> List departments</a></li>
+                        <li><a class="dropdown-item" href="{% url 'department_register' %}"><i class="bi bi-plus-circle"></i> Add department</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
                         Data import
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark">

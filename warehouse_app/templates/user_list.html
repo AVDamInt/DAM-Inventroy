@@ -37,6 +37,7 @@
             <th data-field='field_username'>Name</th>
             <th data-field='field_email'>Surname</th>
             <th data-field='field_email'>Email</th>
+             <th data-field='field_user_department'>Department</th>
             <th data-field='field_delete'>Detail</th>
             <th data-field='field_delete'>Delete</th>
             <th data-field='field_edit'>Edit</th>
@@ -49,6 +50,7 @@
                 <td>{{ user.name }}</td>
                 <td>{{ user.surname }}</td>
                 <td>{{ user.email }}</td>
+                <td>{{ user.user_department }}</td>
                 <td><a class="btn btn-primary" href="{% url 'user_detail' user.id %}">Detail user</a></td>
                 <td><a class="btn btn-danger" href="{% url 'user_delete' user.id %}">Delete user</a></td>
                 <td><a class="btn btn-success" href="{% url 'update_user' user.id %}">Edit user</a></td>

@@ -1,11 +1,59 @@
 from crispy_forms.helper import FormHelper
 from django import forms
 from crispy_forms.layout import Submit, Row, Column, Layout, Div, HTML, Field
-from .models import Device, Place, DeviceUser
+from .models import Device, Place, DeviceUser, Department
 
 
 class DateInput(forms.DateInput):
     input_type = "date"
+
+
+class DepartmentForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(DepartmentForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = "POST"
+        # self.helper.form_action = "department_register"
+        self.helper.layout = Layout(
+            Row(
+                Column("name", css_class="col-md-2"),
+                css_class="form-row",
+            ),
+            HTML(
+                """
+                    <br>
+                """
+            ),
+        )
+        self.helper.add_input(Submit("submit", "Add"))
+
+    class Meta:
+        model = Department
+        fields = "__all__"
+
+
+class DepartmentUpdateForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(DepartmentUpdateForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = "POST"
+        # self.helper.form_action = 'device_register'
+        self.helper.layout = Layout(
+            Row(
+                Column("name", css_class="col-md-4"),
+                css_class="form-row",
+            ),
+            HTML(
+                """
+                    <br>
+                """
+            ),
+        )
+        self.helper.add_input(Submit("submit", "Edit"))
+
+    class Meta:
+        model = Department
+        fields = "__all__"
 
 
 class DeviceForm(forms.ModelForm):
@@ -75,7 +123,7 @@ class DeviceForm(forms.ModelForm):
                 Div("hard_disk_unit", css_class="col-md-2"),
                 css_class="row",
             ),
-            
+
             Div(
                 Div("note", css_class="col-md-2"),
                 css_class="row",
@@ -137,7 +185,7 @@ class DeviceUpdateForm(forms.ModelForm):
                 Div("user_history", css_class="col-md-2"),
                 css_class="row",
             ),
-           Div(
+            Div(
                 Div("make", css_class="col-md-2"),
                 Div("model", css_class="col-md-2"),
                 css_class="row",
@@ -283,7 +331,7 @@ class DeviceUserForm(forms.ModelForm):
                 css_class="form-row",
             ),
             Row(
-                Column("role", css_class="col-md-4"),
+                Column("department", css_class="col-md-4"),
                 css_class="form-row",
             ),
             HTML(
@@ -336,5 +384,22 @@ class DeviceUserUpdateForm(forms.ModelForm):
 
 
 class UploadFileForm(forms.Form):
-    #title = forms.CharField(max_length=50)
+    # title = forms.CharField(max_length=50)
     file = forms.FileField()
+
+    def clean(self):
+        cleaned_data = super(UploadFileForm, self).clean()
+        file = cleaned_data.get('file')
+
+        if file:
+            filename = file.name
+            print(filename)
+            if filename.endswith('.xlsx'):
+                print
+                'File is an excel'
+            else:
+                print
+                'File is NOT an excel'
+                raise forms.ValidationError("File is not a excel. Please upload only mp3 files")
+
+        return file

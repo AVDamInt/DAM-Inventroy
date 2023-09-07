@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ place.name }}
+{% endblock %}
+
+{% block content %}
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-body">
+                    <h1 class="card-title">General data</h1>
+                    <hr>
+                    <h2>Name:</h2>
+                    <p>{{ department.name }}</p>
+                        <div class="col d-flex justify-content-end align-items-end">
+                            <a class="btn btn-danger" href="{% url 'department_delete' department.id %}">Delete department</a>&nbsp
+                            <a class="btn btn-success" href="{% url 'update_department' department.id %}">Edit department</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+{% endblock %}
