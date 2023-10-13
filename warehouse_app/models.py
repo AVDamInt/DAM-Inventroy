@@ -10,6 +10,7 @@ class Place(models.Model):
     cap = models.CharField(max_length=50, blank=True, null=True)
     country = models.CharField(max_length=50, blank=True, null=True)
     plan = models.CharField(max_length=50, blank=True, null=True)
+    #hi
 
     def __str__(self):
         return self.name
