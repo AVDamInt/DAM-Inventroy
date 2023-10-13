@@ -1,98 +1,127 @@
 from datetime import datetime
-
+import time
 import pandas as pd
 import os
-from .models import Device, Place, DeviceUser
+from .models import Device, Place, DeviceUser, Department
 
 
 def handle_uploaded_file(up_file):
-    # if up_file.name ==
-    df = pd.read_excel(up_file, engine='openpyxl')
+    # if up_file.name ==ù
+    print(up_file)
+    start_time = time.time()
+    df = pd.read_excel(up_file, engine="openpyxl", na_filter=False)
     cnt = 0
     for _, row in df.iterrows():
-        UTENTE = str(row['UTENTE'])
-        UTENTE = UTENTE[:-1]
-        UFFICIO = str(row['UFFICIO'])
-        UFFICIO = UFFICIO[:-1]
-        SEDE = str(row['SEDE'])
-        SEDE = SEDE[:-1]
-        # user = DeviceUser(
-        #    name=row['UTENTE'],
-        #    surname='',
-        #    email='',
-        #    role=''
-        # )
-        # user.save()
-        user, created = DeviceUser.objects.get_or_create(
-            name=UTENTE,
-            surname='',
-            email='',
-            role='')
+        utente = str(row["UTENTE"])
+        ufficio = str(row["DIREZIONE"])
+        sede = str(row["SEDE"])
+        dipartimento = str(row["DIREZIONE"])
 
-        if created:
-            print(f"User created with name {UTENTE}")
-        else:
-            print(f"User already in db")
-
-        place, created = Place.objects.get_or_create(
-            name=UFFICIO,
-            city=SEDE,
-            address='',
-            cap='',
-            country='',
-            plan=''
+        dipartimento_create, created = Department.objects.update_or_create(
+            name=dipartimento
         )
-        if created:
-            print(f"Place created with name {UFFICIO} and city {SEDE}")
+
+        device_status = 1
+        user = None
+        if "onibile" in utente.lower() or "ninbile" in utente.lower():
+            device_status = 0
         else:
-            print(f"Place already in db")
+            user, created = DeviceUser.objects.update_or_create(
+                name=utente,
+                surname="",
+                email="",
+                user_department = dipartimento_create,
+            )
 
-        CONTRATTO = str(row['CONTR'])
-        CONTRATTO = CONTRATTO[:-1]
-        SCADENZA = str(row['SCAD'])
-        SCADENZA = SCADENZA[:-1]
-        RINNOVO = str(row['RINNOVO'])
-        RINNOVO = RINNOVO[:-1]
-        HOST_NAME = str(row['HOST_NAME'])
-        HOST_NAME = HOST_NAME[:-1]
-        MARCA = str(row['MARCA'])
-        MARCA = MARCA[:-1]
-        TYPE = str(row['TYPE'])
-        YPE = TYPE[:-1]
-        MATRICOLA = str(row['MATRICOLA'])
-        MATRICOLA = MATRICOLA[:-1]
-        DESC = str(row['DESC'])
-        DESC = DESC[:-1]
+            # if created:
 
-        #dt_scadenza = datetime.strptime(SCADENZA, '%Y-%m-%d')
-        #print(dt_scadenza)
-        #dt_rinnovo = datetime.strptime(RINNOVO, '%Y-%m-%d')
-        #print(dt_rinnovo)
-        device, created = Device.objects.get_or_create(
-            serial_number=MATRICOLA,
-            contract=CONTRATTO,
-            #expiration_date=dt_scadenza,
-            #renewal_date=dt_rinnovo,
-            host_name=HOST_NAME,
-            make=MARCA,
-            model=TYPE,
+            # print(f"User created with name {utente}")
+            # else:
+            # print(f"User already in db")
+
+        place, created = Place.objects.update_or_create(
+            name=ufficio,
+            city=sede,
+            address="",
+            cap="",
+            country="",
+            plan="",
+            defaults={
+                "name": dipartimento,
+                "city": sede,
+                "cap": "",
+                "country": "",
+                "plan": "",
+            },
+        )
+        # if created:
+        # print(f"Place created with name {ufficio} and city {sede}")
+        # else:
+        # print(f"Place already in db")
+
+        contratto = str(row["CONTR"])
+
+        host_name = str(row["HOST_NAME"])
+        marca = str(row["MARCA"])
+        tipo = str(row["TYPE"])
+        matricola = str(row["MATRICOLA"])
+        stato = str(row["STATO"])
+        note = str(row["MONITOR"])
+        #test_id = str(row["TEST_ID"])
+
+        history_type = 0
+        if stato == "STORICO":
+            history_type = 0
+        elif stato == "ATTIVO":
+            history_type = 1
+
+        dt_scadenza = ""
+        dt_rinnovo = ""
+        scad = None
+        rinn = None
+        scadenza = str(row["SCAD"])
+        rinnovo = str(row["RINNOVO"])
+        if scadenza:
+            scad = datetime.strptime(scadenza, "%Y-%m-%d %H:%M:%S")
+        else:
+            scad = None
+
+        if rinnovo:
+            rinn = datetime.strptime(rinnovo, "%Y-%m-%d %H:%M:%S")
+        else:
+            rinn = None
+
+        # print(f"Device data {matricola} - {contratto} - {host_name} - {marca} - {tipo}")
+        # print(scad)
+
+        # print(rinn)
+
+        # bisogna rivdere la get_or_create perchè crea meno records di quelli presente nel file excel.
+        device, created = Device.objects.update_or_create(
+            serial_number=matricola,
+            contract=contratto,
+            expiration_date=scad if scad else None,
+            renewal_date=rinn if rinn else None,
+            host_name=host_name,
+            make=marca,
+            model=tipo,
             place=place,
-            user=user
+            user=user,
+            status=device_status,
+            history_type=history_type,
+            note=note,
+            #test_id=test_id,
         )
 
         if created:
-            print(f"Device created with data {MATRICOLA} - {CONTRATTO} - {HOST_NAME} - {MARCA} - {TYPE}")
+            print(
+                f"Device created with data {matricola} - {contratto} - {host_name} - {marca} - {tipo}"
+            )
         else:
-            print(f"Device already in db")
+            print(
+                f"Device already in db {matricola} - {contratto} - {host_name} - {marca} - {tipo}"
+            )
 
         cnt += 1
-
-        # place = Place(
-        #    name=row['UFFICIO'],
-        #    city=row['SEDE'],
-        #    address='',
-        #    cap='',
-        #    country='',
-        #    plan=''
-        # )
-        # place.save()
+    end_time = time.time() - start_time
+    print(f"Execution time in seconds {end_time}")

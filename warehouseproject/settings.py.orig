@@ -19,17 +19,19 @@ from decouple import config, AutoConfig
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
 config = AutoConfig(search_path=".env")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config("SECRET_KEY")
-#SECRET_KEY = os.environ['SECRET_KEY']
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["damianinventory-staging.azurewebsites.net", "000.00.00.00"]
+ALLOWED_HOSTS = ["damianinventory-staging.azurewebsites.net"]
+# , "localhost", "127.0.0.1"]
 
 #ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
@@ -47,7 +49,7 @@ INSTALLED_APPS = [
     "django.contrib.admin",
     "crispy_forms",
     "django_filters",
-      #"import_export",
+    "import_export",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
@@ -56,7 +58,6 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -89,19 +90,28 @@ WSGI_APPLICATION = "warehouseproject.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
-DATABASES = {
-'default': {
-    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME': 'postgres',
-    'USER': 'xfpbhvcblb',
-    'PASSWORD': '283Q0U2V2YU03UP7!',
-    'HOST': 'damianinventoryserver.postgres.database.azure.com',
-    'PORT': '5432',
-}
-}
-
-
 #DATABASES = {
+#   'default': {
+#       'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#       'NAME': 'damianinventorydatabase', #config('DBNAME'),
+#       'HOST': 'damianinventoryserver.postgres.database.azure.com',#config('DBHOST'),
+#       'USER': 'xfpbhvcblb',#config('DBUSER'),
+#       'PASSWORD': '283Q0U2V2YU03UP7!',#config('DBPASS'),
+#   }
+#}
+
+# PostgreSQL
+DATABASES = {
+  'default': {
+      'ENGINE': 'django.db.backends.postgresql_psycopg2',
+      'NAME': 'postgres',
+      'USER': 'devadmin',
+      'PASSWORD': 'Damiani2022!',
+      'HOST': 'daminventory-server-dev.postgres.database.azure.com',
+      'PORT': '5432',
+  }
+}
+
 #    "default": {
 #        "ENGINE": "django.db.backends.postgresql_psycopg2",
 #        "NAME": "inventorydb",
@@ -109,7 +119,6 @@ DATABASES = {
 #        "PASSWORD": "Damiani2022!?",
 #        "HOST": "localhost",
 #        "PORT": "5432",
-#        'DISABLE_SERVER_SIDE_CURSORS': True,
 #    }
 #}
 
@@ -154,25 +163,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-print(f"tro {BASE_DIR}")
+print (f"tro {BASE_DIR}")
+print("VWNOI")
 
-
-STATICFILES_DIRS = [
-    BASE_DIR / "static"
-]
-
-STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = '/static/'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Add these new lines
-# STATICFILES_DIRS = (
-#    os.path.join(BASE_DIR, 'static'),
-#    ('admin', os.path.join(BASE_DIR, 'static', 'admin'))
-# )
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

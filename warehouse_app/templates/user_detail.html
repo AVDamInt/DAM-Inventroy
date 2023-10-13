@@ -1,31 +1,29 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {{ deviceuser.name }}
+{{ deviceuser.name }}
 {% endblock %}
 
 {% block content %}
-    <div>
-        <a href="{% url 'user_delete' deviceuser.id %}">Delete user</a>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <p>Name: {{ deviceuser.name }}</p>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card card-body">
+            <h1 class="card-title">General data</h1>
+            <hr>
+            <h2>Name:</h2>
+            <p>{{ deviceuser.name }}</h2>
+            <h2>Surname:</h2>
+            <p>{{ deviceuser.surname }}</h2>
+            <h2>E-mail:</h2>
+            <p>{{ deviceuser.email }}</h2>
+            <h2>Department:</h2>
+            <p>{{ deviceuser.user_department }}</h2>
+            <div class="col d-flex justify-content-end align-items-end">
+                    <a class="btn btn-danger" href="{% url 'user_delete' deviceuser.id %}">Delete user</a>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <p>Surname: {{ deviceuser.surname }}</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <p>Email: {{ deviceuser.email }}</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <p>Role: {{ deviceuser.role }}</p>
-        </div>
-    </div>
+</div>
+
 {% endblock %}

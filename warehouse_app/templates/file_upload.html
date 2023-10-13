@@ -4,10 +4,21 @@
 {% load static %}
 
 {% block content %}
+<div class="row">
+    <div class="col-md-4">
+       
+
     <form method="POST" enctype="multipart/form-data">
+
         {% csrf_token %}
-        {{ form | crispy }}
+        <div class="card card-body">
+            <h1 class="card-title">Upload form</h1>
+            {{ form | crispy }}
+        </div>
         <br>
         <button type="submit">Upload</button>
+
     </form>
+</div>
+</div> 
 {% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Search{% endblock title %}
+{% block content %}
+    <h1>Search Results</h1>
+    {% for device in device_list %}
+        <div>
+            <h3>{{ device.serial_number }}</h3>
+            <p>Contract: {{ device.contract }}</p>
+            <p>Host name: {{ device.host_name }}</p>
+            <p>Make: {{ device.make }}</p>
+        </div>
+    {% endfor %}
+{% endblock content %}

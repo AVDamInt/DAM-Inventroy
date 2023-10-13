@@ -1,145 +1,405 @@
 from crispy_forms.helper import FormHelper
 from django import forms
-from crispy_forms.layout import Submit, Row, Column, Layout, Div, Field, HTML
-from .models import Device, Place, DeviceUser
+from crispy_forms.layout import Submit, Row, Column, Layout, Div, HTML, Field
+from .models import Device, Place, DeviceUser, Department
 
 
 class DateInput(forms.DateInput):
-    input_type = 'date'
+    input_type = "date"
+
+
+class DepartmentForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(DepartmentForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = "POST"
+        # self.helper.form_action = "department_register"
+        self.helper.layout = Layout(
+            Row(
+                Column("name", css_class="col-md-2"),
+                css_class="form-row",
+            ),
+            HTML(
+                """
+                    <br>
+                """
+            ),
+        )
+        self.helper.add_input(Submit("submit", "Add"))
+
+    class Meta:
+        model = Department
+        fields = "__all__"
+
+
+class DepartmentUpdateForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(DepartmentUpdateForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = "POST"
+        # self.helper.form_action = 'device_register'
+        self.helper.layout = Layout(
+            Row(
+                Column("name", css_class="col-md-4"),
+                css_class="form-row",
+            ),
+            HTML(
+                """
+                    <br>
+                """
+            ),
+        )
+        self.helper.add_input(Submit("submit", "Edit"))
+
+    class Meta:
+        model = Department
+        fields = "__all__"
 
 
 class DeviceForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(DeviceForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_method = 'POST'
+        self.helper.form_method = "POST"
         # self.helper.form_action = 'device_register'
         self.helper.layout = Layout(
             Div(
-                Div('user_history', css_class='col-md-4'),
-                Div('serial_number', css_class='col-md-4'),
-                Div('status', css_class='col-md-4'),
-                css_class='row',
+                Div("host_name", css_class="col-md-2"),
+                css_class="row",
             ),
             Div(
-                Div('contract', css_class='col-md-4'),
-                Div('expiration_date', type='date', css_class='col-md-4'),
-                Div('renewal_date', type='date', css_class='col-md-4'),
-                css_class='row',
+                Div("serial_number", css_class="col-md-2"),
+                css_class="row",
             ),
             Div(
-                Div('place', css_class='col-md-6'),
-                Div('user', css_class='col-md-6'),
-                css_class='row',
+                Div("status", css_class="col-md-4"),
+                css_class="row",
             ),
             Div(
-                Div('make', css_class='col-md-6'),
-                Div('model', css_class='col-md-6'),
-                css_class='row',
+                Div("contract", css_class="col-md-2"),
+                css_class="row",
             ),
-            HTML("""
-                    <br>
-                """),
             Div(
-                Submit('submit', 'Submit'),
-            )
-        )
+                Div("expiration_date", type="date", css_class="col-md-2"),
+                css_class="row",
+            ),
+            Div(
+                Div("renewal_date", type="date", css_class="col-md-2"),
+                css_class="row",
+            ),
+            Div(
+                Div("place", css_class="col-md-2"),
+                css_class="row",
+            ),
+            Div(
+                Div("user_history", css_class="col-md-2"),
+                css_class="row",
+            ),
+            Div(
+                Div("history_type", css_class="col-md-2"),
+                css_class="row",
+            ),
+            Div(
+                Div("user", css_class="col-md-2"),
+                css_class="row",
+            ),
+            Div(
+                Div("make", css_class="col-md-2"),
+                Div("model", css_class="col-md-2"),
+                css_class="row",
+            ),
+            Div(
+                Div("cpu", css_class="col-md-2"),
+                Div("addr_ip", css_class="col-md-2"),
+                css_class="row",
+            ),
+            Div(
+                Div("memory", css_class="col-md-2"),
+                Div("memory_unit", css_class="col-md-2"),
+                css_class="row",
+            ),
+            Div(
+                Div("hard_disk", css_class="col-md-2"),
+                Div("hard_disk_unit", css_class="col-md-2"),
+                css_class="row",
+            ),
 
-        # self.helper.add_input(Submit('submit', 'Submit'))
+            Div(
+                Div("note", css_class="col-md-2"),
+                css_class="row",
+            ),
+            HTML(
+                """
+                    <br>
+                """
+            ),
+        )
+        self.helper.add_input(Submit("submit", "Add"))
 
     class Meta:
         model = Device
-        fields = ('__all__')
+        fields = "__all__"
         widgets = {
-            'expiration_date': DateInput(),
-            'renewal_date': DateInput()
+            "expiration_date": DateInput(format="%d/%m/%Y"),
+            "renewal_date": DateInput(format="%d/%m/%Y"),
         }
+
+
+class DeviceUpdateForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(DeviceUpdateForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = "POST"
+        # self.helper.form_action = 'device_register'
+        self.helper.layout = Layout(
+            Div(
+                Div("host_name", css_class="col-md-2"),
+                css_class="row",
+            ),
+            Div(
+                Div("serial_number", css_class="col-md-2"),
+                css_class="row",
+            ),
+            Div(
+                Div("status", css_class="col-md-4"),
+                css_class="row",
+            ),
+            Div(
+                Div("contract", css_class="col-md-2"),
+                css_class="row",
+            ),
+            Div(
+                Div("expiration_date", type="date", css_class="col-md-2"),
+                css_class="row",
+            ),
+            Div(
+                Div("renewal_date", type="date", css_class="col-md-2"),
+                css_class="row",
+            ),
+            Div(
+                css_class="row",
+            ),
+            Div(
+                Div("place", css_class="col-md-2"),
+                Div("user", css_class="col-md-2"),
+                Div("user_history", css_class="col-md-2"),
+                css_class="row",
+            ),
+            Div(
+                Div("make", css_class="col-md-2"),
+                Div("model", css_class="col-md-2"),
+                css_class="row",
+            ),
+            Div(
+                Div("cpu", css_class="col-md-2"),
+                Div("addr_ip", css_class="col-md-2"),
+                css_class="row",
+            ),
+            Div(
+                Div("memory", css_class="col-md-2"),
+                Div("memory_unit", css_class="col-md-2"),
+                css_class="row",
+            ),
+            Div(
+                Div("hard_disk", css_class="col-md-2"),
+                Div("hard_disk_unit", css_class="col-md-2"),
+                css_class="row",
+            ),
+            Div(
+                Div("note", css_class="col-md-2"),
+                css_class="row",
+            ),
+            HTML(
+                """
+                    <br>
+                """
+            ),
+        )
+        self.helper.add_input(Submit("submit", "Edit"))
+
+    class Meta:
+        model = Device
+        fields = "__all__"
+        widgets = {"expiration_date": DateInput(), "renewal_date": DateInput()}
 
 
 class PlaceForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PlaceForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_method = 'POST'
-        # self.helper.form_action = 'device_register'
+        self.helper.form_method = "POST"
+        self.helper.form_action = "place_register"
         self.helper.layout = Layout(
             Row(
-                Column('name', css_class='col-md-4'),
-                css_class='form-row',
+                Column("name", css_class="col-md-2"),
+                css_class="form-row",
             ),
             Row(
-                Column('country', css_class='col-md-4'),
-                css_class='form-row',
+                Column("country", css_class="col-md-2"),
+                css_class="form-row",
             ),
             Row(
-                Column('city', css_class='col-md-4'),
-                css_class='form-row',
+                Column("city", css_class="col-md-2"),
+                css_class="form-row",
             ),
             Row(
-                Column('address', css_class='col-md-4'),
-                css_class='form-row',
+                Column("address", css_class="col-md-2"),
+                css_class="form-row",
             ),
             Row(
-                Column('cap', css_class='col-md-4'),
-                css_class='form-row',
+                Column("cap", css_class="col-md-2"),
+                css_class="form-row",
             ),
             Row(
-                Column('plan', css_class='col-md-4'),
-                css_class='form-row',
+                Column("plan", css_class="col-md-2"),
+                css_class="form-row",
             ),
-            HTML("""
+            HTML(
+                """
                     <br>
-                """),
-            Div(
-                Submit('submit', 'Submit'),
-            )
+                """
+            ),
         )
-
-        # self.helper.add_input(Submit('submit', 'Submit'))
+        self.helper.add_input(Submit("submit", "Add"))
 
     class Meta:
         model = Place
-        fields = ('__all__')
+        fields = "__all__"
+
+
+class PlaceUpdateForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(PlaceUpdateForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = "POST"
+        # self.helper.form_action = 'place_register'
+        self.helper.layout = Layout(
+            Row(
+                Column("name", css_class="col-md-4"),
+                css_class="form-row",
+            ),
+            Row(
+                Column("country", css_class="col-md-4"),
+                css_class="form-row",
+            ),
+            Row(
+                Column("city", css_class="col-md-4"),
+                css_class="form-row",
+            ),
+            Row(
+                Column("address", css_class="col-md-4"),
+                css_class="form-row",
+            ),
+            Row(
+                Column("cap", css_class="col-md-4"),
+                css_class="form-row",
+            ),
+            Row(
+                Column("plan", css_class="col-md-4"),
+                css_class="form-row",
+            ),
+            HTML(
+                """
+                    <br>
+                """
+            ),
+        )
+        self.helper.add_input(Submit("submit", "Edit"))
+
+    class Meta:
+        model = Place
+        fields = "__all__"
 
 
 class DeviceUserForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(DeviceUserForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_method = 'POST'
+        self.helper.form_method = "POST"
         # self.helper.form_action = 'device_register'
         self.helper.layout = Layout(
             Row(
-                Column('name', css_class='col-md-4'),
-                css_class='form-row',
+                Column("name", css_class="col-md-4"),
+                css_class="form-row",
             ),
             Row(
-                Column('surname', css_class='col-sm-4 col-sm-offset-4'),
-                css_class='form-row',
+                Column("surname", css_class="col-sm-4"),
+                css_class="form-row",
             ),
             Row(
-                Column('email', css_class='col-md-4'),
-                css_class='form-row',
+                Column("email", css_class="col-md-4"),
+                css_class="form-row",
             ),
             Row(
-                Column('role', css_class='col-md-4'),
-                css_class='form-row',
+                Column("department", css_class="col-md-4"),
+                css_class="form-row",
             ),
-            HTML("""
+            HTML(
+                """
                     <br>
-                """),
-            Div(
-                Submit('submit', 'Submit'),
-            )
+                """
+            ),
         )
-
-        # self.helper.add_input(Submit('submit', 'Submit'))
+        self.helper.add_input(Submit("submit", "Add"))
 
     class Meta:
         model = DeviceUser
-        fields = ('__all__')
+        fields = "__all__"
+
+
+class DeviceUserUpdateForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(DeviceUserUpdateForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = "POST"
+        # self.helper.form_action = 'device_register'
+        self.helper.layout = Layout(
+            Row(
+                Column("name", css_class="col-md-4"),
+                css_class="form-row",
+            ),
+            Row(
+                Column("surname", css_class="col-sm-4 col-sm-offset-4"),
+                css_class="form-row",
+            ),
+            Row(
+                Column("email", css_class="col-md-4"),
+                css_class="form-row",
+            ),
+            Row(
+                Column("role", css_class="col-md-4"),
+                css_class="form-row",
+            ),
+            HTML(
+                """
+                    <br>
+                """
+            ),
+        )
+        self.helper.add_input(Submit("submit", "Edit"))
+
+    class Meta:
+        model = DeviceUser
+        fields = "__all__"
 
 
 class UploadFileForm(forms.Form):
-    title = forms.CharField(max_length=50)
+    # title = forms.CharField(max_length=50)
     file = forms.FileField()
+
+    def clean(self):
+        cleaned_data = super(UploadFileForm, self).clean()
+        file = cleaned_data.get('file')
+
+        if file:
+            filename = file.name
+            print(filename)
+            if filename.endswith('.xlsx'):
+                print
+                'File is an excel'
+            else:
+                print
+                'File is NOT an excel'
+                raise forms.ValidationError("File is not a excel. Please upload only mp3 files")
+
+        return file

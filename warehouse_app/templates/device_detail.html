@@ -1,21 +1,99 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}
-    {{ device.name }}
+{{ device.name }}
 {% endblock %}
 
 {% block content %}
-    <div>
-        <a href="{% url 'device_delete' device.id %}">Delete device</a>
-    </div>
+
     <div class="row">
-        <div class="col-md-12">
-            <p>Name: {{ device.name }}</p>
+        <div class="col-md-4 d-flex align-items-stretch">
+            <div class="card card-body">
+                <h1 class="card-title">General data</h1>
+                <hr>
+                <h2>Contract:</h2>
+                <p>{{ device.contract }}</h2>
+                <h2>Expiration date:</h2>
+                <p>{{ device.expiration_date|date:"d/m/Y" }}</h2>
+                <h2>Host name:</h2>
+                <p>{{ device.host_name }}</h2>
+                <h2>Model type:</h2>
+                <p>{{ device.model }}</h2>
+                <h2>Serial number:</h2>
+                <p>{{ device.serial_number }}</h2>
+            </div>
+        </div>
+        <div class="col-md-4 d-flex align-items-stretch">
+            <div class="card card-body">
+                <h1 class="card-title">Hardware data</h1>
+                <hr>
+                <h2>Make:</h2>
+                <p>{{ device.make }}</h2>
+                <h2>Model:</h2>
+                <p>{{ device.model }}</h2>
+                <h2>RAM:</h2>
+                <p>{{ device.memory }} {{device.memory_unit}}</h2>
+                <h2>HDD/SSD:</h2>
+                <p>{{ device.hard_disk }} {{device.hard_disk_unit}}</h2>
+                <h2>Cpu:</h2>
+                <p>{{ device.cpu }}</p>
+            </div>
+        </div>
+        <div class="col-md-4 d-flex align-items-stretch">
+            <div class="card card-body">
+                <h1 class="card-title">Other data</h1>
+                <hr>
+                <h2>User:</h2>
+                <p><a href="{% url 'user_detail' device.user.id %}">
+                        {{ device.user.name }} {{ device.user.surname }}</a></h2>
+                <h2>Place:</h2>
+                <p><a href="{% url 'place_detail' device.place.id %}">
+                        {{ device.place }}</a></p>
+                <h2>Status:</h2>
+                {% if device.status == 0 %}
+                <p>Available</p>
+                {% elif device.status == 1%}
+                <p>Unavailable</p>
+                {% elif device.status is None%}
+                <p>-</p>
+                {% endif %}
+                <h2>History type:</h2>
+                {% if device.history_type == 0 %}
+                <p>Storico</p>
+                {% elif device.histroy == 1%}
+                <p>Active</p>
+                {% elif device.histroy is None%}
+                <p>-</p>
+                {% endif %}
+
+                <h2>Note:</h2>
+                {% if device.note is None %}
+                <p>-</p>
+                {% else %}
+                <p>
+                    {{ device.user.note }}</p>
+
+                {% endif %}
+            </div>
         </div>
     </div>
+    <br>
+
+
     <div class="row">
         <div class="col-md-12">
-            <p>Serial number: {{ device.serial_number }}</p>
+            <a class="btn btn-secondary"
+                    href="http://10.90.4.52:8013/api/print/text?text=CONTRATTO:+{{device.contract}}%0ASCAD:+{{ device.expiration_date }}%0AHOST+NAME:+{{ device.host_name }}%0AMODEL+TYPE:+{{ device.model }}%0ASERIALNUMBER:+{{ device.serial_number }}&font_family=FreeMono+(Regular)&font_size=50&label_size=39x90&align=left&orientation=standard&margin_top=0&margin_bottom=0&margin_left=0&margin_right=0"
+                    target="_blank">Print</a>
+                    
+                        <a class="btn btn-danger" href="{% url 'device_delete' device.id %}">Delete</a>
+                        <a class="btn btn-success" href="{% url 'update_device' device.id %}">Edit</a>
         </div>
     </div>
+
+<!--<input type="hidden" id="deviceObj" name="device" value="{{ deviceDetails }}">
+    <button onclick="myFunction()">Click me!</button>-->
+
+<script src="{% static 'brotherscript.js' %}"></script>
+
 {% endblock %}

@@ -5,17 +5,28 @@
 {% endblock %}
 
 {% block content %}
-    <div>
-        <a href="{% url 'place_delete' place.id %}">Delete place</a>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <p>Name: {{ place.name }}</p>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-body">
+                    <h1 class="card-title">General data</h1>
+                    <hr>
+                    <h2>Name:</h2>
+                    <p>{{ place.name }}</h2>
+                    <h2>City:</h2>
+                    <p>{{ place.city }}</h2>
+                    <h2>Address:</h2>
+                    <p>{{ place.address }}</h2>
+                    <h2>CAP:</h2>
+                    <p>{{ place.cap }}</h2>
+                    <h2>Country:</h2>
+                    <p>{{ place.plan }}</h2>
+                        <div class="col d-flex justify-content-end align-items-end">
+                            <a class="btn btn-danger" href="{% url 'place_delete' place.id %}">Delete place</a>&nbsp 
+                            <a class="btn btn-success" href="{% url 'update_place' place.id %}">Edit place</a>
+
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <p>City: {{ place.city }}</p>
-        </div>
-    </div>
+        <br>
 {% endblock %}
