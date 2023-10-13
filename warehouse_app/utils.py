@@ -13,7 +13,7 @@ def handle_uploaded_file(up_file):
     cnt = 0
     for _, row in df.iterrows():
         utente = str(row["UTENTE"])
-        ufficio = str(row["UFFICIO"])
+        ufficio = str(row["DIREZIONE"])
         sede = str(row["SEDE"])
         dipartimento = str(row["DIREZIONE"])
 
@@ -47,7 +47,7 @@ def handle_uploaded_file(up_file):
             country="",
             plan="",
             defaults={
-                "name": ufficio,
+                "name": dipartimento,
                 "city": sede,
                 "cap": "",
                 "country": "",

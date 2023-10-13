@@ -6,6 +6,9 @@ from django.core import serializers
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import generic
+from django.views.generic import ListView
+from django.db.models import Q
+
 from . import models
 from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView, CreateView
@@ -19,6 +22,17 @@ import xlwt
 from openpyxl import Workbook
 from django.contrib import messages
 
+
+class SearchResultsListView(ListView):  # new
+    model = models.Device
+    context_object_name = "device_list"
+    template_name = "search_results.html"
+
+    def get_queryset(self):  # new
+        query = self.request.GET.get("q")
+        return models.Device.objects.filter(
+            Q(serial_number__icontains=query) | Q(contract__icontains=query) | Q(host_name__icontains=query)
+        )
 
 class DepartmentList(LoginRequiredMixin, FilterView):
     # login_url = 'accounts/login'

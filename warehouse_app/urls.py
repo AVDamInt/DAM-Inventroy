@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-
+from .views import SearchResultsListView
 urlpatterns = [
     path("device/create", views.create_device, name="device_register"),
     path("", views.DeviceList.as_view(), name="device_list"),
@@ -33,5 +33,6 @@ urlpatterns = [
     path("department/read/<int:pk>", views.DepartmentDetailView.as_view(), name="department_detail"),
     path("department/update/<int:pk>", views.DepartmentUpdateView.as_view(), name="update_department"),
     path("department/delete/<int:pk>", views.DepartmentDeleteView.as_view(), name="department_delete"),
+    path("search", SearchResultsListView.as_view(),name="search_results"),
 
 ]
