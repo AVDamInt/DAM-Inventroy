@@ -34,6 +34,7 @@ class SearchResultsListView(ListView):  # new
             Q(serial_number__icontains=query) | Q(contract__icontains=query) | Q(host_name__icontains=query)
         )
 
+
 class DepartmentList(LoginRequiredMixin, FilterView):
     # login_url = 'accounts/login'
     # redirect_field_name = 'redirect_to'
@@ -75,7 +76,6 @@ class DepartmentDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("department_list")
 
 
-
 @login_required(login_url="/accounts/login/")
 def create_device(request):
     if request.method == "POST":
@@ -86,8 +86,6 @@ def create_device(request):
     else:
         form = forms.DeviceForm()
         return render(request, "device_form.html", {"form": form})
-
-
 
 
 class DeviceList(LoginRequiredMixin, FilterView):
@@ -151,7 +149,7 @@ def delete_device(request, id):
     obj = get_object_or_404(models.Device, id=id)
 
     if request.method == "POST":
-        obj.status = models.Device.status_bol = 1
+        obj.status = models.Device.history_type = 0
         # obj.status = models.Device.status_bol = False
         obj.save()
         return HttpResponseRedirect("/")
@@ -258,7 +256,7 @@ def file_upload(request):
                 utils.handle_uploaded_file(request.FILES["file"])
                 return HttpResponseRedirect(reverse_lazy("device_list"))
             else:
-                messages.error(request,"Wrong file type!")
+                messages.error(request, "Wrong file type!")
                 form = forms.UploadFileForm()
                 return render(request, "file_upload.html", {"form": form})
         else:
@@ -509,3 +507,85 @@ def export_users(request):
     wb.save(response)
 
     return response
+
+
+class OfficeList(LoginRequiredMixin, FilterView):
+    # login_url = 'accounts/login'
+    # redirect_field_name = 'redirect_to'
+    paginate_by = 10
+    context_object_name = "offices"
+    model = models.Office
+    template_name = "office_list.html"
+
+
+@login_required(login_url="/accounts/login/")
+def create_office(request):
+    if request.method == "POST":
+        instance_form = forms.OfficeForm(request.POST)
+        if instance_form.is_valid():
+            instance_form.save()
+            return HttpResponseRedirect(reverse_lazy("office_list"))
+    else:
+        form = forms.OfficeForm()
+        return render(request, "office_form.html", {"form": form})
+
+
+class OfficeDetailView(LoginRequiredMixin, generic.DetailView):
+    login_url = "accounts/login"
+    model = models.Office
+    template_name = "office_detail.html"
+    context_object_name = "office"
+
+
+class OfficeUpdateView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "office_update_form.html"
+    model = models.Office
+    form_class = forms.OfficeUpdateForm
+
+
+class OfficeDeleteView(LoginRequiredMixin, DeleteView):
+    # login_url = 'accounts/login'
+    model = models.Office
+    template_name = "office_delete.html"
+    success_url = reverse_lazy("office_list")
+
+
+class CompanyList(LoginRequiredMixin, FilterView):
+    # login_url = 'accounts/login'
+    # redirect_field_name = 'redirect_to'
+    paginate_by = 10
+    context_object_name = "companies"
+    model = models.Company
+    template_name = "company_list.html"
+
+
+@login_required(login_url="/accounts/login/")
+def create_company(request):
+    if request.method == "POST":
+        instance_form = forms.CompanyForm(request.POST)
+        if instance_form.is_valid():
+            instance_form.save()
+            return HttpResponseRedirect(reverse_lazy("company_list"))
+    else:
+        form = forms.CompanyForm()
+        return render(request, "company_form.html", {"form": form})
+
+
+class CompanyDetailView(LoginRequiredMixin, generic.DetailView):
+    login_url = "accounts/login"
+    model = models.Company
+    template_name = "company_detail.html"
+    context_object_name = "company"
+
+
+class CompanyUpdateView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "company_update_form.html"
+    model = models.Company
+    form_class = forms.CompanyUpdateForm
+
+
+class CompanyDeleteView(LoginRequiredMixin, DeleteView):
+    # login_url = 'accounts/login'
+    model = models.Company
+    template_name = "company_delete.html"
+    success_url = reverse_lazy("company_list")

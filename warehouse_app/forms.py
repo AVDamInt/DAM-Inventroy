@@ -1,7 +1,7 @@
 from crispy_forms.helper import FormHelper
 from django import forms
 from crispy_forms.layout import Submit, Row, Column, Layout, Div, HTML, Field
-from .models import Device, Place, DeviceUser, Department
+from .models import Device, Place, DeviceUser, Department, Office, Company
 
 
 class DateInput(forms.DateInput):
@@ -31,6 +31,101 @@ class DepartmentForm(forms.ModelForm):
         model = Department
         fields = "__all__"
 
+class CompanyForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(CompanyForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = "POST"
+        # self.helper.form_action = "company_register"
+        self.helper.layout = Layout(
+            Row(
+                Column("name", css_class="col-md-2"),
+                css_class="form-row",
+            ),
+            HTML(
+                """
+                    <br>
+                """
+            ),
+        )
+        self.helper.add_input(Submit("submit", "Add"))
+
+    class Meta:
+        model = Company
+        fields = "__all__"
+
+
+class CompanyUpdateForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(CompanyUpdateForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = "POST"
+        # self.helper.form_action = 'device_register'
+        self.helper.layout = Layout(
+            Row(
+                Column("name", css_class="col-md-4"),
+                css_class="form-row",
+            ),
+            HTML(
+                """
+                    <br>
+                """
+            ),
+        )
+        self.helper.add_input(Submit("submit", "Edit"))
+
+    class Meta:
+        model = Company
+        fields = "__all__"
+
+
+class OfficeForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(OfficeForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = "POST"
+        # self.helper.form_action = "office_register"
+        self.helper.layout = Layout(
+            Row(
+                Column("name", css_class="col-md-2"),
+                css_class="form-row",
+            ),
+            HTML(
+                """
+                    <br>
+                """
+            ),
+        )
+        self.helper.add_input(Submit("submit", "Add"))
+
+    class Meta:
+        model = Office
+        fields = "__all__"
+
+
+class OfficeUpdateForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(OfficeUpdateForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = "POST"
+        # self.helper.form_action = 'device_register'
+        self.helper.layout = Layout(
+            Row(
+                Column("name", css_class="col-md-4"),
+                css_class="form-row",
+            ),
+            HTML(
+                """
+                    <br>
+                """
+            ),
+        )
+        self.helper.add_input(Submit("submit", "Edit"))
+
+    class Meta:
+        model = Office
+        fields = "__all__"
+
 
 class DepartmentUpdateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -57,12 +152,23 @@ class DepartmentUpdateForm(forms.ModelForm):
 
 
 class DeviceForm(forms.ModelForm):
+    class Meta:
+        model = Device
+        fields = "__all__"
+        widgets = {
+            "expiration_date": DateInput(format="%d/%m/%Y"),
+            "renewal_date": DateInput(format="%d/%m/%Y")
+        }
     def __init__(self, *args, **kwargs):
         super(DeviceForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_method = "POST"
         # self.helper.form_action = 'device_register'
         self.helper.layout = Layout(
+            Div(
+                Div("company", css_class="col-md-2"),
+                css_class="row",
+            ),
             Div(
                 Div("host_name", css_class="col-md-2"),
                 css_class="row",
@@ -89,7 +195,9 @@ class DeviceForm(forms.ModelForm):
             ),
             Div(
                 Div("place", css_class="col-md-2"),
-                css_class="row",
+                Div("department", css_class="col-md-2"),
+                Div("office", css_class="col-md-2"),
+                css_class="row"
             ),
             Div(
                 Div("user_history", css_class="col-md-2"),
@@ -136,13 +244,7 @@ class DeviceForm(forms.ModelForm):
         )
         self.helper.add_input(Submit("submit", "Add"))
 
-    class Meta:
-        model = Device
-        fields = "__all__"
-        widgets = {
-            "expiration_date": DateInput(format="%d/%m/%Y"),
-            "renewal_date": DateInput(format="%d/%m/%Y"),
-        }
+
 
 
 class DeviceUpdateForm(forms.ModelForm):

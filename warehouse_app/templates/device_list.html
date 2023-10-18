@@ -75,6 +75,9 @@ Device list
         <thead>
             <tr>
                 <th data-field='field_id'>Id</th>
+                <th data-field='field_company'>Company</th>
+                <th data-field='field_department'>Department</th>
+                <th data-field='field_office'>Office</th>
                 <th data-field='field_name'>User History</th>
                 <th data-field='field_status'>Status</th>
                 <th data-field='field_history_type'>History</th>
@@ -101,6 +104,9 @@ Device list
                     {{ usr }}<br />
                     {% endfor %}
                 </td>
+                <td>{{ device.company }}</td>
+                <td>{{ device.department }}</td>
+                <td>{{ device.office }}</td>
                 <td>{{ device.get_status_display }}</td>
                 <td>{{ device.get_history_type_display }}</td>
                 <td>{{ device.serial_number }}</td>

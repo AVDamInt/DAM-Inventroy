@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ company.name }}
+{% endblock %}
+
+{% block content %}
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-body">
+                    <h1 class="card-title">General data</h1>
+                    <hr>
+                    <h2>Name:</h2>
+                    <p>{{ company.name }}</p>
+                        <div class="col d-flex justify-content-end align-items-end">
+                            <a class="btn btn-danger" href="{% url 'company_delete' company.id %}">Delete company</a>&nbsp
+                            <a class="btn btn-success" href="{% url 'update_company' company.id %}">Edit company</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+{% endblock %}

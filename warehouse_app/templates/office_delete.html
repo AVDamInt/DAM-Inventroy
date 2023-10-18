@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ office.name }}
+{% endblock %}
+
+{% block content %}
+    <h2>{{ office.name }}</h2>
+    <form method="POST">
+        {% csrf_token %}
+
+        <h3>Do you want to delete the following office {{ office.name }}?</h3>
+        <p><input type="submit" value="Yes"/><a href=""></a>Cancel</p>
+    </form>
+{% endblock %}

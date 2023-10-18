@@ -2,7 +2,7 @@ from datetime import datetime
 import time
 import pandas as pd
 import os
-from .models import Device, Place, DeviceUser, Department
+from .models import Device, Place, DeviceUser, Department, Office, Company
 
 
 def handle_uploaded_file(up_file):
@@ -13,24 +13,56 @@ def handle_uploaded_file(up_file):
     cnt = 0
     for _, row in df.iterrows():
         utente = str(row["UTENTE"])
-        ufficio = str(row["DIREZIONE"])
+        ufficio = str(row["UFFICIO"])
         sede = str(row["SEDE"])
         dipartimento = str(row["DIREZIONE"])
 
-        dipartimento_create, created = Department.objects.update_or_create(
+        company = str(row["COMPANY"])
+
+        department_create, created = Department.objects.update_or_create(
             name=dipartimento
+        )
+
+        office_create, created = Office.objects.update_or_create(
+            name=ufficio
+        )
+
+        company_create, created = Company.objects.update_or_create(
+            name=company
         )
 
         device_status = 1
         user = None
+        # split on space or underscore
         if "onibile" in utente.lower() or "ninbile" in utente.lower():
             device_status = 0
         else:
+            splitted_user = ''
+            user_final = ''
+            if '_' in utente:
+                name = ''
+                surname = ''
+                splitted_user = utente.split('_')
+                if len(splitted_user) > 2:
+                    name = splitted_user[0]
+                    surname = splitted_user[1] + ' ' + splitted_user[2]
+                else:
+                    name = splitted_user[0]
+                    surname = splitted_user[1]
+            elif ' ' in utente:
+                splitted_user = utente.split(' ')
+                if len(splitted_user) > 2:
+                    name = splitted_user[0]
+                    surname = splitted_user[1] + ' ' +  splitted_user[2]
+                else:
+                    name = splitted_user[0]
+                    surname = splitted_user[1]
+            else:
+                name = utente
             user, created = DeviceUser.objects.update_or_create(
-                name=utente,
-                surname="",
+                name=name,
+                surname=surname,
                 email="",
-                user_department = dipartimento_create,
             )
 
             # if created:
@@ -40,19 +72,11 @@ def handle_uploaded_file(up_file):
             # print(f"User already in db")
 
         place, created = Place.objects.update_or_create(
-            name=ufficio,
             city=sede,
             address="",
             cap="",
             country="",
-            plan="",
-            defaults={
-                "name": dipartimento,
-                "city": sede,
-                "cap": "",
-                "country": "",
-                "plan": "",
-            },
+            plan=""
         )
         # if created:
         # print(f"Place created with name {ufficio} and city {sede}")
@@ -62,8 +86,8 @@ def handle_uploaded_file(up_file):
         contratto = str(row["CONTR"])
 
         host_name = str(row["HOST_NAME"])
-        marca = str(row["MARCA"])
-        tipo = str(row["TYPE"])
+        make = str(row["MARCA"])
+        model = str(row["TYPE"])
         matricola = str(row["MATRICOLA"])
         stato = str(row["STATO"])
         note = str(row["MONITOR"])
@@ -98,28 +122,31 @@ def handle_uploaded_file(up_file):
 
         # bisogna rivdere la get_or_create perchè crea meno records di quelli presente nel file excel.
         device, created = Device.objects.update_or_create(
+            company=company_create,
             serial_number=matricola,
             contract=contratto,
             expiration_date=scad if scad else None,
             renewal_date=rinn if rinn else None,
             host_name=host_name,
-            make=marca,
-            model=tipo,
+            make=make,
+            model=model,
             place=place,
             user=user,
             status=device_status,
             history_type=history_type,
             note=note,
+            department=department_create,
+            office=office_create
             #test_id=test_id,
         )
 
         if created:
             print(
-                f"Device created with data {matricola} - {contratto} - {host_name} - {marca} - {tipo}"
+                f"Device created with data {matricola} - {contratto} - {host_name} - {make} - {model}"
             )
         else:
             print(
-                f"Device already in db {matricola} - {contratto} - {host_name} - {marca} - {tipo}"
+                f"Device already in db {matricola} - {contratto} - {host_name} - {make} - {model}"
             )
 
         cnt += 1

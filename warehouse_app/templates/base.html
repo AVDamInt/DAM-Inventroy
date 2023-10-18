@@ -69,6 +69,26 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
+                        Office
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item" href="{% url 'office_list' %}"><i class="bi bi-list"></i> List offices</a></li>
+                        <li><a class="dropdown-item" href="{% url 'office_register' %}"><i class="bi bi-plus-circle"></i> Add office</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Company
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item" href="{% url 'company_list' %}"><i class="bi bi-list"></i> List companies</a></li>
+                        <li><a class="dropdown-item" href="{% url 'company_register' %}"><i class="bi bi-plus-circle"></i> Add company</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
                         Data import
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark">
@@ -99,7 +119,7 @@
                 </li>
             </ul>
          <form class="d-flex" action="{% url 'search_results' %}" method="get">
-                <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search" >
+                <input class="form-control me-2" type="search" name="q" placeholder="Search device" aria-label="Search" >
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
         </div>

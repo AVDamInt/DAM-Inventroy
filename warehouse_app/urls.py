@@ -28,11 +28,25 @@ urlpatterns = [
     path("file_upload", views.file_upload, name="file_upload"),
     path("export/devices", views.export_devices, name="export_devices"),
     path("export/places", views.export_places, name="export_places"),
+
     path("department/create", views.create_department, name='department_register'),
     path("department", views.DepartmentList.as_view(), name="department_list"),
     path("department/read/<int:pk>", views.DepartmentDetailView.as_view(), name="department_detail"),
     path("department/update/<int:pk>", views.DepartmentUpdateView.as_view(), name="update_department"),
     path("department/delete/<int:pk>", views.DepartmentDeleteView.as_view(), name="department_delete"),
+
+    path("office/create", views.create_office, name='office_register'),
+    path("office", views.OfficeList.as_view(), name="office_list"),
+    path("office/read/<int:pk>", views.OfficeDetailView.as_view(), name="office_detail"),
+    path("office/update/<int:pk>", views.OfficeUpdateView.as_view(), name="update_office"),
+    path("office/delete/<int:pk>", views.OfficeDeleteView.as_view(), name="office_delete"),
+
+    path("company/create", views.create_company, name='company_register'),
+    path("company", views.CompanyList.as_view(), name="company_list"),
+    path("company/read/<int:pk>", views.CompanyDetailView.as_view(), name="company_detail"),
+    path("company/update/<int:pk>", views.CompanyUpdateView.as_view(), name="update_company"),
+    path("company/delete/<int:pk>", views.CompanyDeleteView.as_view(), name="company_delete"),
+
     path("search", SearchResultsListView.as_view(),name="search_results"),
 
 ]
