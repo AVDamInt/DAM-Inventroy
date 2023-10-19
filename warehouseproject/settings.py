@@ -24,10 +24,11 @@ config = AutoConfig(search_path=".env")
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY")
-#SECRET_KEY = os.environ['SECRET_KEY']
+#SECRET_KEY = config("SECRET_KEY")
+SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+#DEBUG = False
+DEBUG = os.environ['DEBUG']
 
 ALLOWED_HOSTS = ["damianinventory-staging.azurewebsites.net", "000.00.00.00"]
 
