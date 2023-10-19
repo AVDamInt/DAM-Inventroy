@@ -33,35 +33,40 @@ def handle_uploaded_file(up_file):
 
         device_status = 1
         user = None
+
+        if 'spedito' in utente.lower():
+            print("Found spedito")
+
         # split on space or underscore
         if "onibile" in utente.lower() or "ninbile" in utente.lower():
             device_status = 0
         else:
-            splitted_user = ''
-            user_final = ''
-            if '_' in utente:
-                name = ''
-                surname = ''
-                splitted_user = utente.split('_')
-                if len(splitted_user) > 2:
-                    name = splitted_user[0]
-                    surname = splitted_user[1] + ' ' + splitted_user[2]
-                else:
-                    name = splitted_user[0]
-                    surname = splitted_user[1]
-            elif ' ' in utente:
-                splitted_user = utente.split(' ')
-                if len(splitted_user) > 2:
-                    name = splitted_user[0]
-                    surname = splitted_user[1] + ' ' +  splitted_user[2]
-                else:
-                    name = splitted_user[0]
-                    surname = splitted_user[1]
+            device_stats = 1
+        splitted_user = ''
+        user_final = ''
+        if '_' in utente:
+            name = ''
+            surname = ''
+            splitted_user = utente.split('_')
+            if len(splitted_user) > 2:
+                name = splitted_user[0]
+                surname = splitted_user[1] + ' ' + splitted_user[2]
             else:
-                name = utente
+                name = splitted_user[0]
+                surname = splitted_user[1]
+        elif ' ' in utente:
+            splitted_user = utente.split(' ')
+            if len(splitted_user) > 2:
+                name = splitted_user[0]
+                surname = splitted_user[1] + ' ' +  splitted_user[2]
+            else:
+                name = splitted_user[0]
+                surname = splitted_user[1]
+        else:
+            name = utente
             user, created = DeviceUser.objects.update_or_create(
                 name=name,
-                surname=surname,
+                surname='',
                 email="",
             )
 

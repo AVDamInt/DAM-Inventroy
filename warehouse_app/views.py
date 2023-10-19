@@ -149,7 +149,7 @@ def delete_device(request, id):
     obj = get_object_or_404(models.Device, id=id)
 
     if request.method == "POST":
-        obj.status = models.Device.history_type = 0
+        obj.history_type = models.Device.history_type = 0
         # obj.status = models.Device.status_bol = False
         obj.save()
         return HttpResponseRedirect("/")
@@ -319,6 +319,7 @@ def export_devices(request):
         "Id",
         "User History",
         "Status",
+        "History Type",
         "Serial number",
         "Contract",
         "Expiration Date",
@@ -329,17 +330,34 @@ def export_devices(request):
         "Place",
         "User",
     ]
+    ws.append(columns)
 
     # for col_num in range(len(columns)):
     #    ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
 
     # Sheet body, remaining rows
     # font_style = xlwt.XFStyle()
+    header_data = ["id",
+                   "user_history",
+                   "status",
+                   "history_type",
+                   "serial_number",
+                   "contract",
+                   "expiration_date",
+                   "renewal_date",
+                   "host_name",
+                   "make",
+                   "model",
+                   "place",
+                   "user"]
+
+
 
     rows = models.Device.objects.all().values_list(
         "id",
         "user_history",
         "status",
+        "history_type",
         "serial_number",
         "contract",
         "expiration_date",
@@ -373,33 +391,41 @@ def export_devices(request):
             elif row[2] == 0:
                 status = "Available"
 
+        history_type = ""
+        if row[3] is not None:
+            if row[3] == 1:
+                history_type = "Attivo"
+            elif row[3] == 0:
+                history_type = "Storico"
+
         device_place = ""
-        if row[10] is not None:
-            device_place = models.Place.objects.get(pk=row[10]).name
+        if row[11] is not None:
+            device_place = models.Place.objects.get(pk=row[11]).name
 
         device_user = ""
-        if row[11] is not None:
-            device_user = models.DeviceUser.objects.get(pk=row[11]).name
+        if row[12] is not None:
+            device_user = models.DeviceUser.objects.get(pk=row[12]).name
 
         device_expiration_date = ""
-        if row[5] is not None:
-            device_expiration_date = row[5].strftime("%d/%m/%Y")
+        if row[6] is not None:
+            device_expiration_date = row[6].strftime("%d/%m/%Y")
 
         device_renewal_date = ""
-        if row[6] is not None:
-            device_renewal_date = row[6].strftime("%d/%m/%Y")
+        if row[7] is not None:
+            device_renewal_date = row[7].strftime("%d/%m/%Y")
 
         data_row = [
             row[0],
             hist_us,
             status,
-            row[3],
+            history_type,
             row[4],
+            row[5],
             device_expiration_date,
             device_renewal_date,
-            row[7],
             row[8],
             row[9],
+            row[10],
             device_place,
             device_user,
         ]

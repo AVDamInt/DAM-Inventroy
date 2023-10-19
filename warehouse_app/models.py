@@ -21,6 +21,7 @@ class Place(models.Model):
     class Meta:
         ordering = ["id"]
 
+
 class Office(models.Model):
     # UFFICIO
     name = models.CharField(max_length=50, null=True)
@@ -34,11 +35,13 @@ class Office(models.Model):
     class Meta:
         ordering = ["id"]
 
+
 class Department(models.Model):
     # DIREZIONE
     name = models.CharField(max_length=50, null=True)
+
     # one to many su Office
-    #office = models.ForeignKey(Office, related_name="office", on_delete=models.SET_NULL, null=True)
+    # office = models.ForeignKey(Office, related_name="office", on_delete=models.SET_NULL, null=True)
     def __str__(self):
         return self.name
 
@@ -68,6 +71,7 @@ class DeviceUser(models.Model):
 class Company(models.Model):
     # COMPANY
     name = models.CharField(max_length=50)
+
     def __str__(self):
         return self.name
 
@@ -77,8 +81,10 @@ class Company(models.Model):
     class Meta:
         ordering = ["id"]
 
+
 def get_foo():
     return Company.objects.get_or_create(id=1)
+
 
 class Device(models.Model):
     EXABYTE = "EB"
@@ -102,10 +108,13 @@ class Device(models.Model):
     company = models.ForeignKey(Company, on_delete=models.SET_DEFAULT, default=get_foo)
 
     # Populated by USER field with DISPONIBILE value Default = Available -> Indicates whether the product is available or assigned to an user
-    IS_AVAILABLE_CHOICES = [(0, "Available"), (1, "Unavailable")]
+    IS_AVAILABLE_CHOICES = [(0, "Available"), (1, "Unavailable"), (2, "Da eliminare")]
 
     # STATO
     IS_HISTORY_CHOICES = [(0, "Storico"), (1, "Attivo")]
+
+    # PHASE
+    PHASE_DESCRIPTION = [(0,"In preparazione"),(1,"Da spedire"),(2,"Spedito"),(3,"Consegnato")]
 
     # MATRICOLA
     serial_number = models.CharField(max_length=50, blank=True, null=True)
@@ -165,6 +174,9 @@ class Device(models.Model):
     history_type = models.IntegerField(
         choices=IS_HISTORY_CHOICES, default=0, null=True
     )
+
+    phase = models.IntegerField(choices=PHASE_DESCRIPTION, default=0, null=True)
+
     note = models.TextField(max_length=400, blank=True, null=True)
 
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True)
@@ -178,5 +190,3 @@ class Device(models.Model):
 
     class Meta:
         ordering = ["id"]
-
-

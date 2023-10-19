@@ -10,6 +10,7 @@ class DeviceFilter(django_filters.FilterSet):
     model = CharFilter(field_name="model", lookup_expr="icontains")
     status = ChoiceFilter(choices=Device.IS_AVAILABLE_CHOICES)
     user = CharFilter(field_name="user__name", lookup_expr="icontains")
+    user_surname = CharFilter(field_name="user__surname", lookup_expr="icontains")
     q = django_filters.CharFilter(method="search_all_fields", label="Search")
 
     class Meta:

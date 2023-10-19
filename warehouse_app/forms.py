@@ -31,6 +31,7 @@ class DepartmentForm(forms.ModelForm):
         model = Department
         fields = "__all__"
 
+
 class CompanyForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CompanyForm, self).__init__(*args, **kwargs)
@@ -159,6 +160,7 @@ class DeviceForm(forms.ModelForm):
             "expiration_date": DateInput(format="%d/%m/%Y"),
             "renewal_date": DateInput(format="%d/%m/%Y")
         }
+
     def __init__(self, *args, **kwargs):
         super(DeviceForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -208,6 +210,10 @@ class DeviceForm(forms.ModelForm):
                 css_class="row",
             ),
             Div(
+                Div("phase", css_class="col-md-2"),
+                css_class="row",
+            ),
+            Div(
                 Div("user", css_class="col-md-2"),
                 css_class="row",
             ),
@@ -243,8 +249,6 @@ class DeviceForm(forms.ModelForm):
             ),
         )
         self.helper.add_input(Submit("submit", "Add"))
-
-
 
 
 class DeviceUpdateForm(forms.ModelForm):
