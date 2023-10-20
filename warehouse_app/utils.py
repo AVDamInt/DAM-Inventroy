@@ -23,6 +23,8 @@ def handle_uploaded_file(up_file):
             name=dipartimento
         )
 
+
+
         office_create, created = Office.objects.update_or_create(
             name=ufficio
         )
@@ -47,10 +49,14 @@ def handle_uploaded_file(up_file):
         if '_' in utente:
             name = ''
             surname = ''
+            surname_t = ''
             splitted_user = utente.split('_')
+            usr_cnt = 0
             if len(splitted_user) > 2:
-                name = splitted_user[0]
-                surname = splitted_user[1] + ' ' + splitted_user[2]
+                name = splitted_user[0] + ' '
+                for usr_sp in splitted_user:
+                    surname_t += usr_sp + ' '
+                surname = surname[:-1]
             else:
                 name = splitted_user[0]
                 surname = splitted_user[1]
@@ -60,10 +66,16 @@ def handle_uploaded_file(up_file):
                 email="",
             )
         elif ' ' in utente:
+            name = ''
+            surname = ''
+            surname_t = ''
             splitted_user = utente.split(' ')
+            usr_cnt = 0
             if len(splitted_user) > 2:
-                name = splitted_user[0]
-                surname = splitted_user[1] + ' ' +  splitted_user[2]
+                name = splitted_user[0] + ' '
+                for usr_sp in splitted_user:
+                    surname_t += usr_sp + ' '
+                surname = surname[:-1]
             else:
                 name = splitted_user[0]
                 surname = splitted_user[1]
