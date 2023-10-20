@@ -54,6 +54,11 @@ def handle_uploaded_file(up_file):
             else:
                 name = splitted_user[0]
                 surname = splitted_user[1]
+            user, created = DeviceUser.objects.update_or_create(
+                name=name,
+                surname=surname,
+                email="",
+            )
         elif ' ' in utente:
             splitted_user = utente.split(' ')
             if len(splitted_user) > 2:
@@ -62,6 +67,11 @@ def handle_uploaded_file(up_file):
             else:
                 name = splitted_user[0]
                 surname = splitted_user[1]
+            user, created = DeviceUser.objects.update_or_create(
+                name=name,
+                surname=surname,
+                email="",
+            )
         else:
             name = utente
             user, created = DeviceUser.objects.update_or_create(

@@ -5,13 +5,13 @@ from django.db.models import Q
 
 
 class DeviceFilter(django_filters.FilterSet):
-    contract = CharFilter(field_name="contract", lookup_expr="icontains")
-    serial_number = CharFilter(field_name="serial_number", lookup_expr="icontains")
-    model = CharFilter(field_name="model", lookup_expr="icontains")
-    status = ChoiceFilter(choices=Device.IS_AVAILABLE_CHOICES)
-    user = CharFilter(field_name="user__name", lookup_expr="icontains")
-    user_surname = CharFilter(field_name="user__surname", lookup_expr="icontains")
-    q = django_filters.CharFilter(method="search_all_fields", label="Search")
+    contract = django_filters.CharFilter(field_name="contract", lookup_expr="icontains")
+    serial_number = django_filters.CharFilter(field_name="serial_number", lookup_expr="icontains")
+    model = django_filters.CharFilter(field_name="model", lookup_expr="icontains")
+    status = django_filters.ChoiceFilter(choices=Device.IS_AVAILABLE_CHOICES)
+    #user_surname = CharFilter(field_name="user__surname", lookup_expr="icontains")
+    q = django_filters.CharFilter(method="search_all_fields", label="All")
+    s = django_filters.CharFilter(method='filter_user', label='User')
 
     class Meta:
         model = Device
@@ -41,6 +41,12 @@ class DeviceFilter(django_filters.FilterSet):
             | Q(user__name__icontains=value)
             | Q(host_name__icontains=value)
             | Q(make__icontains=value)
+        )
+
+    def filter_user(self, queryset, name, value):
+        return queryset.filter(
+            Q(user__name__icontains=value) |
+            Q(user__surname__icontains=value)
         )
 
 

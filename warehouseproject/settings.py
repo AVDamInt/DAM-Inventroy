@@ -12,27 +12,24 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
-
 from django.urls import reverse_lazy
 from decouple import config, AutoConfig
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-config = AutoConfig(search_path=".env")
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = config("SECRET_KEY")
 SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = False
 DEBUG = os.environ['DEBUG']
 
-ALLOWED_HOSTS = ["damianinventory-staging.azurewebsites.net", "000.00.00.00"]
+#ALLOWED_HOSTS = ["damianinventory-staging.azurewebsites.net", "000.00.00.00"]
 
-#ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 CSRF_TRUSTED_ORIGINS = ["https://damianinventory-staging.azurewebsites.net"]
 
@@ -102,26 +99,6 @@ DATABASES = {
 }
 
 
-#DATABASES = {
-#    "default": {
-#        "ENGINE": "django.db.backends.postgresql_psycopg2",
-#        "NAME": "inventorydb",
-#        "USER": "admin",
-#        "PASSWORD": "Damiani2022!?",
-#        "HOST": "localhost",
-#        "PORT": "5432",
-#        'DISABLE_SERVER_SIDE_CURSORS': True,
-#    }
-#}
-
-# default sqlite db
-# DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': BASE_DIR / 'db.sqlite3',
-#    }
-# }
-
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -155,7 +132,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-print(f"tro {BASE_DIR}")
 
 
 STATICFILES_DIRS = [
