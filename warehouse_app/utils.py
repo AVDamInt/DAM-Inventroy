@@ -4,6 +4,7 @@ import pandas as pd
 import os
 from .models import Device, Place, DeviceUser, Department, Office, Company
 
+# TODO modify upload logic for office and department like the user one
 
 def handle_uploaded_file(up_file):
     # if up_file.name ==ù
