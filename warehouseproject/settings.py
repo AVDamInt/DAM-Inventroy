@@ -14,24 +14,35 @@ from pathlib import Path
 import os
 from django.urls import reverse_lazy
 from decouple import config, AutoConfig
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ['DEBUG']
+DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = ["damianinventory-staging.azurewebsites.net", "000.00.00.00"]
 
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(',')
+print(ALLOWED_HOSTS)
 #ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
-CSRF_TRUSTED_ORIGINS = ["https://damianinventory-staging.azurewebsites.net"]
+
+
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS').split(' ')
+print(CSRF_TRUSTED_ORIGINS)
+
+#CSRF_TRUSTED_ORIGINS = ["https://damianinventory-staging.azurewebsites.net"]
 
 # Application definition
 
@@ -90,11 +101,11 @@ WSGI_APPLICATION = "warehouseproject.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ['dbname'],
-        'USER': os.environ['dbuser'],
-        'PASSWORD': os.environ['dbpassword'],
-        'HOST': os.environ['dbhost'],
-        'PORT': os.environ['dbport'],
+        'NAME': os.getenv('dbname'),
+        'USER': os.getenv('dbuser'),
+        'PASSWORD': os.getenv('dbpassword'),
+        'HOST': os.getenv('dbhost'),
+        'PORT': os.getenv('dbport'),
     }
 }
 
