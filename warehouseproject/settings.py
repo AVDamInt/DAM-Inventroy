@@ -41,7 +41,7 @@ print(ALLOWED_HOSTS)
 
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS').split(' ')
 print(CSRF_TRUSTED_ORIGINS)
-
+# HI
 #CSRF_TRUSTED_ORIGINS = ["https://damianinventory-staging.azurewebsites.net"]
 
 # Application definition
